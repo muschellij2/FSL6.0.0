@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo "Fslview is now deprecated, please type:"
+echo
+echo "fsleyes"
+echo
+echo "to launch our great new image viewer, or type:"
+echo
+echo "fslview_deprecated"
+echo
+echo "to launch the old fslview"

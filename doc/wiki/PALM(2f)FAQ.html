@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>PALM/FAQ</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">PALM/FAQ</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><p class="line867"><div class="FslToolContents">
+<h1>Contents</h1>
+<ol><li><a href="./PALM.html">Introduction</a></li><li><a href="./PALM(2f)UserGuide.html">User Guide</a></li><li><a href="./PALM(2f)ExchangeabilityBlocks.html">Exchangeability Blocks</a></li><li><a href="./PALM(2f)JointInference.html">Joint Inference</a></li><li><a href="./PALM(2f)MasksAndVoxelwiseRegressors.html">Masks And Voxelwise Regressors</a></li><li><a href="./PALM(2f)FasterInference.html">Faster Inference</a></li><li><a href="./PALM(2f)Examples.html">Examples</a></li><li>FAQ<div class="contentslist"><div class="table-of-contents"><p class="table-of-contents-heading">Contents<ol><li>
+<a href="#Why_the_TFCE_results_aren.27t_identical_to_the_ones_produced_by_randomise.3F">Why the TFCE results aren't identical to the ones produced by randomise?</a></li><li>
+<a href="#Why_are_the_degrees_of_freedom_non-integers.3F">Why are the degrees of freedom non-integers?</a></li></ol></div></div></li></ol></div> <span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line867">
+<h1 id="Why_the_TFCE_results_aren.27t_identical_to_the_ones_produced_by_randomise.3F">Why the TFCE results aren't identical to the ones produced by randomise?</h1>
+<span class="anchor" id="line-4"></span><p class="line874">There are two reasons for this: <span class="anchor" id="line-5"></span><ul><li>To accommodate various other statistics, such as for multivariate tests and NPC, and also to allow correction across multiple designs and modalities, a common scale is needed, something that can provided by the z-statistic. For this reason, PALM converts internally all statistics to z before computing spatial statistics as TFCE, cluster extent and cluster mass. The outputs, however, will be in the original statistic, unless the option -zstat is used. Thus, the values of the spatial statistics are not guaranteed to be identical to those produced by randomise, although the difference tends to be small, and even smaller as the sample size increases. <span class="anchor" id="line-6"></span></li><li>In both randomise and PALM, the TFCE equation is calculated in steps, i.e., discretely. The size of the step in randomise is fixed for all permutations and based on the first permutation, whereas in PALM it is the number of steps that is by default fixed for all permutations. As above, the reason for the difference is to accommodate the correction for multiple input modalities, designs and contrasts, such that a particular step size chosen for one is not unfavourable to the others. This is not an issue for randomise as it deals with one design, contrast and modality at a time, so there is no need for uniformity across these. PALM uses a fixed number of steps, then normalise the resulting statistic by the step size, yielding a value that still has a constant (comparable across) measurement unit. <span class="anchor" id="line-7"></span><span class="anchor" id="line-8"></span></li></ul><p class="line867">
+<h1 id="Why_are_the_degrees_of_freedom_non-integers.3F">Why are the degrees of freedom non-integers?</h1>
+<span class="anchor" id="line-9"></span><p class="line862">For the <em>v</em> and <em>G</em> statistics, the degrees of freedom can indeed be non-integers. These values, even if non-integers, can be used to compute parametric p-values by referring to the <em>t</em> and <em>F</em> distributions (if the parametric assumptions are met). <span class="anchor" id="line-10"></span><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:28
+</body>
+</html>

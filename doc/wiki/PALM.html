@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>PALM</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">PALM</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><p class="line867"><div class="FslToolContents">
+<h1>Contents</h1>
+<ol><li>Introduction<div class="contentslist"><div class="table-of-contents"><p class="table-of-contents-heading">Contents<ol><li>
+<a href="#References">References</a></li></ol></div></div></li><li><a href="./PALM(2f)UserGuide.html">User Guide</a></li><li><a href="./PALM(2f)ExchangeabilityBlocks.html">Exchangeability Blocks</a></li><li><a href="./PALM(2f)JointInference.html">Joint Inference</a></li><li><a href="./PALM(2f)MasksAndVoxelwiseRegressors.html">Masks And Voxelwise Regressors</a></li><li><a href="./PALM(2f)FasterInference.html">Faster Inference</a></li><li><a href="./PALM(2f)Examples.html">Examples</a></li><li><a href="./PALM(2f)FAQ.html">FAQ</a></li></ol></div> <span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line867"><strong>PALM</strong> — <strong>Permutation Analysis of Linear Models</strong> — is a tool that allows inference using permutation methods, offering a number of features not available in other analysis software. These features currently include: <span class="anchor" id="line-4"></span><span class="anchor" id="line-5"></span><ul><li>Ability to work with volumetric and surface-based formats, including facewise data, as well as with non-imaging data; <span class="anchor" id="line-6"></span></li><li>A range of various regression and permutation strategies; <span class="anchor" id="line-7"></span></li><li>Statistics that are robust to heteroscedasticity; <span class="anchor" id="line-8"></span></li><li>Shuffling of sets of observations, to allow, for instance, the analysis of certain designs with repeated measurements, with no missing data; <span class="anchor" id="line-9"></span></li><li>Shuffling of observations with complex, tree-like covariance structure (such as for the Human Connectome Project); <span class="anchor" id="line-10"></span></li><li>Permutation with sign-flipping (wild bootstrap); <span class="anchor" id="line-11"></span></li><li>Modified Non-Parametric Combination (NPC) for joint inference over multiple modalities, or multiple contrasts, or both together, with various combining functions available; <span class="anchor" id="line-12"></span></li><li>Classical multivariate statistics (MANOVA, MANCOVA, CCA) for joint inference over multiple modalities, assessed through robust permutation methods, and also parametrically when such approximations exist; <span class="anchor" id="line-13"></span></li><li>Correction over multiple contrasts, multiple modalities, for images with or without the same size or geometry, including non-imaging data, controlling the FWER or FDR; <span class="anchor" id="line-14"></span></li><li>Various acceleration methods based on the test statistics and their distributions. <span class="anchor" id="line-15"></span><span class="anchor" id="line-16"></span></li></ul><p class="line874">PALM requires Matlab or Octave. It can be executed from inside either environment, or directly from the shell. It can also be called from scripts. <span class="anchor" id="line-17"></span><span class="anchor" id="line-18"></span><p class="line867"><strong>PALM is experimental software.</strong> As novel features are introduced, tested, verified, and validated, eventually they will be implemented and made available in randomise or in other tools. PALM is for users who are familiar with statistics and willing to use experimental analysis tools. Bugs (real or suspected) can be reported via <a class="https" href="https://github.com/andersonwinkler/PALM/issues">GitHub</a> or through the <a class="https" href="https://www.jiscmail.ac.uk/lists/FSL.html">FSL mailing list</a>. <span class="anchor" id="line-19"></span><span class="anchor" id="line-20"></span><p class="line862">To download PALM and for installation instructions, please visit the <strong><a href="./PALM(2f)UserGuide.html">User Guide</a></strong>. <span class="anchor" id="line-21"></span><span class="anchor" id="line-22"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-23"></span>
+<h1 id="References">References</h1>
+<span class="anchor" id="line-24"></span><p class="line862">The main reference for PALM is the same as for <strong>randomise</strong>: <span class="anchor" id="line-25"></span><span class="anchor" id="line-26"></span><p class="line867"><span class="anchor" id="line-27"></span><span class="anchor" id="line-28"></span><div class="references"><span class="anchor" id="line-1-1"></span><p class="line862">* Winkler AM, Ridgway GR, Webster MA, Smith SM, Nichols TE. <a class="http" href="http://www.sciencedirect.com/science/article/pii/S1053811914000913">Permutation inference for the general linear model.</a> <a class="nonexistent" href="./NeuroImage.html">NeuroImage</a>, 2014;92:381-397 (Open Access) </div><span class="anchor" id="line-29"></span><p class="line874">For Non-Parametric Combination (NPC; options -npc, -npcmod and -npccon), classical multivariate tests (MANOVA, MANCOVA, CCA; options -mv and -cca) assessed with permutations, and for correction over contrasts and/or modalities (options -corrcon and -corrmod), the reference is: <span class="anchor" id="line-30"></span><span class="anchor" id="line-31"></span><p class="line867"><span class="anchor" id="line-32"></span><span class="anchor" id="line-33"></span><div class="references"><span class="anchor" id="line-1-2"></span><p class="line862">* Winkler AM, Webster MA, Brooks JC, Tracey I, Smith SM, Nichols TE. <a class="http" href="http://onlinelibrary.wiley.com/doi/10.1002/hbm.23115/epdf">Non-Parametric Combination and related permutation tests for neuroimaging.</a> Hum Brain Mapp. 2016 Apr;37(4):1486-511. (Open Access) </div><span class="anchor" id="line-34"></span><p class="line874">For the multi-level exchangeability blocks (options -eb, -vg, and for HCP data), the reference is: <span class="anchor" id="line-35"></span><span class="anchor" id="line-36"></span><p class="line867"><span class="anchor" id="line-37"></span><span class="anchor" id="line-38"></span><div class="references"><span class="anchor" id="line-1-3"></span><p class="line862">* Winkler AM, Webster MA, Vidaurre D, Nichols TE, Smith SM. <a class="http" href="http://www.sciencedirect.com/science/article/pii/S105381191500508X">Multi-level block permutation.</a> Neuroimage. 2015;123:253-68. (Open Access) </div><span class="anchor" id="line-39"></span><p class="line874">For the accelerated permutation inference (options -accel or -approx), the reference is: <span class="anchor" id="line-40"></span><span class="anchor" id="line-41"></span><p class="line867"><span class="anchor" id="line-42"></span><span class="anchor" id="line-43"></span><div class="references"><span class="anchor" id="line-1-4"></span><p class="line862">* Winkler AM, Ridgway GR, Douaud G, Nichols TE, Smith SM. <a class="http" href="http://www.sciencedirect.com/science/article/pii/S1053811916301902">Faster permutation inference in brain imaging.</a> Neuroimage. 2016 Jun 7;141:502-516. (Open Access) </div><span class="anchor" id="line-44"></span><p class="line874">For additional theory of permutation tests in neuroimaging, please see and cite: <span class="anchor" id="line-45"></span><span class="anchor" id="line-46"></span><p class="line867"><span class="anchor" id="line-47"></span><span class="anchor" id="line-48"></span><span class="anchor" id="line-49"></span><span class="anchor" id="line-50"></span><div class="references"><span class="anchor" id="line-1-5"></span><p class="line862">* Nichols TE, Holmes AP. <a class="http" href="http://dx.doi.org/10.1002/hbm.1058">Nonparametric permutation tests for functional neuroimaging: a primer with examples.</a> Hum Brain Mapp. 2002 Jan;15(1):1-25. <span class="anchor" id="line-2-1"></span><span class="anchor" id="line-3-1"></span><p class="line862">* Holmes AP, Blair RC, Watson JD, Ford I. <a class="http" href="http://dx.doi.org/10.1097/00004647-199601000-00002">Nonparametric analysis of statistic images from functional mapping experiments.</a> J Cereb Blood Flow Metab. 1996 Jan;16(1):7-22. </div><span class="anchor" id="line-51"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-52"></span><a class="nonexistent" href="./CategoryStatistics.html">CategoryStatistics</a> <span class="anchor" id="line-53"></span><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:28
+</body>
+</html>

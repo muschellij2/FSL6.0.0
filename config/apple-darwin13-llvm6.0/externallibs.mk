@@ -1,0 +1,85 @@
+# $Id: externallibs.mk,v 1.6 2018/10/09 13:10:49 mwebster Exp $
+
+# External Library and Include Paths
+
+FSLEXTLIB=${FSLDIR}/extras/lib
+FSLEXTINC=${FSLDIR}/extras/include
+FSLEXTBIN=${FSLDIR}/extras/bin
+
+# CEPHES library
+LIB_CEPHES = ${FSLEXTLIB}
+INC_CEPHES = ${FSLEXTINC}/cephes
+
+# GD library
+LIB_GD = ${FSLEXTLIB}
+INC_GD = ${FSLEXTINC}
+
+# GDC library
+LIB_GDC = ${FSLEXTLIB}
+INC_GDC = ${FSLEXTINC}/libgdc
+
+# LIBXML2 library
+INC_XML2 = ${FSLEXTINC}/libxml2
+
+# LIBXML++ library
+INC_XML++ = ${FSLEXTINC}/libxml++-2.6
+INC_XML++CONF = ${FSLEXTLIB}/libxml++-2.6/include
+
+# GSL library
+LIB_GSL = ${FSLEXTLIB}
+INC_GSL = ${FSLEXTINC}/gsl
+
+# PNG library
+LIB_PNG = ${FSLEXTLIB}
+INC_PNG = ${FSLEXTINC}
+
+# PROB library
+LIB_PROB = ${FSLEXTLIB}
+INC_PROB = ${FSLEXTINC}/libprob
+
+# CPROB library
+LIB_CPROB = ${FSLEXTLIB}
+INC_CPROB = ${FSLEXTINC}/libcprob
+
+# Armadillo library
+LIB_NEWMAT = ${FSLEXTLIB} -llapack -lblas
+INC_NEWMAT = ${FSLDIR}/extras/include/armawrap/armawrap -DARMA_USE_LAPACK -DARMA_USE_BLAS
+
+# NEWRAN library
+LIB_NEWRAN = ${FSLEXTLIB}
+INC_NEWRAN = ${FSLEXTINC}/newran
+
+# ZLIB library
+LIB_ZLIB = /usr/lib
+INC_ZLIB = /usr/include
+
+# QT library
+QTDIR = /sw
+LIB_QT = ${QTDIR}/lib
+INC_QT = ${QTDIR}/include
+
+# BOOST library
+BOOSTDIR = ${FSLEXTINC}/boost
+LIB_BOOST = ${BOOSTDIR}
+INC_BOOST = ${BOOSTDIR}
+
+# QWT library
+QWTDIR = /usr/local/qwt
+INC_QWT = ${QWTDIR}/include
+LIB_QWT = ${QWTDIR}/lib
+
+# FFTW3 library
+LIB_FFTW3 = ${FSLEXTLIB}
+INC_FFTW3 = ${FSLEXTINC}/fftw3
+
+# VTK library
+VTKDIR_INC = /Users/cowboy/VTK7/include/vtk-7.0
+VTKDIR_LIB = /Users/cowboy/VTK7/lib
+VTKSUFFIX = -7.0
+
+# CUDA library
+CUDA_INSTALLATION = /Developer/NVIDIA/CUDA-7.5
+GENCODE_FLAGS = $(shell ${FSLDIR}/config/common/supportedGencodes.sh ${CUDA_INSTALLATION})
+LIB_CUDA = ${CUDA_INSTALLATION}/lib
+INC_CUDA = ${CUDA_INSTALLATION}/include
+NVCC = ${CUDA_INSTALLATION}/bin/nvcc

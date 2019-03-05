@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<atlas version="1.0">
+  <header>
+    <name>Human Sensorimotor Tracts Labels</name>
+    <type>Label</type>
+    <images>
+      <imagefile>/SMATT/SMATT-labels-1mm</imagefile>
+      <summaryimagefile>/SMATT/SMATT-labels-1mm</summaryimagefile>
+    </images>
+  </header>
+  <data>
+<label index="0" x="0" y="0" z="0">Unclassified</label>
+<label index="1" x="67" y="99" z="117">Right-M1</label>
+<label index="2" x="71" y="128" z="136">Right-PMd</label>
+<label index="3" x="46" y="122" z="95">Right-PMv</label>
+<label index="4" x="79" y="118" z="141">Right-SMA</label>
+<label index="5" x="79" y="132" z="138">Right-preSMA</label>
+<label index="6" x="61" y="95" z="104">Right-S1</label>
+<label index="7" x="63" y="106" z="113">Right-M1,PMd</label>
+<label index="8" x="70" y="111" z="70">Right-M1,PMv</label>
+<label index="9" x="85" y="107" z="37">Right-M1,SMA</label>
+<label index="10" x="62" y="104" z="103">Right-M1,S1</label>
+<label index="11" x="60" y="118" z="102">Right-PMd,PMv</label>
+<label index="12" x="64" y="121" z="90">Right-PMd,SMA</label>
+<label index="13" x="62" y="117" z="101">Right-PMv,SMA</label>
+<label index="14" x="88" y="104" z="38">Right-PMd,preSMA</label>
+<label index="15" x="80" y="127" z="140">Right-SMA,preSMA</label>
+<label index="16" x="84" y="108" z="40">Right-M1,PMd,SMA</label>
+<label index="17" x="85" y="106" z="37">Right-M1,PMv,SMA</label>
+<label index="18" x="71" y="110" z="62">Right-M1,PMv,S1</label>
+<label index="19" x="85" y="98" z="37">Right-M1,SMA,S1</label>
+<label index="20" x="75" y="111" z="60">Right-PMd,PMv,SMA</label>
+<label index="21" x="84" y="106" z="39">Right-M1,PMd,SMA,S1</label>
+<label index="22" x="86" y="98" z="38">Right-M1,PMv,SMA,S1</label>
+<label index="23" x="77" y="113" z="55">Right-M1,PMd,PMv,SMA</label>
+<label index="24" x="74" y="115" z="64">Right-PMd,SMA,preSMA</label>
+<label index="25" x="85" y="99" z="37">Right-M1,PMd,PMv,SMA,S1</label>
+<label index="26" x="85" y="107" z="41">Right-M1,PMd,SMA,preSMA</label>
+<label index="27" x="88" y="100" z="37">Right-PMd,PMv,SMA,preSMA</label>
+<label index="28" x="84" y="107" z="40">Right-M1,PMd,SMA,preSMA,S1</label>
+<label index="29" x="87" y="98" z="37">Right-M1,PMd,PMv,SMA,preSMA</label>
+<label index="30" x="85" y="103" z="40">Right-M1,PMd,PMv,SMA,preSMA,S1</label>
+<label index="101" x="114" y="99" z="117">Left-M1</label>
+<label index="102" x="110" y="128" z="136">Left-PMd</label>
+<label index="103" x="135" y="122" z="95">Left-PMv</label>
+<label index="104" x="102" y="118" z="141">Left-SMA</label>
+<label index="105" x="102" y="132" z="138">Left-preSMA</label>
+<label index="106" x="120" y="95" z="104">Left-S1</label>
+<label index="107" x="118" y="106" z="113">Left-M1,PMd</label>
+<label index="108" x="111" y="111" z="70">Left-M1,PMv</label>
+<label index="109" x="96" y="107" z="37">Left-M1,SMA</label>
+<label index="110" x="119" y="104" z="103">Left-M1,S1</label>
+<label index="111" x="121" y="118" z="102">Left-PMd,PMv</label>
+<label index="112" x="117" y="121" z="90">Left-PMd,SMA</label>
+<label index="113" x="119" y="117" z="101">Left-PMv,SMA</label>
+<label index="114" x="93" y="104" z="38">Left-PMd,preSMA</label>
+<label index="115" x="101" y="127" z="140">Left-SMA,preSMA</label>
+<label index="116" x="97" y="108" z="40">Left-M1,PMd,SMA</label>
+<label index="117" x="96" y="106" z="37">Left-M1,PMv,SMA</label>
+<label index="118" x="110" y="110" z="62">Left-M1,PMv,S1</label>
+<label index="119" x="96" y="98" z="37">Left-M1,SMA,S1</label>
+<label index="120" x="106" y="111" z="60">Left-PMd,PMv,SMA</label>
+<label index="121" x="97" y="106" z="39">Left-M1,PMd,SMA,S1</label>
+<label index="122" x="95" y="98" z="38">Left-M1,PMv,SMA,S1</label>
+<label index="123" x="104" y="113" z="55">Left-M1,PMd,PMv,SMA</label>
+<label index="124" x="107" y="115" z="64">Left-PMd,SMA,preSMA</label>
+<label index="125" x="96" y="99" z="37">Left-M1,PMd,PMv,SMA,S1</label>
+<label index="126" x="96" y="107" z="41">Left-M1,PMd,SMA,preSMA</label>
+<label index="127" x="93" y="100" z="37">Left-PMd,PMv,SMA,preSMA</label>
+<label index="128" x="97" y="107" z="40">Left-M1,PMd,SMA,preSMA,S1</label>
+<label index="129" x="94" y="98" z="37">Left-M1,PMd,PMv,SMA,preSMA</label>
+<label index="130" x="96" y="103" z="40">Left-M1,PMd,PMv,SMA,preSMA,S1</label>
+  </data>
+</atlas>
+

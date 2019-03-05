@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>FIX/FAQ</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">FIX/FAQ</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><p class="line867"><div class="FslToolContents">
+<h1>Contents</h1>
+<ol><li><a href="./FIX.html">Introduction</a></li><li><a href="./FIX(2f)UserGuide.html">User Guide</a></li><li>FAQ<div class="contentslist"><div class="table-of-contents"><p class="table-of-contents-heading">Contents<ol><li>
+<a href="#When_I_run_FIX.2C_I_obtain_the_following_output:_.2BIBw-No_valid_labelling_file_specified.2BIB0._What_does_it_mean.3F">When I run FIX, I obtain the following output: “No valid labelling file specified”. What does it mean?</a></li><li>
+<a href="#How_do_I_choose_the_best_training_dataset_.28among_the_existing_ones.29_and.2For_threshold_for_my_data.3F">How do I choose the best training dataset (among the existing ones) and/or threshold for my data?</a></li><li>
+<a href="#What_is_the_difference_between_fsl_regfilt_and_FIX.3F">What is the difference between fsl_regfilt and FIX?</a></li><li>
+<a href="#Can_I_use_FIX_to_clean_task_fMRI_data.3F">Can I use FIX to clean task fMRI data?</a></li><li>
+<a href="#When_I_run_FIX_to_create_a_new_training_file_.28-t.29.2C_the_output_folder_is_created.2C_but_no_.RData_is_produced_at_the_end.2C_with_no_explicit_error_message._What_does_it_mean.3F">When I run FIX to create a new training file (-t), the output folder is created, but no .RData is produced at the end, with no explicit error message. What does it mean?</a></li></ol></li></ol></div></div></li></ol></div> <span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line867">
+<h2 id="When_I_run_FIX.2C_I_obtain_the_following_output:_.2BIBw-No_valid_labelling_file_specified.2BIB0._What_does_it_mean.3F">When I run FIX, I obtain the following output: “No valid labelling file specified”. What does it mean?</h2>
+<span class="anchor" id="line-4"></span><ul><li style="list-style-type:none">FIX doesn’t find the classification file with the list of components to be removed, so the error could be either in the features extraction or in the classification. To see which is the problem have a look at the following log files: <span class="anchor" id="line-5"></span></li><li><p class="line891">&lt;subject.ica&gt;/fix/logMatlab.txt (this should show errors in Matlab part, i.e. features extraction) <span class="anchor" id="line-6"></span></li><li><p class="line891">&lt;subject.ica&gt;/.fix.log <span class="anchor" id="line-7"></span></li><li><p class="line891">&lt;subject.ica&gt;/.fix_2b_predict.log (those are log file in general for the whole routine) You’ll probably find errors related to Matlab or R, so you might need to check your settings.sh file following the setup instructions described in the FIX README file <span class="anchor" id="line-8"></span><span class="anchor" id="line-9"></span></li></ul><p class="line867">
+<h2 id="How_do_I_choose_the_best_training_dataset_.28among_the_existing_ones.29_and.2For_threshold_for_my_data.3F">How do I choose the best training dataset (among the existing ones) and/or threshold for my data?</h2>
+<span class="anchor" id="line-10"></span><ul><li style="list-style-type:none">FIX is more likely to work better with the training dataset that is most similar to your data, both in terms of acquisition parameters (TR and resolution) and preprocessing steps applied. Regarding the threshold to use, you can start with the “default” 20 and increase or decrease it according to FIX performance (i.e. visual check of the components' classification contained in the file fix4melview_TRAIN_thr.txt). For example, if it is very important to you that almost no good components are removed, and hence you would prefer to leave in the data a larger number of bad components, then use a low threshold. If you want to remove more noise, use a higher threshold. <span class="anchor" id="line-11"></span><span class="anchor" id="line-12"></span></li></ul><p class="line867">
+<h2 id="What_is_the_difference_between_fsl_regfilt_and_FIX.3F">What is the difference between fsl_regfilt and FIX?</h2>
+<span class="anchor" id="line-13"></span><ul><li style="list-style-type:none">FIX output is basically the (automated) equivalent of the output of fsl_regfilt, so you don’t need to run both: <span class="anchor" id="line-14"></span></li><li><p class="line862">fsl_regfilt: manual classification of unwanted components + run fsl_regfilt —&gt; cleaned data <span class="anchor" id="line-15"></span></li><li><p class="line862">FIX automatically classifies the artefactual components and regress their contribution out of the data —&gt; cleaned data (the equivalent to fsl_regfilt would be using FIX with the –A option – see user guide) To check that FIX is removing the artifactual components correctly (i.e. it is doing what you would do before running fsl_regfilt) you can check the classification done by FIX in the fix4melview….txt file and adjust the training dataset and threshold you are using as appropriate. <span class="anchor" id="line-16"></span><span class="anchor" id="line-17"></span></li></ul><p class="line867">
+<h2 id="Can_I_use_FIX_to_clean_task_fMRI_data.3F">Can I use FIX to clean task fMRI data?</h2>
+<span class="anchor" id="line-18"></span><ul><li style="list-style-type:none">Yes, although you will probably need to create a study-specific training dataset <span class="anchor" id="line-19"></span><span class="anchor" id="line-20"></span></li></ul><p class="line867">
+<h2 id="When_I_run_FIX_to_create_a_new_training_file_.28-t.29.2C_the_output_folder_is_created.2C_but_no_.RData_is_produced_at_the_end.2C_with_no_explicit_error_message._What_does_it_mean.3F">When I run FIX to create a new training file (-t), the output folder is created, but no .RData is produced at the end, with no explicit error message. What does it mean?</h2>
+<span class="anchor" id="line-21"></span><ul><li style="list-style-type:none">Check the content of the folllowing hidden files within the output directory created: <span class="anchor" id="line-22"></span></li><li style="list-style-type:none"><span class="anchor" id="line-23"></span></li><li><p class="line862">.fixlist --&gt; should contain the list of subjects included in the training dataset (to check if they've been all loaded/recognised properly) <span class="anchor" id="line-24"></span></li><li><p class="line862">.Rlog1 --&gt; contains errors from R about the generation of the .RData file <span class="anchor" id="line-25"></span></li><li style="list-style-type:none">Also, make sure that the .txt files (hand_labels_noise.txt) are in the correct format: the last line should contain the list of the components only, within square brackets and comma separated, and there should be an empty line at the end (i.e. hit return after writing the list). <span class="anchor" id="line-26"></span></li><li style="list-style-type:none"><span class="anchor" id="line-27"></span></li></ul><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:28
+</body>
+</html>

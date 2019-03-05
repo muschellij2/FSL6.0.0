@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>eddy/Faq</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">eddy/Faq</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line867"><div class="FslToolContents">
+<h1>Contents</h1>
+<ol><li><a href="./eddy.html">Introduction</a></li><li><a href="./eddy(2f)UsersGuide.html">Users Guide</a></li><li>FAQ<div class="contentslist"><div class="table-of-contents"><p class="table-of-contents-heading">Contents<ol><li>
+<a href="#How_do_I_know_what_to_put_into_my_--acqp_file.3F">How do I know what to put into my --acqp file?</a></li><li>
+<a href="#Does_it_matter_what_I_put_into_my_--acqp_file.3F">Does it matter what I put into my --acqp file?</a></li><li>
+<a href="#What_if_I_still_really_want_to_have_an_.22accurate.22_--acqp_file.3F">What if I still really want to have an &quot;accurate&quot; --acqp file?</a></li><li>
+<a href="#Why_do_I_need_more_than_two_rows_in_my_--acqp_file.3F">Why do I need more than two rows in my --acqp file?</a></li><li>
+<a href="#Will_eddy_rotate_my_bvecs_for_me.3F">Will eddy rotate my bvecs for me?</a></li></ol></div></div></li></ol></div> <span class="anchor" id="line-4"></span>
+<h1 id="How_do_I_know_what_to_put_into_my_--acqp_file.3F">How do I know what to put into my --acqp file?</h1>
+<span class="anchor" id="line-5"></span><p class="line862">The <a class="nonexistent" href="./eddy(2f)UsersGuide(2f).html#A--acqp">--acqp</a> file is of the same format as the <a class="nonexistent" href="./topup(2f)TopupUsersGuide(2f).html#A--datain">--datain</a> parameter for <a href="./topup.html">topup</a>, and quite possibly you can re-use the one you created for <a href="./topup.html">topup</a>. It is used to inform <tt class="backtick">eddy</tt> what direction the distortions are likely to go in. Each row consists of a vector (three values) that specify what the phase-encode (PE) axis is and also what direction along that axis that imply higher frequency. So for example the two lines <span class="anchor" id="line-6"></span><span class="anchor" id="line-7"></span><p class="line867"><tt class="backtick">0&nbsp;1&nbsp;0&nbsp;0.085</tt><br>
+<tt class="backtick">0&nbsp;-1&nbsp;0&nbsp;0.085</tt> <span class="anchor" id="line-8"></span><span class="anchor" id="line-9"></span><p class="line862">have the vectors [0 1 0] and [0 -1 0] which both imply that PE is along the y-direction and which further imply that for the first row [0 1 0] a higher frequency is associated with a position higher up along the y-direction (<em>i.e.</em> positive blips) and the second [0 -1 0] implies that a lower frequency is associated with a position higher up (<em>i.e.</em> negative blips). <span class="anchor" id="line-10"></span><span class="anchor" id="line-11"></span><p class="line874">The fourth element in each row is the time (in seconds) between reading the center of the first echo and reading the center of the last echo. It is the &quot;dwell time&quot; multiplied by &quot;number of PE steps - 1&quot; and it is also the reciprocal of the PE bandwidth/pixel.  <span class="anchor" id="line-12"></span><span class="anchor" id="line-13"></span><p class="line874">For a Siemens scanner you will get a &quot;protocol PDF&quot; that contains all the relevant information. Look for the tags &quot;Phase enc. dir.&quot;, &quot;Echo spacing&quot; and &quot;EPI factor&quot;. Here is an example <span class="anchor" id="line-14"></span><span class="anchor" id="line-15"></span><p class="line862">Phase enc. dir. A &gt;&gt; P<br>
+...<br>
+Echo spacing 0.8 [ms]<br>
+...<br>
+EPI factor 128 <span class="anchor" id="line-16"></span><span class="anchor" id="line-17"></span><p class="line874">Where the first tag tells us that more posterior (lower down in the y-direction) locations are associated with higher frequency meaning that our vector should be [0 -1 0] and where the second two tags tells us that the fourth number should be 0.8*0.001*127=0.102 resulting in <span class="anchor" id="line-18"></span><span class="anchor" id="line-19"></span><p class="line867"><tt class="backtick">0&nbsp;-1&nbsp;0&nbsp;0.102</tt> <span class="anchor" id="line-20"></span><span class="anchor" id="line-21"></span><p class="line862">as the row for our <a class="nonexistent" href="./eddy(2f)UsersGuide(2f).html#A--acqp">--acqp</a> file. <span class="anchor" id="line-22"></span><span class="anchor" id="line-23"></span><p class="line874">I am afraid that I don't have sufficient experience of the other scanner manufacturers to know how/where the relevant information is stored. <span class="anchor" id="line-24"></span><span class="anchor" id="line-25"></span><p class="line867">
+<h1 id="Does_it_matter_what_I_put_into_my_--acqp_file.3F">Does it matter what I put into my --acqp file?</h1>
+<span class="anchor" id="line-26"></span><span class="anchor" id="line-27"></span><p class="line862">Almost not at all, as long as the same file is used for both <a href="./topup.html">topup</a> and <tt class="backtick">eddy</tt>.  <span class="anchor" id="line-28"></span><span class="anchor" id="line-29"></span><p class="line874">Let us for example say that the &quot;true&quot; file should be <span class="anchor" id="line-30"></span><span class="anchor" id="line-31"></span><p class="line867"><tt class="backtick">0&nbsp;1&nbsp;0&nbsp;0.05</tt><br>
+<tt class="backtick">0&nbsp;-1&nbsp;0&nbsp;0.05</tt> <span class="anchor" id="line-32"></span><span class="anchor" id="line-33"></span><p class="line874">but that we happen to use one that looks like  <span class="anchor" id="line-34"></span><span class="anchor" id="line-35"></span><p class="line867"><tt class="backtick">0&nbsp;-1&nbsp;0&nbsp;0.1</tt><br>
+<tt class="backtick">0&nbsp;1&nbsp;0&nbsp;0.1</tt> <span class="anchor" id="line-36"></span><span class="anchor" id="line-37"></span><p class="line874">instead. Surely that must be disastrous? No, in fact the results would be indistinguishable from each other.  <span class="anchor" id="line-38"></span><span class="anchor" id="line-39"></span><p class="line862">The sign-swap for the PE-directions would mean that <tt class="backtick">topup</tt> would sign-swap the entire field so that areas with higher field will look like they have a lower field, and vice versa. The twice as large &quot;readout time&quot; means that <tt class="backtick">topup</tt> will underestimate the field by a factor 2. Hence, the estimated field will be sign-swapped and underestimated, which on the surface sounds like a bad thing. <span class="anchor" id="line-40"></span><span class="anchor" id="line-41"></span><p class="line862">But now we enter that field into <tt class="backtick">eddy</tt> with the <tt class="backtick">--topup</tt> parameter and also the &quot;fault&quot; <tt class="backtick">--acqp</tt> file. The sign-swap in the field and in the <tt class="backtick">--acqp</tt> file will now cancel out by being multiplied together, so the displacements will still go in the correct direction. Similarily, the field is underestimated by a factor 2, but that is counteracted by a twice as large &quot;sensitivity&quot; to off-resonance indicated by the too large readout time. So the magnitude of the displacements is also correct. <span class="anchor" id="line-42"></span><span class="anchor" id="line-43"></span><p class="line862">There are some special cases where it matters to get the <tt class="backtick">--acqp</tt> file right, but unless you know exactly what you are doing it is generally best to avoid those cases. They would be <span class="anchor" id="line-44"></span><span class="anchor" id="line-45"></span><ul><li><p class="line862">If you acquire data with PE direction along two different axes (<em>i.e.</em> the x- and y-axis). In that case you need to get the signs right for the columns indicating the PE. But you can always use trial and error to find the correct combination. <span class="anchor" id="line-46"></span></li><li>If you acquire data with different readout times. In that case you need at the very least to get the ratio between the times right. <span class="anchor" id="line-47"></span></li><li><p class="line862">If you use a non-<tt class="backtick">topup</tt> derived fieldmap, such as for example a dual echo-time gradient echo fieldmap, that you feed into <tt class="backtick">eddy</tt> as the <tt class="backtick">--field</tt> parameter. In this case you need to get all signs and times right, both when creating the field (for example using <a class="nonexistent" href="./fugue.html">prelude</a>) and when specifying its use in <tt class="backtick">eddy</tt> through the <tt class="backtick">--acqp</tt>. <span class="anchor" id="line-48"></span><span class="anchor" id="line-49"></span></li></ul><p class="line862">If your data is not one of those special cases, and you don't have a specific interest in the off-resonance field <em>per se</em>, you can make life very easy for you. Run a movie (for example using <a class="http" href="http://fsl.fmrib.ox.ac.uk/fsl/fslview/">fslview</a> or <a href="./FSLeyes.html">FSLeyes</a>) of the 4D file you plan to enter into <tt class="backtick">topup</tt>. Does the brain jump up and down? If so, use <span class="anchor" id="line-50"></span><span class="anchor" id="line-51"></span><p class="line867"><tt class="backtick">0&nbsp;1&nbsp;0&nbsp;0.05</tt><br>
+<tt class="backtick">0&nbsp;-1&nbsp;0&nbsp;0.05</tt> <span class="anchor" id="line-52"></span><span class="anchor" id="line-53"></span><p class="line874">Does the brain bounce from side to side? If so, use <span class="anchor" id="line-54"></span><span class="anchor" id="line-55"></span><p class="line867"><tt class="backtick">1&nbsp;0&nbsp;0&nbsp;0.05</tt><br>
+<tt class="backtick">-1&nbsp;0&nbsp;0&nbsp;0.05</tt> <span class="anchor" id="line-56"></span><span class="anchor" id="line-57"></span><p class="line862">Is the brain essentially still? If so, there has probably been a mistake in the acquisition and both images have been acquired with the same phase-encoding. In that case you cannot use <tt class="backtick">topup</tt>. <span class="anchor" id="line-58"></span><span class="anchor" id="line-59"></span><p class="line867">
+<h1 id="What_if_I_still_really_want_to_have_an_.22accurate.22_--acqp_file.3F">What if I still really want to have an &quot;accurate&quot; --acqp file?</h1>
+<span class="anchor" id="line-60"></span><span class="anchor" id="line-61"></span><p class="line862">If you are one of the special cases, or you just really would like to see what the &quot;true&quot; off-resonance field is, here is an <a class="nonexistent" href="./eddy(2f)UsersGuide(2f).html#A--acqp">--acqp</a> for dummies: <span class="anchor" id="line-62"></span><span class="anchor" id="line-63"></span><div><table><tbody><tr>  <td><p class="line862"> What you see in FSLVIEW </td>
+  <td><p class="line891"><img align="centre" alt="P_2_A.jpg" class="attachment" src="attachments/eddy(2f)Faq/P_2_A.jpg" title="P_2_A.jpg" width="150" /></td>
+  <td><p class="line891"><img align="centre" alt="A_2_P.jpg" class="attachment" src="attachments/eddy(2f)Faq/A_2_P.jpg" title="A_2_P.jpg" width="150" /></td>
+  <td><p class="line891"><img align="centre" alt="R_2_L.jpg" class="attachment" src="attachments/eddy(2f)Faq/R_2_L.jpg" title="R_2_L.jpg" width="150" /></td>
+  <td><p class="line891"><img align="centre" alt="L_2_R.jpg" class="attachment" src="attachments/eddy(2f)Faq/L_2_R.jpg" title="L_2_R.jpg" width="150" /></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-64"></span><p class="line862"> In Siemens protocol </td>
+  <td><p class="line862">Phase enc. dir. P &gt;&gt; A<br>
+Echo spacing 0.75 [ms]<br>
+EPI factor 128</td>
+  <td><p class="line862">Phase enc. dir. A &gt;&gt; P<br>
+Echo spacing 0.75 [ms]<br>
+EPI factor 128</td>
+  <td><p class="line862">Phase enc. dir. R &gt;&gt; L<br>
+Echo spacing 0.96 [ms]<br>
+EPI factor 128</td>
+  <td><p class="line862">Phase enc. dir. L &gt;&gt; R<br>
+Echo spacing 0.96 [ms]<br>
+EPI factor 128</td>
+</tr>
+<tr>  <td><span class="anchor" id="line-65"></span><p class="line862"> In <a class="nonexistent" href="./eddy(2f)UsersGuide(2f).html#A--acqp">--acqp</a> file </td>
+  <td><p class="line862"> 0 1 0 0.095 </td>
+  <td><p class="line862"> 0 -1 0 0.095 </td>
+  <td><p class="line862"> 1 0 0 0.122 </td>
+  <td><p class="line862"> -1 0 0 0.122 </td>
+</tr>
+</tbody></table></div><span class="anchor" id="line-66"></span><span class="anchor" id="line-67"></span><p class="line867">
+<h1 id="Why_do_I_need_more_than_two_rows_in_my_--acqp_file.3F">Why do I need more than two rows in my --acqp file?</h1>
+<span class="anchor" id="line-68"></span><span class="anchor" id="line-69"></span><p class="line862">First of all, all the information below is correct. <em>But</em> as of the release of the FSL 5.0.9. eddy patch (<a class="http" href="http://fsl.fmrib.ox.ac.uk/fsldownloads/patches/eddy-patch-fsl-5.0.9/">here</a>) it is also a little less relevant. The reason for that is that as of that version <tt class="backtick">eddy</tt> will start by rigid-body registering all the b=0 and then linearly interpolate the movement parameters from those to the diffusion weighted images. If the b=0 volumes are interspersed among the diffusion images this works really well even in the presence of large subject movements. Hence, it is now quite rare that <tt class="backtick">eddy</tt> needs the kind of help that the multiple <tt class="backtick">--acqp</tt> rows offer. <span class="anchor" id="line-70"></span><span class="anchor" id="line-71"></span><p class="line862">Let us say you have data that has only been collected in two different ways (<em>e.g.</em> R-&gt;L and L-&gt;R) but your <a class="nonexistent" href="./topup(2f)TopupUsersGuide(2f).html#A--datain">--datain</a> file from <a href="./topup.html">topup</a> contains four rows. Why do I need four rows? Should not two rows be sufficient to describe the two ways that my data was collected in? <span class="anchor" id="line-72"></span><span class="anchor" id="line-73"></span><p class="line862">The reason that more than two rows <span class="u">can</span> be useful is that it is a way of feeding information from <a href="./topup.html">topup</a> to <tt class="backtick">eddy</tt>. Let us say we have collected two b=0 and two dwis each for R-&gt;L and L-&gt;R (which is of course silly, but used here to save space) <span class="anchor" id="line-74"></span><span class="anchor" id="line-75"></span><p class="line867"><img align="centre" alt="eight_original_images_b0_dwi_b0_dwi_b0_dwi_b0_dwi.jpg" class="attachment" src="attachments/eddy(2f)Faq/eight_original_images_b0_dwi_b0_dwi_b0_dwi_b0_dwi.jpg" title="eight_original_images_b0_dwi_b0_dwi_b0_dwi_b0_dwi.jpg" width="800" /> <span class="anchor" id="line-76"></span><span class="anchor" id="line-77"></span><p class="line862">Let us further say you used <tt class="backtick">fslroi</tt> and <tt class="backtick">fslmerge</tt> to create a file <tt class="backtick">my_b0.nii.gz</tt> with only the b=0 scans <span class="anchor" id="line-78"></span><span class="anchor" id="line-79"></span><p class="line867"><img align="centre" alt="four_original_images_b0_b0_b0_b0.jpg" class="attachment" src="attachments/eddy(2f)Faq/four_original_images_b0_b0_b0_b0.jpg" title="four_original_images_b0_b0_b0_b0.jpg" width="400" /> <span class="anchor" id="line-80"></span><span class="anchor" id="line-81"></span><p class="line862">In order to run <a href="./topup.html">topup</a> on this we create a <a class="nonexistent" href="./topup(2f)TopupUsersGuide(2f).html#A--datain">--datain</a> file (that we call <tt class="backtick">parameters.txt</tt>) which consists of <span class="anchor" id="line-82"></span><span class="anchor" id="line-83"></span><p class="line867"><tt class="backtick">-1&nbsp;0&nbsp;0&nbsp;0.051</tt><br>
+<tt class="backtick">-1&nbsp;0&nbsp;0&nbsp;0.051</tt><br>
+<tt class="backtick">1&nbsp;0&nbsp;0&nbsp;0.051</tt><br>
+<tt class="backtick">1&nbsp;0&nbsp;0&nbsp;0.051</tt> <span class="anchor" id="line-84"></span><span class="anchor" id="line-85"></span><p class="line862">since <a href="./topup.html">topup</a> expects one line per volume. The output from <a href="./topup.html">topup</a> consists of an estimate of the susceptibility induced field that caused the distortions and also an estimate of the position of each of the b=0 scans relative the first one. It is necessary for <a href="./topup.html">topup</a> to simultaneously estimate the field and the subject movement as the latter may otherwise affect the estimation of the field. If the <a class="nonexistent" href="./topup(2f)TopupUsersGuide(2f).html#A--out">--out</a> parameter in the <a href="./topup.html">topup</a> call was set to for example <tt class="backtick">--out=my_topup_output</tt> there will be a text-file named <tt class="backtick">my_topup_output_movpar.txt</tt> which will contain something like <span class="anchor" id="line-86"></span><span class="anchor" id="line-87"></span><p class="line867"><tt class="backtick">0&nbsp;0&nbsp;0&nbsp;0&nbsp;0&nbsp;0</tt><br>
+<tt class="backtick">0.725&nbsp;-0.023&nbsp;-0.066&nbsp;0.002&nbsp;0.000&nbsp;-0.002</tt><br>
+<tt class="backtick">0&nbsp;-0.111&nbsp;-0.327&nbsp;0.002&nbsp;0.013&nbsp;-0.004</tt><br>
+<tt class="backtick">-0.698&nbsp;-0.120&nbsp;-0.426&nbsp;0.002&nbsp;0.014&nbsp;-0.004</tt> <span class="anchor" id="line-88"></span><span class="anchor" id="line-89"></span><p class="line874">which are the rigid-body parameters for each of the scans relative the first. <span class="anchor" id="line-90"></span><span class="anchor" id="line-91"></span><p class="line862">If we now consider using a two line <a class="nonexistent" href="./eddy(2f)UsersGuide(2f).html#A--acqp">--acqp</a> when running <tt class="backtick">eddy</tt> on the full data  <span class="anchor" id="line-92"></span><span class="anchor" id="line-93"></span><p class="line867"><img align="centre" alt="eight_original_images_b0_dwi_b0_dwi_b0_dwi_b0_dwi.jpg" class="attachment" src="attachments/eddy(2f)Faq/eight_original_images_b0_dwi_b0_dwi_b0_dwi_b0_dwi.jpg" title="eight_original_images_b0_dwi_b0_dwi_b0_dwi_b0_dwi.jpg" width="800" /> <span class="anchor" id="line-94"></span><span class="anchor" id="line-95"></span><p class="line874">we would have <span class="anchor" id="line-96"></span><span class="anchor" id="line-97"></span><p class="line867"><a class="nonexistent" href="./eddy(2f)UsersGuide(2f).html#A--acqp">--acqp</a><br>
+<tt class="backtick">-1&nbsp;0&nbsp;0&nbsp;0.051</tt><br>
+<tt class="backtick">1&nbsp;0&nbsp;0&nbsp;0.051</tt> <span class="anchor" id="line-98"></span><span class="anchor" id="line-99"></span><p class="line874">and <span class="anchor" id="line-100"></span><span class="anchor" id="line-101"></span><p class="line867"><br>
+<tt class="backtick">--index</tt><br>
+<tt class="backtick">1&nbsp;1&nbsp;1&nbsp;1&nbsp;2&nbsp;2&nbsp;2&nbsp;2</tt> <span class="anchor" id="line-102"></span><span class="anchor" id="line-103"></span><p class="line862">This would be sufficient to inform <tt class="backtick">eddy</tt> about the acquisition parameters <strong>but</strong> we have lost the information about the relative positions of the b=0 scans. This information is potentially useful as a starting estimate for <tt class="backtick">eddy</tt> when it calculates the relative position of the diffusion weighted volumes. The thinking here is that if you for example acquire a b=0 volume every ten volumes then the position of the first diffusion weighted volume (coming immediately after the first b=0 volume) is likely to be similar to first b=0 volume. Likewise the position of the tenth diffusion weighted volume (coming immediately after the second b=0 volume) is likely to be more similar to that of the second b=0 volume. So, in order to pass this information (for our silly eight scan example) to <tt class="backtick">eddy</tt> one can instead use the <a class="nonexistent" href="./eddy(2f)UsersGuide(2f).html#A--acqp">--acqp</a> - <tt class="backtick">--index</tt> pair <span class="anchor" id="line-104"></span><span class="anchor" id="line-105"></span><span class="anchor" id="line-106"></span><p class="line867"><a class="nonexistent" href="./eddy(2f)UsersGuide(2f).html#A--acqp">--acqp</a><br>
+<tt class="backtick">-1&nbsp;0&nbsp;0&nbsp;0.051</tt><br>
+<tt class="backtick">-1&nbsp;0&nbsp;0&nbsp;0.051</tt><br>
+<tt class="backtick">1&nbsp;0&nbsp;0&nbsp;0.051</tt><br>
+<tt class="backtick">1&nbsp;0&nbsp;0&nbsp;0.051</tt> <span class="anchor" id="line-107"></span><span class="anchor" id="line-108"></span><p class="line874">and <span class="anchor" id="line-109"></span><span class="anchor" id="line-110"></span><p class="line867"><br>
+<tt class="backtick">--index</tt><br>
+<tt class="backtick">1&nbsp;1&nbsp;2&nbsp;2&nbsp;3&nbsp;3&nbsp;4&nbsp;4</tt> <span class="anchor" id="line-111"></span><span class="anchor" id="line-112"></span><p class="line862">which carries the exact same information pertaining to the acquisition parameters as the previous (two line) pair, but which now also carries information about the relative positions by virtue of the <tt class="backtick">--index</tt> file also indexing the <tt class="backtick">my_topup_output_movpar.txt</tt> seen above. <span class="anchor" id="line-113"></span><span class="anchor" id="line-114"></span><p class="line867">
+<h1 id="Will_eddy_rotate_my_bvecs_for_me.3F">Will eddy rotate my bvecs for me?</h1>
+<span class="anchor" id="line-115"></span><span class="anchor" id="line-116"></span><p class="line862">Yes, it will as of the FSL 5.0.9 patch that can be found <a class="http" href="http://fsl.fmrib.ox.ac.uk/fsldownloads/patches/eddy-patch-fsl-5.0.9/">here</a>. Note that for the rotation to work the bvecs fed into <tt class="backtick">eddy</tt> must be <a class="nonexistent" href="./EDDY(2f)UsersGuide.html#HelpOnRotBvec">correctly oriented</a> for use by the FSL tools.  <span class="anchor" id="line-117"></span><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:30
+</body>
+</html>

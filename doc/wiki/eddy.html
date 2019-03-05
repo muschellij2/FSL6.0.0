@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>eddy</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">eddy</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><span class="anchor" id="line-4"></span><span class="anchor" id="line-5"></span><span class="anchor" id="line-6"></span><span class="anchor" id="line-7"></span><span class="anchor" id="line-8"></span><span class="anchor" id="line-9"></span><span class="anchor" id="line-10"></span><span class="anchor" id="line-11"></span><span class="anchor" id="line-12"></span><span class="anchor" id="line-13"></span><span class="anchor" id="line-14"></span><span class="anchor" id="line-15"></span><span class="anchor" id="line-16"></span><p class="line867"><div class="FslToolContents">
+<h1>Contents</h1>
+<ol><li>Introduction<div class="contentslist"><div class="table-of-contents"><p class="table-of-contents-heading">Contents<ol><li>
+<a href="#eddy_--_a_tool_for_correcting_eddy_currents_and_movements_in_diffusion_data">eddy -- a tool for correcting eddy currents and movements in diffusion data</a></li><li>
+<a href="#If_you_haven.27t_already_acquired_your_data">If you haven't already acquired your data</a></li><li>
+<a href="#Referencing">Referencing</a><ol><li>
+<a href="#Other_papers_of_interest">Other papers of interest</a></li></ol></li></ol></div></div></li><li><a href="./eddy(2f)UsersGuide.html">Users Guide</a></li><li><a href="./eddy(2f)Faq.html">FAQ</a></li></ol></div> <span class="anchor" id="line-17"></span>
+<h1 id="eddy_--_a_tool_for_correcting_eddy_currents_and_movements_in_diffusion_data">eddy -- a tool for correcting eddy currents and movements in diffusion data</h1>
+<span class="anchor" id="line-18"></span><span class="anchor" id="line-19"></span><p class="line862">This is a new tool to correct for eddy current-induced distortions and subject movements.  It simultaneously models the effects of diffusion eddy currents and movements on the image, allowing it to work with higher b-value data than has been possible with for example <tt class="backtick">eddy_correct</tt> (FSL's earlier tool for eddy current correction). As of FSL 5.0.10 (and a 5.0.9 patch) it also, optionally, performs outlier detection to identify slices where signal has been lost as a consequence of subject movement during the diffusion encoding. These slices are replaced by non-parametric predictions by the Gaussian Process that is at the heart of <tt class="backtick">eddy</tt>. <span class="anchor" id="line-20"></span><div><table><tbody><tr>  <td style="&amp;quot; text-align: center; &amp;quot;"><p class="line862">Selected slice in 300 volumes of a data set from the HCP project</td>
+</tr>
+<tr>  <td><span class="anchor" id="line-21"></span><p class="line891"><img align="left" alt="before_after_hcp_v4.gif" class="attachment" src="attachments/eddy/before_after_hcp_v4.gif" title="before_after_hcp_v4.gif" width="600" /></td>
+</tr>
+<tr>  <td style="&amp;quot; text-align: center; &amp;quot;"><span class="anchor" id="line-22"></span><p class="line862">On the left before correction and on the right after correction for susceptibility, eddy<br>
+ currents and subject movement using a combination of <tt class="backtick">topup</tt> and <tt class="backtick">eddy</tt>.</td>
+</tr>
+</tbody></table></div><span class="anchor" id="line-23"></span><span class="anchor" id="line-24"></span><p class="line874">The diffusion signal is modelled using a Gaussian Process, which means that it makes very few assumptions about the diffusion signal (unlike parametric models such as for example the diffusion tensor). The only two assumptions are <span class="anchor" id="line-25"></span><span class="anchor" id="line-26"></span><ul><li>the signal from two acquisitions acquired with diffusion weighting along two vectors with a small angle between them is more similar than for two acquisitions with a large angle between them  <span class="anchor" id="line-27"></span></li><li><p class="line862">the signal from two acquisitions along vectors <strong>v</strong> and -<strong>v</strong> is identical.  <span class="anchor" id="line-28"></span><span class="anchor" id="line-29"></span></li></ul><p class="line874">From these two assumptions it also follows that:  <span class="anchor" id="line-30"></span><span class="anchor" id="line-31"></span><ul><li><p class="line862">if <strong>v1</strong> and <strong>v2</strong> are two vectors with a &quot;small&quot; angle between them so that it can be assumed that the signal from the corresponding acquisitions is &quot;similar&quot; then <strong>v1</strong> and -<strong>v2</strong> are equally similar. <span class="anchor" id="line-32"></span><span class="anchor" id="line-33"></span></li></ul><p class="line862">Because of the way the diffusion signal is modelled, and because <tt class="backtick">eddy</tt> needs to be able to distinguish between signal variation caused by diffusion and that caused by eddy currents/movements it is beneficial if the data is acquired with either <span class="anchor" id="line-34"></span><span class="anchor" id="line-35"></span><ul><li><p class="line862">A set of diffusion encoding directions that span <em>the entire sphere</em> and not just a half-sphere <span class="anchor" id="line-36"></span></li><li>A blip-up-blip-down (phase encode reversed) acquisition <span class="anchor" id="line-37"></span><span class="anchor" id="line-38"></span></li></ul><p class="line862">or with both. Note that &quot;sampling on the whole sphere&quot; does <strong>not</strong> imply twice as many directions. From a diffusion perspective sampling along <strong>v</strong> and -<strong>v</strong> is exactly equivalent whereas from the perspective of eddy current distortions they are different. One can therefore have two sampling schemes that both sample the diffusion evenly and equally well (and with the same total acquisition time), but where one is on the half sphere and the other on the whole sphere. To make this concrete look at the two sampling schemes below. In these plots the end of each vector is marked with an x-marker. They sample the diffusion in exactly the same way <strong>but</strong> the one on the left facilitates correcting for eddy currents while the one on the right does <strong>not</strong>. Note also that either of these schemes can easily be created from the other. To for example transform the half sphere scheme to the whole sphere scheme one just need to replace half the vectors by their negations. <span class="anchor" id="line-39"></span><span class="anchor" id="line-40"></span><div><table><tbody><tr>  <td><p class="line891"><img align="left" alt="whole_sphere_final.gif" class="attachment" src="attachments/eddy/whole_sphere_final.gif" title="whole_sphere_final.gif" width="400" /></td>
+  <td><p class="line891"><img align="left" alt="half_sphere.gif" class="attachment" src="attachments/eddy/half_sphere.gif" title="half_sphere.gif" width="400" /></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-41"></span><p class="line862"> Diffusion sampled on the whole sphere </td>
+  <td><p class="line862"> Diffusion sampled on the half sphere </td>
+</tr>
+</tbody></table></div><span class="anchor" id="line-42"></span><span class="anchor" id="line-43"></span><p class="line874">In order to check your own diffusion directions you can use the following Matlab commands <span class="anchor" id="line-44"></span><span class="anchor" id="line-45"></span><p class="line867"><span class="anchor" id="line-46"></span><span class="anchor" id="line-47"></span><span class="anchor" id="line-48"></span><span class="anchor" id="line-49"></span><span class="anchor" id="line-50"></span><span class="anchor" id="line-51"></span><span class="anchor" id="line-52"></span><pre><span class="anchor" id="line-1"></span>bvecs = load('bvecs'); % Assuming your filename is bvecs
+<span class="anchor" id="line-2"></span>figure('position',[100 100 500 500]);
+<span class="anchor" id="line-3"></span>plot3(bvecs(1,:),bvecs(2,:),bvecs(3,:),'*r');
+<span class="anchor" id="line-4"></span>axis([-1 1 -1 1 -1 1]);
+<span class="anchor" id="line-5"></span>axis vis3d;
+<span class="anchor" id="line-6"></span>rotate3d</pre><span class="anchor" id="line-53"></span><span class="anchor" id="line-54"></span><p class="line862">The final command (<tt class="backtick">rotate3d</tt>) will allow you to use the pointer to rotate the plot which is essential as from some angles a half sphere looks just like a whole sphere. <span class="anchor" id="line-55"></span><span class="anchor" id="line-56"></span><p class="line862">If data has neither been acquired on the whole sphere or with reversed PE-directions there is a good chance that it will still work well. In that case it can be beneficial to use the --slm=linear parameter as described in the <a class="nonexistent" href="./EDDY(2f)UsersGuide(2f).html#A--slm">manual</a>. <span class="anchor" id="line-57"></span><span class="anchor" id="line-58"></span><p class="line862">For eddy to work well there also needs to be a minimum number of diffusion directions. The reason for this is that the concept of &quot;close&quot; and &quot;distant&quot; vectors becomes a little pointless when there are only a handful of vectors. The &quot;minimum number&quot; will depend on the <em>b</em>-value (with a larger number of directions needed for higher <em>b</em>-values), but it appears that the minimum is ~10-15 directions for a <em>b</em>-value of 1500 and ~30-40 directions for a <em>b</em>-value of 5000. <span class="anchor" id="line-59"></span><span class="anchor" id="line-60"></span><p class="line862">If it sounds like your data might be a good candidate for <tt class="backtick">eddy</tt> I suggest you go on to read the <a class="nonexistent" href="./EDDY(2f)UsersGuide.html">manual</a>. <span class="anchor" id="line-61"></span><span class="anchor" id="line-62"></span><p class="line867">
+<h1 id="If_you_haven.27t_already_acquired_your_data">If you haven't already acquired your data</h1>
+<span class="anchor" id="line-63"></span><span class="anchor" id="line-64"></span><p class="line874">If you have taken the very sensible, and unusual, step to read this documentation before acquiring your data, here are some advice. <span class="anchor" id="line-65"></span><span class="anchor" id="line-66"></span><p class="line862">First of all let us assume you have some maximum scan time that you cannot exceed and that this allows you to acquire <em>N</em> volumes. Secondly, to keep things simple, let us assume that you plan to acquire data in a single (non-zero) shell. Thirdly, you intend to run tractography on your data.<br>
+ <span class="anchor" id="line-67"></span><span class="anchor" id="line-68"></span><p class="line862">If <em>N</em> &lt; 80 we recommend you acquire all your diffusion weighted images with a single PE-direction, that you acquire <em>N</em> unique diffusion gradients/directions optimised on the whole sphere (see above). Please note that the gradients <strong>g</strong> and -<strong>g</strong> are <em>not</em> unique, and that you should not acquire both. We further recommend that you acquire 2-3 <em>b</em>=0 volumes with an opposing PE-direction for use with <a class="nonexistent" href="./TOPUP.html">topup</a>, and that you acquire these immediately prior to the full diffusion data set. An example acquisition would be something like<br>
+ <span class="anchor" id="line-69"></span><tt class="backtick">PE-dir&nbsp;:&nbsp;A-&gt;P&nbsp;&nbsp;A-&gt;P&nbsp;&nbsp;P-&gt;A&nbsp;&nbsp;P-&gt;A&nbsp;&nbsp;P-&gt;A&nbsp;&nbsp;P-&gt;A&nbsp;&nbsp;P-&gt;A&nbsp;...</tt><br>
+ <span class="anchor" id="line-70"></span><tt class="backtick">b-value:&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;1500&nbsp;&nbsp;1500&nbsp;&nbsp;1500&nbsp;...</tt><br>
+ <span class="anchor" id="line-71"></span>It can also be a good idea to intersperse additional <em>b</em>=0 volumes in the main data set. One in sixteen for example.<br>
+ <span class="anchor" id="line-72"></span><span class="anchor" id="line-73"></span><p class="line862">If <em>N</em> &gt; 120 we suggest you consider acquiring <em>N</em>/2 unique diffusion gradients/directions, each acquired twice with opposing PE-directions. In this case <em>N</em>/2 is still &gt; 60, which is sufficient angular sampling for most applications. The opposing PE-directions offers the option to use a different type of &quot;interpolation&quot; that we call &quot;least-squares reconstruction&quot;. It works by combining the data acquired with the two PE-directions to solve the inverse problem &quot;what might the truth look like that produce these two distorted data sets?&quot;. The method is described in detail in Andersson et al., 2003 in the reference list below. It is able to recover some of the lost resolution in areas that have been compressed by susceptibility-induced distortions. <span class="anchor" id="line-74"></span><span class="anchor" id="line-75"></span><p class="line862">If <em>N</em> is between 80 and 120 it will depend on what model you will use for your tractography, how many fibres you will model per voxel etc. <span class="anchor" id="line-76"></span><span class="anchor" id="line-77"></span><p class="line867"><hr /><p class="line874">  <span class="anchor" id="line-78"></span>
+<h1 id="Referencing">Referencing</h1>
+<span class="anchor" id="line-79"></span><span class="anchor" id="line-80"></span><p class="line862">The main reference that should be cited when using <tt class="backtick">eddy</tt> is<br>
+ <span class="anchor" id="line-81"></span><small>Jesper L. R. Andersson and Stamatios N. Sotiropoulos. An integrated approach to correction for off-resonance effects and subject movement in diffusion MR imaging. <em>Neuro<tt class="backtick"></tt>Image</em>, 125:1063-1078, 2016.</small> <br>
+ <span class="anchor" id="line-82"></span><span class="anchor" id="line-83"></span><p class="line862">If you use the <tt class="backtick">--repol</tt> (<strong>rep</strong>lace <strong>o</strong>ut<strong>l</strong>iers) option, please also reference<br>
+ <span class="anchor" id="line-84"></span><small>Jesper L. R. Andersson, Mark S. Graham, Eniko Zsoldos and Stamatios N. Sotiropoulos. Incorporating outlier detection and replacement into a non-parametric framework for movement and distortion correction of diffusion MR images. <em>Neuro<tt class="backtick"></tt>Image</em> DOI: 10.1016/j.neuroimage.2016.06.058.</small><br>
+ <span class="anchor" id="line-85"></span><span class="anchor" id="line-86"></span><p class="line862">You are welcome to integrate <tt class="backtick">eddy</tt> in scripts or pipelines that are subsequently made publicly available. In that case, please make it clear that users of that script should reference the paper/papers above. <span class="anchor" id="line-87"></span><span class="anchor" id="line-88"></span><p class="line867">
+<h2 id="Other_papers_of_interest">Other papers of interest</h2>
+<span class="anchor" id="line-89"></span><p class="line862">For those interested in understanding the inner workings of <tt class="backtick">eddy</tt> the following paper describes how it makes model-free predictions of what a diffusion weighted image should look like<br>
+ <span class="anchor" id="line-90"></span><small>Jesper L.R. Andersson and Stamatios N. Sotiropoulos. Non-parametric representation and prediction of single- and multi-shell diffusion-weighted MRI data using Gaussian processes. <em>Neuro<tt class="backtick"></tt>Image</em>, 122:166-176, 2015.</small> <span class="anchor" id="line-91"></span><span class="anchor" id="line-92"></span><p class="line862">The &quot;least-squares reconstruction&quot; referred to above is described in<br>
+ <span class="anchor" id="line-93"></span><small>Jesper L. R. Andersson, Stefan Skare and John Ashburner. How to correct susceptibility distortions in spin-echo echo-planar images: application to diffusion tensor imaging. <em>Neuro<tt class="backtick"></tt>Image</em>, 20:870-888, 2003.</small> <span class="anchor" id="line-94"></span><span class="anchor" id="line-95"></span><p class="line862">The following paper compares the performance of <tt class="backtick">eddy</tt> to the previous FSL tool <tt class="backtick">eddy_correct</tt><br>
+ <span class="anchor" id="line-96"></span><small>Mark S. Graham, Ivana Drobnjak and Hui Zhang. Realistic simulation of artefacts in diffusion MRI for validating post-processing correction techniques. <em>Neuro<tt class="backtick"></tt>Image</em>, 125:1079-1094, 2015.</small> <span class="anchor" id="line-97"></span><span class="anchor" id="line-98"></span><p class="line867"><span class="anchor" id="line-99"></span><span class="anchor" id="line-100"></span><div class="references"><span class="anchor" id="line-1-1"></span><p class="line874">References appear here </div><span class="anchor" id="line-101"></span><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:30
+</body>
+</html>

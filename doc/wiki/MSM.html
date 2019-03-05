@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>MSM</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">MSM</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><p class="line867"><div class="FslToolContents">
+<h1>Contents</h1>
+<ol><li>Introduction<div class="contentslist"><div class="table-of-contents"><p class="table-of-contents-heading">Contents<ol><li>
+<a href="#Release">Release</a></li><li>
+<a href="#Overview">Overview</a></li><li>
+<a href="#Method_fundamentals">Method fundamentals</a></li><li>
+<a href="#The_Human_Connectome_Project_-_visualisation_software_and_file_formats">The Human Connectome Project - visualisation software and file formats</a></li><li>
+<a href="#Referencing">Referencing</a></li></ol></div></div></li><li><a href="./MSM(2f)UserGuide.html">User Guide</a></li></ol></div> <span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line867">
+<h1 id="Release">Release</h1>
+<span class="anchor" id="line-4"></span><p class="line862">MSM will be released in the next version of FSL but is currently available by request. Please email the list or <a class="mailto" href="mailto:emmar@fmrib.ox.ac.uk">emmar@fmrib.ox.ac.uk</a> if you are interested in getting  a copy <span class="anchor" id="line-5"></span><span class="anchor" id="line-6"></span><p class="line867">
+<h1 id="Overview">Overview</h1>
+<span class="anchor" id="line-7"></span><p class="line862">MSM (Multimodal Surface Matching) is a tool for registering cortical surfaces. The tool has been developed and tested using <a href="./FreeSurfer.html">FreeSurfer</a> extracted surfaces. However, in principle the tool with work with any cortical surface extraction method provided the surfaces can be mapped to the sphere. The key advantage of the method is that alignment may be driven using a wide variety of univariate (sulcal depth, curvature, myelin), multivariate (Task fMRI, or Resting State Networks) or multimodal (combinations of folding, myelin and fMRI) feature sets. <span class="anchor" id="line-8"></span><span class="anchor" id="line-9"></span><p class="line862">The main MSM tool is currently run from the command line using the program <strong>msm</strong>. This enables fast alignment of spherical cortical surfaces by utilising a fast discrete optimisation framework (<a href="./MSM.html#Referencing">FastPD: Komodakis 2007</a>), which significantly reduces the search space of possible deformations for each vertex, and allows flexibility with regards to the choice of similarity metric used to match the images. <span class="anchor" id="line-10"></span><span class="anchor" id="line-11"></span><p class="line874">In addition to the main tool we supply a number of post processing functions: <span class="anchor" id="line-12"></span><span class="anchor" id="line-13"></span><ul><li><p class="line891"><strong>msmapplywarp</strong> <span class="anchor" id="line-14"></span></li><li><p class="line891"><strong>msmresample</strong> <span class="anchor" id="line-15"></span></li><li><p class="line891"><strong>average_surfaces</strong> <span class="anchor" id="line-16"></span></li><li><p class="line891"><strong>estimate_metric_distortion</strong> <span class="anchor" id="line-17"></span><span class="anchor" id="line-18"></span></li></ul><p class="line867"><span class="anchor" id="line-19"></span><span class="anchor" id="line-20"></span><span class="anchor" id="line-21"></span><span class="anchor" id="line-22"></span><div class="comment dashed" style="display:none"><span class="anchor" id="line-1-1"></span><p class="line874">And, a series of pre-processing and batch processing scripts for your convenience: <span class="anchor" id="line-2-1"></span><span class="anchor" id="line-3-1"></span><ul><li><p class="line891"><strong>BatchprocessMSM</strong> </li></ul></div><span class="anchor" id="line-23"></span><span class="anchor" id="line-24"></span><p class="line862">If you wish to use this tool, please reference our <a href="./MSM.html#Referencing">paper</a> in any resulting publication. <span class="anchor" id="line-25"></span><span class="anchor" id="line-26"></span><p class="line867">
+<h1 id="Method_fundamentals">Method fundamentals</h1>
+<span class="anchor" id="line-27"></span><p class="line874">As mentioned above MSM matches two spherical surfaces known as the input and reference. Registration is performed by warping a low resolution regular Control Point (CP) Grid. At each iteration of the registration, every control point is deformed independently according to one of a small set of local rotations. The endpoints of these rotations are defined by a set of evenly spaced points (labels) that surround the control point, which are determined by placing a higher resolution Sampling Grid over each CP. This warp is then propagated to the (higher resolution) input mesh using mesh interpolation. <span class="anchor" id="line-28"></span><span class="anchor" id="line-29"></span><p class="line862">Example of label set overlaid on a control point grid   <img align="middle" alt="sphericalframework.001.jpg" class="attachment" src="attachments/MSM/sphericalframework.001.jpg" title="sphericalframework.001.jpg" /> <span class="anchor" id="line-30"></span><span class="anchor" id="line-31"></span><p class="line862">Choice of label (and therefore local deformation) is dependent on the similarity of the input and reference mesh features following the proposed warp. Therefore, for each control point, an overlapping patch from the input_mesh is transformed according to each local rotation, and its similarity with the reference features at that position is assessed. The optimal label choice balances the desire for optimal image matching with a requirement that the deformation should be as smooth as possible. Note, rather than using the full feature sets, data is typically downsampled and smoothed onto regular <a href="./MSM(2f)UserGuide.html#Regular_Mesh_Surfaces">template surfaces</a> known as the datagrid as we find this speeds computation without appreciably downgrading the quality of the alignment. <span class="anchor" id="line-32"></span><span class="anchor" id="line-33"></span><p class="line862">An important characteristic of the MSM framework is that the registration is performed over a series of stages. The registration can be initialised using an affine alignment step that should be able to correct global transformation differences between images. It then proceeds over a series of discrete registration steps where the resolution of the control point grid (that warps the input surface) is increased at each stage. At each stage of the discrete registration the registration performs a series of iterations, where control points are deformed as described above. Thus the registration proceeds in a coarse to fine fashion, where if large deformations are required to align the two surfaces these will be corrected for in the early stages of the registration and the final steps are for alignment of fine detail. For more details please see our NeuroImage <a href="./MSM.html#Referencing">paper</a>. <span class="anchor" id="line-34"></span><span class="anchor" id="line-35"></span><p class="line867">
+<h1 id="The_Human_Connectome_Project_-_visualisation_software_and_file_formats">The Human Connectome Project - visualisation software and file formats</h1>
+<span class="anchor" id="line-36"></span><span class="anchor" id="line-37"></span><p class="line862">The HCP consortium (<a class="http" href="http://www.humanconnectome.org/">http://www.humanconnectome.org/</a>) provide a suite of surface processing and visualisation tools that can be used very effectively together with MSM. In particular these tools refine the <a href="./FreeSurfer.html">FreeSurfer</a> pipeline, and supply pipelines for directly mapping functional and diffusion data onto the surface. Surfaces are supplied in CIFTI and GIFTI formats and can be visualised using the very flexible HCP visualisation tool wb_view. Scripts for processing your data following the HCP pipeline can be found at <a class="http" href="http://www.humanconnectome.org/documentation/HCP-pipelines/">http://www.humanconnectome.org/documentation/HCP-pipelines/</a>. If your data does not conform to the HCP protocol, specifically you have no T2 or different task protocols, please contact the FSL list.   <span class="anchor" id="line-38"></span><span class="anchor" id="line-39"></span><span class="anchor" id="line-40"></span><p class="line867">
+<h1 id="Referencing">Referencing</h1>
+<span class="anchor" id="line-41"></span><p class="line867"><span class="anchor" id="line-42"></span><span class="anchor" id="line-43"></span><span class="anchor" id="line-44"></span><span class="anchor" id="line-45"></span><div class="references"><span class="anchor" id="line-1-2"></span><p class="line862">Emma C. Robinson, S. Jbabdi, M.F. Glasser, J. Andersson, G.C. Burgess, M.P. Harms, S.M. Smith, D.C. Van Essen, M. Jenkinson, MSM: A new flexible framework for Multimodal Surface Matching, <a class="nonexistent" href="./NeuroImage.html">NeuroImage</a>, Volume 100, 15 October 2014, Pages 414-426, ISSN 1053-8119, <a class="http" href="http://dx.doi.org/10.1016/j.neuroimage.2014.05.069">http://dx.doi.org/10.1016/j.neuroimage.2014.05.069</a>. <span class="anchor" id="line-2-2"></span><span class="anchor" id="line-3-2"></span><p class="line874">Komodakis, N., Tziritas, G., 2007. Approximate labeling via graph cuts based on linear programming. Pattern Analysis and Machine Intelligence, IEEE Transactions on 29 (8), 1436{1453. </div><span class="anchor" id="line-46"></span><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:28
+</body>
+</html>

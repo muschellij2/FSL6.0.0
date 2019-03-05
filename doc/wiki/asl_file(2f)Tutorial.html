@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>asl_file/Tutorial</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">asl_file/Tutorial</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line867">
+<h1 id="Introduction">Introduction</h1>
+<span class="anchor" id="line-4"></span><p class="line862">This page includes a number of examples of the use of <tt class="backtick">asl_file</tt>. For these exercises you will need the example data from the main <a href="./BASIL(2f)Tutorial.html">BASIL tutorial page</a>. <span class="anchor" id="line-5"></span><span class="anchor" id="line-6"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-7"></span>
+<h1 id="Exercise_1:_Single_inflow-time_ASL">Exercise 1: Single inflow-time ASL</h1>
+<span class="anchor" id="line-8"></span><p class="line867">
+<h2 id="Calculating_a_simple_perfusion_image">Calculating a simple perfusion image</h2>
+<span class="anchor" id="line-9"></span><p class="line862">The data in <tt class="backtick">data_singleti</tt> has 69 repeats all at single inflow-time and contains both the tag and control images interleaved. To create a simple perfusion image we need to do a pairwise subtraction and then take the mean over all the repeats. This can be completed in a single command using <tt class="backtick">asl_file</tt>: <span class="anchor" id="line-10"></span><span class="anchor" id="line-11"></span><p class="line867"><span class="anchor" id="line-12"></span><span class="anchor" id="line-13"></span><pre><span class="anchor" id="line-1"></span>asl_file --data=data_singleti/data --ntis=1 --iaf=tc --diff --out=diffdata --mean=diffdata_mean</pre><span class="anchor" id="line-14"></span><ul><li><p class="line862">We have specified the number of inflow times as 1 using <tt class="backtick">--tis</tt> and that the data contains tag control pairs (with tag coming as the first volume) with <tt class="backtick">--iaf=tc</tt>. <span class="anchor" id="line-15"></span></li><li><p class="line862">We have asked <tt class="backtick">asl_file</tt> to do subtraction prior to output using the <tt class="backtick">--diff</tt> option. <span class="anchor" id="line-16"></span></li><li><p class="line862">We have specified two outputs: the full set of tag-control subtracted 'difference' images with <tt class="backtick">--out=diffdata</tt>; the mean difference (perfusion) image with <tt class="backtick">--mean=diffdata_mean</tt> <span class="anchor" id="line-17"></span><span class="anchor" id="line-18"></span></li></ul><p class="line874">If you run the command you should see: <span class="anchor" id="line-19"></span><span class="anchor" id="line-20"></span><p class="line867"><span class="anchor" id="line-21"></span><span class="anchor" id="line-22"></span><span class="anchor" id="line-23"></span><span class="anchor" id="line-24"></span><span class="anchor" id="line-25"></span><pre><span class="anchor" id="line-1-1"></span>Number of voxels is:162712
+<span class="anchor" id="line-2"></span>Number of repeats in data is:69
+<span class="anchor" id="line-3"></span>Outputting ASL data mean at each TI
+<span class="anchor" id="line-4"></span>Done.</pre><span class="anchor" id="line-26"></span><p class="line862">There will be two images output: <tt class="backtick">diffdata.nii.gz</tt> with 69 volumes and <tt class="backtick">diffdata_mean</tt> with only 1 volume - the (relative) perfusion image. <span class="anchor" id="line-27"></span><span class="anchor" id="line-28"></span><p class="line867">
+<h2 id="Extracting_the_mean_control_image">Extracting the mean control image</h2>
+<span class="anchor" id="line-29"></span><p class="line874">We might also want to extract the mean control image from the series, for example if we wanted to use it as the basis of calibration to get perfusion in absolute units (this would assume, as is the case in this data, that background suppression had not been applied). <span class="anchor" id="line-30"></span><span class="anchor" id="line-31"></span><p class="line867"><span class="anchor" id="line-32"></span><span class="anchor" id="line-33"></span><pre><span class="anchor" id="line-1-2"></span>asl_file --data=data_singleti/data --ntis=1 --iaf=tc --spairs --mean=staticdata_mean</pre><span class="anchor" id="line-34"></span><p class="line862">The difference this time is that instead of asking for <tt class="backtick">--diff</tt>, we have used the <tt class="backtick">--spairs</tt> option to split the pairs. <span class="anchor" id="line-35"></span><span class="anchor" id="line-36"></span><p class="line874">The output on the command line should look like: <span class="anchor" id="line-37"></span><span class="anchor" id="line-38"></span><p class="line867"><span class="anchor" id="line-39"></span><span class="anchor" id="line-40"></span><span class="anchor" id="line-41"></span><span class="anchor" id="line-42"></span><span class="anchor" id="line-43"></span><span class="anchor" id="line-44"></span><span class="anchor" id="line-45"></span><span class="anchor" id="line-46"></span><pre><span class="anchor" id="line-1-3"></span>Number of voxels is:162712
+<span class="anchor" id="line-2-1"></span>Number of repeats in data is:69
+<span class="anchor" id="line-3-1"></span>Dealing with odd members of pairs
+<span class="anchor" id="line-4-1"></span>Outputting ASL data mean at each TI
+<span class="anchor" id="line-5"></span>Dealing with even members of pairs
+<span class="anchor" id="line-6"></span>Outputting ASL data mean at each TI
+<span class="anchor" id="line-7"></span>Done.</pre><span class="anchor" id="line-47"></span><p class="line862">Note that even and odd volumes are both processed, but independently - thus we will get the mean image for both tag and control volumes from this command. As tag images were first in the data then we want the image called <tt class="backtick">staticdata_mean_even.nii.gz</tt> which will contain the mean control image. The mean tag image is in <tt class="backtick">static&nbsp;data_mean_odd.nii.gz</tt>. <span class="anchor" id="line-48"></span><span class="anchor" id="line-49"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-50"></span>
+<h1 id="Exercise_2:_Multi_inflow-time_data">Exercise 2: Multi inflow-time data</h1>
+<span class="anchor" id="line-51"></span><p class="line862">In the <tt class="backtick">data_pcasl</tt> we have the original tag-control pairs for a data set that has multiple inflow-times (post labelling delays). Before we do any further analysis on this we might want to have done tag control subtraction to get difference data, e.g. ready for <tt class="backtick">oxford_asl</tt> or <tt class="backtick">basil</tt>. This can easily be achieved with <tt class="backtick">asl_file</tt> and as long as we tell it how many inflow times there are it will preserve the individual inflow times. <span class="anchor" id="line-52"></span><span class="anchor" id="line-53"></span><p class="line867"><span class="anchor" id="line-54"></span><span class="anchor" id="line-55"></span><pre><span class="anchor" id="line-1-4"></span>asl_file --data=data_pcasl/asl_raw_data --ntis=5 --iaf=tc --diff --out=diffdata</pre><span class="anchor" id="line-56"></span><p class="line874">The output in this case looks like: <span class="anchor" id="line-57"></span><span class="anchor" id="line-58"></span><p class="line867"><span class="anchor" id="line-59"></span><span class="anchor" id="line-60"></span><span class="anchor" id="line-61"></span><span class="anchor" id="line-62"></span><span class="anchor" id="line-63"></span><pre><span class="anchor" id="line-1-5"></span>Number of voxels is:98304
+<span class="anchor" id="line-2-2"></span>Number of repeats in data is:12
+<span class="anchor" id="line-3-2"></span>Outputting ASL data mean at each TI
+<span class="anchor" id="line-4-2"></span>Done.</pre><span class="anchor" id="line-64"></span><p class="line874">Notice that asl_file has correctly recognised that there are 12 repeats of each inflow-time in this data. <span class="anchor" id="line-65"></span><span class="anchor" id="line-66"></span><p class="line862">The output image <tt class="backtick">diffdata.nii.gz</tt> will have 60 volumes (5 inflow times x 12 repeats), the volumes will reflect the same ordering as in the input data, i.e. groups in sets of repeated inflow-times (<tt class="backtick">--obf=rpt</tt> since <tt class="backtick">--ibf=rpt</tt> and <tt class="backtick">--obf</tt> defaults to the input value). this would be correct if we were feeding this data into <tt class="backtick">oxford_asl</tt>. However, <tt class="backtick">basil</tt> (the command line tool) expects data with repeats of each TI grouped together so we would need to have used <tt class="backtick">--obf=tis</tt> - this is unlikely to affect most users since <tt class="backtick">oxford_asl</tt> is recommended for most data. <span class="anchor" id="line-67"></span><span class="anchor" id="line-68"></span><p class="line862">If we want to examine the data by eye - to see the inflow and decay of the label in the voxels (mainly the latter in this case as we mainly have long inflow-times), we could ask <tt class="backtick">asl_file</tt> to take the mean over the repeats for each inflow-time using the <tt class="backtick">--mean=&lt;filename&gt;</tt> output operation. <span class="anchor" id="line-69"></span><span class="anchor" id="line-70"></span><p class="line867"><span class="anchor" id="line-71"></span><span class="anchor" id="line-72"></span><pre><span class="anchor" id="line-1-6"></span>asl_file --data=data_pcasl/asl_raw_data --ntis=5 --iaf=tc --diff --out=diffdata_mean</pre><span class="anchor" id="line-73"></span><p class="line862">The image <tt class="backtick">diffdata_mean</tt> will only have 5 volumes one for each inflow-time. <span class="anchor" id="line-74"></span><span class="anchor" id="line-75"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-76"></span>
+<h1 id="Exercise_3:_Dividing_data_into_epochs">Exercise 3: Dividing data into epochs</h1>
+<span class="anchor" id="line-77"></span><p class="line862">The single inflow-time data <tt class="backtick">data_singleti</tt> contains a relatively large number of repeats, thus the acquisition was unusually long for ASL perfusion. We might be interested in how perfusion changed during the duration of the acquisition. However, the signal-to-noise ratio of ASL is too poor to examine individual tag-control difference images (as we created in exercise 1). We might like to divide the data into epochs of a set number of repeats so that we can examine a number of reasonable quality ASL images. <span class="anchor" id="line-78"></span><span class="anchor" id="line-79"></span><p class="line867"><span class="anchor" id="line-80"></span><span class="anchor" id="line-81"></span><pre><span class="anchor" id="line-1-7"></span>asl_file --data=data_singleti/data --ntis=1 --iaf=tc --diff --epoch=epochdiffmean --elen=8 --eol=0</pre><span class="anchor" id="line-82"></span><p class="line862">In this command we have asked <tt class="backtick">asl_file</tt> to do tag-control subtraction, but then divide the data into epochs each of length 8 repeats and take the average within the epoch. <span class="anchor" id="line-83"></span><span class="anchor" id="line-84"></span><p class="line874">The output from the command should look like: <span class="anchor" id="line-85"></span><span class="anchor" id="line-86"></span><p class="line867"><span class="anchor" id="line-87"></span><span class="anchor" id="line-88"></span><span class="anchor" id="line-89"></span><span class="anchor" id="line-90"></span><span class="anchor" id="line-91"></span><span class="anchor" id="line-92"></span><pre><span class="anchor" id="line-1-8"></span>Number of voxels is:162712
+<span class="anchor" id="line-2-3"></span>Number of repeats in data is:69
+<span class="anchor" id="line-3-3"></span>Ouput ASL data epochs
+<span class="anchor" id="line-4-3"></span>Number of measurements from end of data discarded: 5
+<span class="anchor" id="line-5-1"></span>Done.</pre><span class="anchor" id="line-93"></span><p class="line862">Notice that 69 tag-control difference volumes does not neatly divide by 8, so <tt class="backtick">asl_file</tt> discards the final 5 and provides a warning to that effect. <span class="anchor" id="line-94"></span><span class="anchor" id="line-95"></span><p class="line862">The files created by this command are all called <tt class="backtick">epochdiffdmean</tt> followed by a number , in this case in the range 000 to 007, as there are 8 possible epochs of length 8. Each file represents the mean difference (perfusion) image for each epoch of 8 repeats/volumes in the order of the data so <tt class="backtick">epochdiffmean000.nii.gz</tt> is from the start and <tt class="backtick">epochdiffmean007.nii.gz</tt> is from near the end. <span class="anchor" id="line-96"></span><span class="anchor" id="line-97"></span><p class="line862">In the above example we didn't allow the epochs to overlap. However, we can vary the overlap between epochs using the <tt class="backtick">--eol</tt> option, for example: <span class="anchor" id="line-98"></span><span class="anchor" id="line-99"></span><p class="line867"><span class="anchor" id="line-100"></span><span class="anchor" id="line-101"></span><pre><span class="anchor" id="line-1-9"></span>asl_file --data=data_singleti/data --ntis=1 --iaf=tc --diff --epoch=epochdiffmean --elen=9 --eol=3</pre><span class="anchor" id="line-102"></span><p class="line874">Which gives an output of <span class="anchor" id="line-103"></span><span class="anchor" id="line-104"></span><p class="line867"><span class="anchor" id="line-105"></span><span class="anchor" id="line-106"></span><span class="anchor" id="line-107"></span><span class="anchor" id="line-108"></span><span class="anchor" id="line-109"></span><pre><span class="anchor" id="line-1-10"></span>Number of voxels is:162712
+<span class="anchor" id="line-2-4"></span>Number of repeats in data is:69
+<span class="anchor" id="line-3-4"></span>Ouput ASL data epochs
+<span class="anchor" id="line-4-4"></span>Done.</pre><span class="anchor" id="line-110"></span><p class="line874">Notice that there are no discarded data this time as our choice of epoch length and overlap between epochs allows us to use all the data. <span class="anchor" id="line-111"></span><span class="anchor" id="line-112"></span><p class="line874">From this command we get 11 perfusion images. <span class="anchor" id="line-113"></span><hr /><p class="line874"> <span class="anchor" id="line-114"></span><a href="./CategoryBASIL.html">CategoryBASIL</a> <span class="anchor" id="line-115"></span><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:30
+</body>
+</html>

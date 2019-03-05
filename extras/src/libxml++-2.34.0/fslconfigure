@@ -1,0 +1,16 @@
+#!/bin/sh
+
+export LIBXMLXX_CFLAGS="-I$FSLDIR/extras/include/libxml2 -I$FSLDIR/extras/include/boost -I$FSLDIR/extras/include"
+export LIBXMLXX_LIBS="-lxml2"
+export MMDOCTOOLDIR=/dev/null 
+
+
+configure_script=${FSLDIR}/config/${FSLMACHTYPE}/configure.sh
+if [ -f ${configure_script} ]; then
+    . ${configure_script}
+fi
+# Note, over-ride the settings of the configure_opts as doesn't support --disable-dependency-tracking
+configure_opts="--prefix=${FSLDEVDIR} --disable-documentation --enable-examples=no --enable-shared=no"
+
+echo "CFLAGS=\"${cflags}\" LDFLAGS=\"${ldflags}\" ./configure ${configure_opts}"
+CFLAGS="${cflags}" CPPFLAGS="${cppflags}" LDFLAGS="${ldflags}" ./configure ${configure_opts}

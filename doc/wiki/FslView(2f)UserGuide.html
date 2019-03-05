@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>FslView/UserGuide</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">FslView/UserGuide</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><p class="line867"><div class="FslToolContents">
+<h1>Contents</h1>
+<ol><li><a href="./FslView.html">Introduction</a></li><li>User Guide<div class="contentslist"><div class="table-of-contents"><p class="table-of-contents-heading">Contents<ol><li>
+<a href="#Basic_Usage">Basic Usage</a><ol><li>
+<a href="#Loading_images_into_FSLView">Loading images into FSLView</a></li><li>
+<a href="#Organising_loaded_images_for_display">Organising loaded images for display</a></li><li>
+<a href="#Different_image_views">Different image views</a></li><li>
+<a href="#Mode_toolbar">Mode toolbar</a></li><li>
+<a href="#Brightness_and_contrast_control">Brightness and contrast control</a></li><li>
+<a href="#Cursor_position_widget">Cursor position widget</a></li><li>
+<a href="#Image_info_widget">Image info widget</a></li><li>
+<a href="#Masking_.26_editing">Masking &amp; editing</a></li></ol></li><li>
+<a href="#Advanced_Usage">Advanced Usage</a><ol><li>
+<a href="#Viewing_FMRI_data">Viewing FMRI data</a></li><li>
+<a href="#Viewing_Diffusion_MRI_data">Viewing Diffusion MRI data</a></li><li>
+<a href="#Anatomical_atlas_tools">Anatomical atlas tools</a></li><li>
+<a href="#A3D_rendering">3D rendering</a></li><li>
+<a href="#Starting_FSLView_from_the_terminal">Starting FSLView from the terminal</a></li></ol></li><li>
+<a href="#Support_and_Further_Details">Support and Further Details</a><ol><li>
+<a href="#Support.2C_bug-reporting.2C_etc">Support, bug-reporting, etc</a></li><li>
+<a href="#Release_notes">Release notes</a></li><li>
+<a href="#Compiling_FSLView_from_sources">Compiling FSLView from sources</a></li></ol></li></ol></div></div></li></ol></div> <span class="anchor" id="line-2"></span>
+<h1 id="Basic_Usage">Basic Usage</h1>
+<span class="anchor" id="line-3"></span><p class="line867">
+<h2 id="Loading_images_into_FSLView">Loading images into FSLView</h2>
+<span class="anchor" id="line-4"></span><p class="line862">FSLView can read <span class="anchor" id="analyze"></span>Analyze and <span class="anchor" id="nifti"></span>NIFTI files, either uncompressed or compressed, and either as a single file (e.g., image.nii.gz) or two files (e.g., image.hdr &amp; image.img). To open an image, select the Open option from the File menu. A file opening dialog will appear. It will list all directories and all files with a suitable extension. Select the image file that you want to load and press the Open button. <span class="anchor" id="line-5"></span><span class="anchor" id="line-6"></span><p class="line862">The image will then be opened in Ortho <span class="anchor" id="view"></span>view; coronal, sagittal and axial views are displayed simultaneously. If there is sufficient information present in the image header, L, R, A, P, S, I   (Left, Right, Anterior=front, Posterior=back, Superior=top, Inferior=bottom) <span class="anchor" id="markers"></span>orientation markers will be displayed, making the orientation clear. The image name will be displayed in the <a href="./FslView(2f)UserGuide.html#imagelist">Image List</a>. Because this is the first image to be loaded it will be the &quot;Main Image&quot;; in the Image List it will be marked with a small set of arrows <img alt="mainimage.png" class="attachment" src="attachments/FslView(2f)UserGuide/mainimage.png" title="mainimage.png" />. <span class="anchor" id="line-7"></span><span class="anchor" id="line-8"></span><p class="line862">To load a second image (an &quot;overlay&quot;), select File -&gt; Add. The image to be added must have the same dimensions as the Main Image, otherwise a message will appear saying Cannot load incompatible overlay. <span class="anchor" id="line-9"></span><span class="anchor" id="line-10"></span><p class="line874">When the second overlay is added, its name will appear in the Image List. Since it is not the Main Image it will not be marked with arrows. The Image List control can be used to change the transparency of images, change the order in which they are drawn, make them visible or invisible and lock or unlock them (for editing). <span class="anchor" id="line-11"></span>
+<h2 id="Organising_loaded_images_for_display">Organising loaded images for display</h2>
+<span class="anchor" id="line-12"></span><p class="line867"><span class="anchor" id="imagelist"></span> <span class="anchor" id="line-13"></span>Each graphical view renders a combination of the stored images according to the settings of that view's layer tool. You can think of the view as being the result of observing a stack of overlaid layers with different visibility, transparency, colour, etc., settings. <span class="anchor" id="line-14"></span><span class="anchor" id="line-15"></span><p class="line874">The top of the layer list (7) represents the uppermost layer of the rendered stack. Rendering is evaluated from the bottom up so layers higher up the list obscure those lower down. <span class="anchor" id="line-16"></span>{{attachment: <span class="anchor" id="line-17"></span><ul><li>The &quot;Visibilty&quot; checkbox (1) toggles whether or not a given layer is visible. You can also toggle this property by simply double-clicking on the relevant layer in the layer list. <span class="anchor" id="line-18"></span></li><li>Each layer can be locked using the &quot;Lock&quot; checkbox (2). This property determines if a given layer can be edited or not. By default freshly loaded layers are locked, but new layers, those created with the &quot;Create Mask&quot; menu option, are un-locked by default and can be edited immediately. <span class="anchor" id="line-19"></span></li><li><p class="line862">The &quot;Transparency&quot; slider (3) determines how the selected layer blends with the layers below it. A value of 1 makes any voxel above <a href="./FslView(2f)BriCon.html">threshold</a> completely obscure the same voxel in the layer below, while a value of 0 means this image makes no contribution to the rendered stack. <span class="anchor" id="line-20"></span></li><li>The &quot;Layer Up&quot; (4), and &quot;Layer Down&quot; (5), buttons move the selected layer up or down the stack. Items lower down are obscured by those higher up the stack. <span class="anchor" id="line-21"></span></li><li><p class="line862">The &quot;Info&quot; button (6) calls up the <a href="./FslView(2f)LayerInfo.html">layer info dialog</a> where you can get a fuller description of an images properties as well as modify some advanced options such as the look up table to be used. <span class="anchor" id="line-22"></span></li><li>The &quot;Layer List&quot; box (7) indicates the order in which the layers will be evaluated along with visual feedback of that layers display settings. <span class="anchor" id="line-23"></span><span class="anchor" id="line-24"></span></li></ul><p class="line874">The layer marked with chevrons (8) to the right of it is the &quot;main layer&quot;. This layer is the first one loaded during any given session and cannot be removed from the list as much of the viewer's display capabilities are determined from this layer's attributes. <span class="anchor" id="line-25"></span>
+<h2 id="Different_image_views">Different image views</h2>
+<span class="anchor" id="line-26"></span><p class="line862">Images can be displayed using several kinds of 2 &amp; 3-D views, selectable via the Tools menu: <span class="anchor" id="line-27"></span><span class="anchor" id="line-28"></span><ul><li>Orthographic - the default view showing one slice each of: axial; coronal and sagittal planes. <span class="anchor" id="line-29"></span></li><li>Lightbox - showing all axial slices simultaneously. <span class="anchor" id="line-30"></span></li><li>Single - shows only a single slice - the orientation can be switched between axial, coronal and sagittal. <span class="anchor" id="line-31"></span><span class="anchor" id="line-32"></span></li></ul><p class="line874">Here we can see a typical view, &quot;Ortho view&quot;, with the default set of toolbars enabled: <span class="anchor" id="line-33"></span><div><table><tbody><tr>  <td><p class="line862"> * The &quot;Mode&quot; toolbar (1) determining how the cursor behaves. </td>
+  <td colspan="1" rowspan="6" style="text-align: center"><p class="line891"><img alt="Ortho View" class="attachment" src="attachments/FslView(2f)UserGuide/view-ortho.png" title="Ortho View" width="600 align=right" /></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-34"></span><p class="line862"> * The &quot;View&quot; toolbar(2) can be used to animate/re-orient certain views.</td>
+</tr>
+<tr>  <td><span class="anchor" id="line-35"></span><p class="line862"> * The &quot;Bri<tt class="backtick"></tt>Con&quot; control(3) for adjusting the way voxel intensities get mapped to colours on screen.</td>
+</tr>
+<tr>  <td><span class="anchor" id="line-36"></span><p class="line862"> * The &quot;Slice&quot; views(4) which render the images as single slices and provide cursor input via the mouse.</td>
+</tr>
+<tr>  <td><span class="anchor" id="line-37"></span><p class="line862"> * The &quot;Cursor&quot; tool(5) which provides control and feedback via the cursor position.</td>
+</tr>
+<tr>  <td style="&amp;quot; vertical-align: top; &amp;quot;"><span class="anchor" id="line-38"></span><p class="line862"> * The &quot;Layer&quot; tool(6) used to control the order and individual properties of each layer to be draw.</td>
+</tr>
+</tbody></table></div><span class="anchor" id="line-39"></span><span class="anchor" id="line-40"></span><span class="anchor" id="line-41"></span><p class="line874">You can open as many views as you like (although the viewer might get a little slow if you open too many). This includes opening more than one instance of any given type - for example, you might want to start with the Ortho view, then open another Ortho view, in which you have different images from the Layer List turned on, so that you can move the cursor around in the volume and compare different images (see example). If you close down all views then all loaded images will be discarded and you will have to re-open a file to start viewing again. <span class="anchor" id="line-42"></span><span class="anchor" id="line-43"></span><p class="line862">If you end up with too many open sub-windows to keep track of, Window -&gt; Tile will auto-arrange them so that they are all visible simultaneously, and Window -&gt; Cascade will place all sub-windows in a diagonal overlapping line, for you to select and adjust those of interest. <span class="anchor" id="line-44"></span><span class="anchor" id="line-45"></span><p class="line874">Moving the mouse over a slice while holding down the left mouse button will cause the cursor to move around the image. The cursor position and value can be viewed on the Cursor Toolbar. It is also possible to move the cursor to any position by altering the values in the Cursor Toolbar. FSLView has &quot;linked cursor&quot; behaviour: as the cursor is moved around in one view it also moves in all other views. Visit the &quot;View Options&quot; dialog to turn on/off the linked cursor as needed. <span class="anchor" id="line-46"></span>
+<h2 id="Mode_toolbar">Mode toolbar</h2>
+<span class="anchor" id="line-47"></span><p class="line867">
+<h2 id="Brightness_and_contrast_control">Brightness and contrast control</h2>
+<span class="anchor" id="line-48"></span><p class="line867">
+<h2 id="Cursor_position_widget">Cursor position widget</h2>
+<span class="anchor" id="line-49"></span><p class="line867">
+<h2 id="Image_info_widget">Image info widget</h2>
+<span class="anchor" id="line-50"></span><p class="line867">
+<h2 id="Masking_.26_editing">Masking &amp; editing</h2>
+<span class="anchor" id="line-51"></span><p class="line867">
+<h1 id="Advanced_Usage">Advanced Usage</h1>
+<span class="anchor" id="line-52"></span><p class="line867">
+<h2 id="Viewing_FMRI_data">Viewing FMRI data</h2>
+<span class="anchor" id="line-53"></span><p class="line867">
+<h2 id="Viewing_Diffusion_MRI_data">Viewing Diffusion MRI data</h2>
+<span class="anchor" id="line-54"></span><p class="line867">
+<h2 id="Anatomical_atlas_tools">Anatomical atlas tools</h2>
+<span class="anchor" id="line-55"></span><p class="line867">
+<h2 id="A3D_rendering">3D rendering</h2>
+<span class="anchor" id="line-56"></span><p class="line867">
+<h2 id="Starting_FSLView_from_the_terminal">Starting FSLView from the terminal</h2>
+<span class="anchor" id="line-57"></span><p class="line867">
+<h1 id="Support_and_Further_Details">Support and Further Details</h1>
+<span class="anchor" id="line-58"></span><p class="line867">
+<h2 id="Support.2C_bug-reporting.2C_etc">Support, bug-reporting, etc</h2>
+<span class="anchor" id="line-59"></span><p class="line867">
+<h2 id="Release_notes">Release notes</h2>
+<span class="anchor" id="line-60"></span><p class="line867">
+<h2 id="Compiling_FSLView_from_sources">Compiling FSLView from sources</h2>
+<span class="anchor" id="line-61"></span><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:28
+</body>
+</html>

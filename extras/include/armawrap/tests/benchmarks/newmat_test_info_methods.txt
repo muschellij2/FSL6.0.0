@@ -1,0 +1,84 @@
+Testing matrix methods ...
+
+X.Nrows():245
+X.Ncols():255
+X.Minimum:               1.02813e-05
+Minimum(X):              1.02813e-05
+X.Maximum:               0.999981
+Maximum(X):              0.999981
+X.MinimumAbsoluteValue:  1.02813e-05
+MinimumAbsoluteValue(X): 1.02813e-05
+X.MaximumAbsoluteValue:  0.999981
+MaximumAbsoluteValue(X): 0.999981
+X.Minimum1:              1.02813e-05
+     index:              56753
+X.Minimum2:              1.02813e-05
+     index:              223,143
+X.Maximum1:              0.999981
+     index:              52917
+X.Maximum2:              0.999981
+     index:              208,132
+X.MinimumAbsoluteValue1: 1.02813e-05
+     index:              56753
+X.MinimumAbsoluteValue2: 1.02813e-05
+     index:              223,143
+X.MaximumAbsoluteValue1: 0.999981
+     index:              52917
+X.MaximumAbsoluteValue2: 0.999981
+     index:              208,132
+Testing row vector methods ...
+
+X.Nrows():1
+X.Ncols():250
+X.Minimum:               0.0041364
+Minimum(X):              0.0041364
+X.Maximum:               0.997573
+Maximum(X):              0.997573
+X.MinimumAbsoluteValue:  0.0041364
+MinimumAbsoluteValue(X): 0.0041364
+X.MaximumAbsoluteValue:  0.997573
+MaximumAbsoluteValue(X): 0.997573
+X.Minimum1:              0.0041364
+     index:              246
+X.Minimum2:              0.0041364
+     index:              1,246
+X.Maximum1:              0.997573
+     index:              15
+X.Maximum2:              0.997573
+     index:              1,15
+X.MinimumAbsoluteValue1: 0.0041364
+     index:              246
+X.MinimumAbsoluteValue2: 0.0041364
+     index:              1,246
+X.MaximumAbsoluteValue1: 0.997573
+     index:              15
+X.MaximumAbsoluteValue2: 0.997573
+     index:              1,15
+Testing col vector methods ...
+
+X.Nrows():250
+X.Ncols():1
+X.Minimum:               0.00313442
+Minimum(X):              0.00313442
+X.Maximum:               0.998778
+Maximum(X):              0.998778
+X.MinimumAbsoluteValue:  0.00313442
+MinimumAbsoluteValue(X): 0.00313442
+X.MaximumAbsoluteValue:  0.998778
+MaximumAbsoluteValue(X): 0.998778
+X.Minimum1:              0.00313442
+     index:              149
+X.Minimum2:              0.00313442
+     index:              149,1
+X.Maximum1:              0.998778
+     index:              228
+X.Maximum2:              0.998778
+     index:              228,1
+X.MinimumAbsoluteValue1: 0.00313442
+     index:              149
+X.MinimumAbsoluteValue2: 0.00313442
+     index:              149,1
+X.MaximumAbsoluteValue1: 0.998778
+     index:              228
+X.MaximumAbsoluteValue2: 0.998778
+     index:              228,1

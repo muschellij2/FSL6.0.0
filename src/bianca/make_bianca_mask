@@ -1,0 +1,257 @@
+#!/bin/bash
+#   Copyright (C) 2016 University of Oxford
+#   Part of FSL - FMRIB's Software Library
+#   http://www.fmrib.ox.ac.uk/fsl
+#   fsl@fmrib.ox.ac.uk
+#   
+#   Developed at FMRIB (Oxford Centre for Functional Magnetic Resonance
+#   Imaging of the Brain), Department of Clinical Neurology, Oxford
+#   University, Oxford, UK
+#   
+#   
+#   LICENCE
+#   
+#   FMRIB Software Library, Release 5.0 (c) 2012, The University of
+#   Oxford (the "Software")
+#   
+#   The Software remains the property of the University of Oxford ("the
+#   University").
+#   
+#   The Software is distributed "AS IS" under this Licence solely for
+#   non-commercial use in the hope that it will be useful, but in order
+#   that the University as a charitable foundation protects its assets for
+#   the benefit of its educational and research purposes, the University
+#   makes clear that no condition is made or to be implied, nor is any
+#   warranty given or to be implied, as to the accuracy of the Software,
+#   or that it will be suitable for any particular purpose or for use
+#   under any specific conditions. Furthermore, the University disclaims
+#   all responsibility for the use which is made of the Software. It
+#   further disclaims any liability for the outcomes arising from using
+#   the Software.
+#   
+#   The Licensee agrees to indemnify the University and hold the
+#   University harmless from and against any and all claims, damages and
+#   liabilities asserted by third parties (including claims for
+#   negligence) which arise directly or indirectly from the use of the
+#   Software or the sale of any products based on the Software.
+#   
+#   No part of the Software may be reproduced, modified, transmitted or
+#   transferred in any form or by any means, electronic or mechanical,
+#   without the express permission of the University. The permission of
+#   the University is not required if the said reproduction, modification,
+#   transmission or transference is done without financial return, the
+#   conditions of this Licence are imposed upon the receiver of the
+#   product, and all original and amended source code is included in any
+#   transmitted product. You may be held legally responsible for any
+#   copyright infringement that is caused or encouraged by your failure to
+#   abide by these terms and conditions.
+#   
+#   You are not permitted under this Licence to use this Software
+#   commercially. Use for which any financial return is received shall be
+#   defined as commercial use, and includes (1) integration of all or part
+#   of the source code or the Software into a product for sale or license
+#   by or on behalf of Licensee to third parties or (2) use of the
+#   Software or any derivative of it for research with the final aim of
+#   developing software products for sale or license to a third party or
+#   (3) use of the Software or any derivative of it for research with the
+#   final aim of developing non-software products for sale or license to a
+#   third party, or (4) use of the Software to provide any service to an
+#   external organisation for which payment is received. If you are
+#   interested in using the Software commercially, please contact Oxford
+#   University Innovation ("OUI"), the technology transfer company of the
+#   University, to negotiate a licence. Contact details are:
+#   Innovation@innovation.ox.ac.uk quoting reference DE/9564.
+export LC_ALL=C
+set -e
+#set -x
+
+################################################################################################################
+
+if [ $# -lt 1 ] ; then
+  echo "Usage:  `basename $0` <structural_image> <CSF pve> <warp_file_MNI2structural> <keep_intermediate_files>"
+  echo " "
+  echo "The first input is the basename of the structural image (e.g. T1_biascorr). The script works under the assumption that the brain extracted image would be called <structural image>_brain.nii.gz"
+  echo "The second input is the corresponding CSF partial volume map calculated with FAST"
+  echo "The third input is the non-linear transformation warp file from standard space to structural image"
+  echo "If you want to keep intermediate files (e.g. for debugging), add 1 as 4th input"
+  echo " "
+  echo "e.g.`basename $0` T1_biascorr T1_fast_pve_0 MNI_to_T1_nonlin_field.nii.gz"
+  echo " "
+  echo "Output: the script creates two files called <structural image>_bianca_mask.nii.gz , <structural image>_ventmask.nii.gz"
+  echo "The first masks can be used to remove candidate lesions from the automatic segmentation via fslmaths:"
+  echo "  e.g.   fslmaths sub001_bianca_output –mas T1_bianca_mask.nii.gz sub001_bianca_output_masked"
+  echo "alternatively, it can be used to mask one of the input images to restrict the search for lesions within a tighter brain mask"
+  echo " e.g. fslmaths FLAIR –mas T1_bianca_mask_to_FLAIR FLAIR_masked"
+  echo "The second mask can be used to calculate ventricle volumes or to extract periventricular lesions (as those whithin a certain distance from the ventricles)"
+  exit 0
+fi
+################################################################################################################
+
+# basename of the structural image. Under the assumption that the brain extracted image would be ${strucimg}_brain.nii.gz
+strucimgfile=$1
+strucimg=`basename ${strucimgfile} .nii.gz`
+strucimgdir=`dirname ${strucimgfile} `
+pushd $strucimgdir > /dev/null
+strucimgdir=`pwd`
+popd > /dev/null
+
+# basename of the CSF pve image. 
+pve0file=$2
+pve0=`basename ${pve0file} .nii.gz`
+pve0dir=`dirname ${pve0file} `
+pushd $pve0dir > /dev/null
+pve0dir=`pwd`
+popd > /dev/null
+
+# name of the nonlinear registration warp from MNI to structural image
+std2strucfile=$3
+std2stdir=`dirname $std2strucfile`
+pushd $std2stdir > /dev/null
+std2stdir=`pwd`
+popd > /dev/null
+std2stname=`basename ${std2strucfile} .nii.gz`
+std2struc=${std2stdir}/${std2stname}
+
+if [ $# -gt 3 ] ; then
+intermediateON=$4
+else
+intermediateON=0
+fi
+
+# cd into the directory containing the structural image. It will create all the files at this level. At the end it will go back to the folder where the command was called from.
+origdir=`pwd`
+cd  ${strucimgdir}
+
+# creates temporary directory that will be deleted at the end.
+logID=`echo $(date | awk '{print $1 $2 $3}' |  sed 's/://g')`
+tmpdir=`mktemp -d ./makemask_${logID}_XXXXXX`
+
+# EXCLUSION MASK: brain mask without cerebellum, basal ganglia, brainstem, hippocampus, amygdala and enthorinal cortex:
+GMWMmask=${FSLDIR}/data/standard/bianca/bianca_exclusion_mask.nii.gz
+
+# VENTRICLES MASK: copies or creates dilated ventricle mask from MNI Harvard-Oxford atlas
+${FSLDIR}/bin/imcp ${FSLDIR}/data/standard/bianca/HarvardOxford-1mm-latvent-dilated.nii.gz $tmpdir/HOlatvent
+
+# Generate brain mask if not present
+if [ ! -e ${strucimg}_brain_mask.nii.gz ] ; then
+    echo generating ${strucimg}_brain_mask.nii.gz
+    $FSLDIR/bin/fslmaths ${strucimg}_brain.nii.gz -bin ${strucimg}_brain_mask.nii.gz
+else
+    echo using  ${strucimg}_brain_mask.nii.gz as brain mask
+fi
+
+$FSLDIR/bin/applywarp -i $tmpdir/HOlatvent.nii.gz -o $tmpdir/HOlatvent2${strucimg}_warped -r ${strucimg}_brain.nii.gz -w ${std2struc}  
+$FSLDIR/bin/applywarp -i $GMWMmask -o $tmpdir/subcortexcl2${strucimg}_warped -r ${strucimg}_brain.nii.gz -w ${std2struc}
+$FSLDIR/bin/fslmaths $tmpdir/subcortexcl2${strucimg}_warped -thr 0.5 -bin -mas ${strucimg}_brain_mask $tmpdir/${strucimg}_subcortexcl
+
+#  Eliminate bright voxels (the second mode for the widest distribution)
+$FSLDIR/bin/fslmaths ${pve0dir}/${pve0} -thr 0.9 -bin -binv -mul ${strucimg}_brain $tmpdir/${strucimg}_nonCSF
+medval=`$FSLDIR/bin/fslstats $tmpdir/${strucimg}_nonCSF -P 50`
+$FSLDIR/bin/fslmaths ${strucimg}_brain -uthr $medval -bin -mul ${pve0dir}/${pve0} $tmpdir/${strucimg}_brain_pve_0
+
+# Overlapping csf_pve thresholded at 0.9 with ventricle mask from standard space and keeping all the clusters that overlap with the standard ventricles and have a size greater than 10 voxels
+$FSLDIR/bin/fslmaths $tmpdir/${strucimg}_brain_pve_0 -thr 0.9 -mas $tmpdir/HOlatvent2${strucimg}_warped $tmpdir/ventmask_temp1
+$FSLDIR/bin/cluster --in=$tmpdir/ventmask_temp1.nii.gz --thresh=0.001 --osize=$tmpdir/ventmask_temp1_sidx.nii.gz --no_table
+$FSLDIR/bin/fslmaths $tmpdir/ventmask_temp1_sidx.nii.gz -thr 10 -bin $tmpdir/ventmask_temp
+
+# Improved ventricles segmentation
+# As normally the posterior portions of the ventricles are those that are not identified after nonlinear registration as they're the most distorted,
+# starts close to (3 slices before) the most posterior CORONAL slice where ventricles where identified and move towards the occipital lobe, adding,
+# slice by slice, the 2 biggest clusters (bigger than 5 voxels) of the thresholded (0.9) csf pve (pve0) that overlap with the ventricles identified in the previous slice.
+echo creating ventricles mask
+nlast_AP=`fslstats $tmpdir/ventmask_temp -w | awk '{ print $3 }' `
+nlastAP=`echo $nlast_AP + 3 | bc`
+$FSLDIR/bin/fslroi $tmpdir/ventmask_temp $tmpdir/ventmask_lastCORslice 0 -1 ${nlastAP} 1 0 -1
+VENTlastcorslice=$tmpdir/ventmask_lastCORslice
+# cut the vent mask until that slice (one slice earlier). From that one on, I’ll add the coronal slices with additional portions of ventricles
+totdim_AP=`fslval $tmpdir/ventmask_temp dim2`
+startslice=`echo $nlast_AP + 4 | bc`
+size_ventmaskOK=`echo $totdim_AP - $startslice | bc`
+$FSLDIR/bin/fslroi $tmpdir/ventmask_temp $tmpdir/ventmask_anterior 0 -1 $startslice $size_ventmaskOK 0 -1
+#from startslice towards 0 (posterior) I want to look for the ventricles in the pve0 image thresholded at 0.9
+$FSLDIR/bin/fslmaths $tmpdir/${strucimg}_brain_pve_0.nii.gz -thr 0.9  $tmpdir/${strucimg}_brain_pve_0_thr09
+# step down until the first (zero) slice
+idslice1=$nlastAP
+stop=0
+while [ X`echo "if ( 0 <= $idslice1 ) { 1 }" | bc -l` = X1 ] && [ $stop = 0 ] ; do 
+    $FSLDIR/bin/fslroi $tmpdir/${strucimg}_brain_pve_0_thr09  $tmpdir/${strucimg}_pve09_lastCORslice 0 -1 $idslice1 1 0 -1    
+    $FSLDIR/bin/cluster -i $tmpdir/${strucimg}_pve09_lastCORslice -t 0.05 -o $tmpdir/${strucimg}_pve09_lastCORslice_idx --connectivity=6 --no_table
+    $FSLDIR/bin/fslcpgeom $tmpdir/${strucimg}_pve09_lastCORslice $VENTlastcorslice
+    $FSLDIR/bin/fslmaths $tmpdir/${strucimg}_pve09_lastCORslice_idx -mas $VENTlastcorslice $tmpdir/${strucimg}_pve09_lastCORslice_idx_masked
+    idx1=`$FSLDIR/bin/fslstats $tmpdir/${strucimg}_pve09_lastCORslice_idx_masked -P 100 | bc`
+    # if the slice is empty, there are no more ventricles to add, so it will fill the rest of the image with zero slices
+    if [ $idx1 = 0 ] ; then
+	pad=`echo $idslice1 +1 | bc`
+	# no more ventricles - padding with zeros
+	$FSLDIR/bin/fslroi $tmpdir/ventmask_temp $tmpdir/ventmask_posterior 0 -1 0 $pad 0 -1
+	$FSLDIR/bin/fslmerge -y $tmpdir/ventmask_anterior $tmpdir/ventmask_posterior $tmpdir/ventmask_anterior
+	stop=1
+    else
+    # get indices and sizes of two biggest clusters with some overlap
+    touch $tmpdir/sortlist.txt
+    rm $tmpdir/sortlist.txt
+    touch $tmpdir/sortlist.txt
+    idx0=`echo $idx1 + 1 | bc`
+    # step down through the non-zero indices
+    while [ X`echo "if ( 0 < $idx1 ) { 1 }" | bc -l` = X1 ] ; do
+	idx2=`$FSLDIR/bin/fslstats $tmpdir/${strucimg}_pve09_lastCORslice_idx_masked -u $idx1 -P 100`
+	n=`$FSLDIR/bin/fslstats $tmpdir/${strucimg}_pve09_lastCORslice_idx_masked -l $idx2 -u $idx0 -V | awk '{ print $1 }'`
+	if [ $n -ge 5 ] ; then
+	    echo "$n $idx1" >> $tmpdir/sortlist.txt
+	fi
+	idx0=$idx1
+	idx1=$idx2
+    done
+    # take top two results
+    idxlist=`sort -n $tmpdir/sortlist.txt | tail -2 | awk '{ print $2 }' | sort -u`
+    $FSLDIR/bin/fslmaths $tmpdir/${strucimg}_pve09_lastCORslice_idx -mul 0 $tmpdir/SEL
+    for idx in $idxlist ; do
+	$FSLDIR/bin/fslmaths $tmpdir/${strucimg}_pve09_lastCORslice_idx -thr $idx -uthr $idx -bin -add $tmpdir/SEL $tmpdir/SEL
+    done
+    $FSLDIR/bin/fslmerge -y $tmpdir/ventmask_anterior $tmpdir/SEL $tmpdir/ventmask_anterior
+    VENTlastcorslice=$tmpdir/SEL    
+    idslice1=`echo $idslice1 -1 | bc`
+    fi
+done
+
+mv $tmpdir/ventmask_anterior.nii.gz $tmpdir/ventmask_unfilled.nii.gz
+# fill holes in the ventricle mask (try to include calcifications in the ventricles)
+$FSLDIR/bin/fslmaths $tmpdir/ventmask_unfilled.nii.gz -fillh26 $tmpdir/ventmask.nii.gz
+# non-ventricles mask
+$FSLDIR/bin/fslmaths $tmpdir/${strucimg}_brain_pve_0_thr09 -sub $tmpdir/ventmask $tmpdir/nonventmask
+# add outer rim to nonvent mask for calculating distances
+$FSLDIR/bin/fslmaths ${strucimg}_brain_mask -dilF -sub ${strucimg}_brain_mask $tmpdir/${strucimg}_brain_outerrim
+$FSLDIR/bin/fslmaths $tmpdir/nonventmask -add $tmpdir/${strucimg}_brain_outerrim -bin $tmpdir/nonventmask
+
+# threshold CSF mask at 0.1 and exclude subcortical structures
+$FSLDIR/bin/fslmaths $tmpdir/${strucimg}_brain_pve_0.nii.gz -thr 0.1 -bin -mas $tmpdir/${strucimg}_subcortexcl $tmpdir/${strucimg}_pve_0_masked
+
+# calculate distance from ventricles and non ventricles within the thresholded CSF map
+${FSLDIR}/bin/distancemap -i $tmpdir/nonventmask --secondim=$tmpdir/ventmask -m $tmpdir/${strucimg}_pve_0_masked -o $tmpdir/${strucimg}_dist2nonventPOS_ventNEG
+$FSLDIR/bin/fslmaths $tmpdir/${strucimg}_dist2nonventPOS_ventNEG -bin -add $tmpdir/nonventmask -bin $tmpdir/${strucimg}_CSFmask
+
+# Add an outerrim from the brain mask and generate use the single biggest (3D) cluster as the basis of the cortical CSF
+$FSLDIR/bin/fslmaths $tmpdir/${strucimg}_CSFmask -mas ${strucimg}_brain_mask -add $tmpdir/${strucimg}_brain_outerrim $tmpdir/${strucimg}_CSFmask_outerrim
+$FSLDIR/bin/cluster -i $tmpdir/${strucimg}_CSFmask_outerrim -t 0.5 --oindex=$tmpdir/${strucimg}_CSF_index --connectivity=6 --no_table
+$FSLDIR/bin/fslmaths $tmpdir/${strucimg}_CSF_index -thr `$FSLDIR/bin/fslstats $tmpdir/${strucimg}_CSF_index -P 100` -bin $tmpdir/${strucimg}_CSFmask2
+
+# Create WM mask
+echo creating WM mask
+$FSLDIR/bin/fslmaths $tmpdir/${strucimg}_CSFmask2 -kernel sphere 3 -dilF -binv $tmpdir/${strucimg}_GMmaskexcl
+# removing ventricles and subcortical structures from the  mask 
+$FSLDIR/bin/fslmaths $tmpdir/${strucimg}_GMmaskexcl -sub $tmpdir/ventmask -mul $tmpdir/${strucimg}_subcortexcl -bin ${strucimg}_bianca_mask
+# removing CSF thresholded at 0.9 (to remove possible residuals of ventricles, not identified by the ventricles segmentation) 
+$FSLDIR/bin/fslmaths ${strucimg}_bianca_mask -sub $tmpdir/${strucimg}_brain_pve_0_thr09 -bin ${strucimg}_bianca_mask
+# saves ventricle mask
+imcp $tmpdir/ventmask ${strucimg}_ventmask
+
+# removes temporary directory and goes back to original directory
+if [ $intermediateON == 0 ] ; then
+rm -r $tmpdir
+else
+echo "intermediate files in $tmpdir"
+fi
+cd ${origdir}
+
+exit 0
+

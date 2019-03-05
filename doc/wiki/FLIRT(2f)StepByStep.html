@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>FLIRT/StepByStep</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">FLIRT/StepByStep</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line867">
+<h1 id="Step-by-Step_Guide">Step-by-Step Guide</h1>
+<span class="anchor" id="line-4"></span><p class="line867">
+<h2 id="Registration">Registration</h2>
+<span class="anchor" id="line-5"></span><ul><li><p class="line891"><a href="./InitialProcessing.html">Initial processing</a> <span class="anchor" id="line-6"></span></li><li><p class="line862">Run <a class="nonexistent" href="./BET(2f)StepByStep.html">brain extraction</a> on the structural image <span class="anchor" id="line-7"></span><span class="anchor" id="line-8"></span></li></ul><p class="line867">
+<h3 id="Structural_Registration">Structural Registration</h3>
+<span class="anchor" id="line-9"></span><ul><li>Subject T1 images may need to be registered to either a standard brain or a study template <span class="anchor" id="line-10"></span></li><li><p class="line862">Registration for structural analysis is within <a class="nonexistent" href="./FSLVBM(2f)StepByStep.html">VBM</a>, <a href="./FreeSurfer.html">FreeSurfer</a> and <a href="./FIRST(2f)StepByStep.html">FIRST</a> pathways <span class="anchor" id="line-11"></span></li><li><p class="line862">Stand-alone registration can be conducted using first linear (<a href="./FLIRT.html">FLIRT</a>) followed by non-linear (<a href="./FNIRT.html">FNIRT</a>) registration <span class="anchor" id="line-12"></span><ul><li>First use the FLIRT GUI or terminal command (flirt) with affine registration from structural to standard <span class="anchor" id="line-13"></span></li><li>Use the fnirt command line tool, specifying the affine matrix (--aff) and the configuration file (--config=T1_2_MNI152_2mm usually) <span class="anchor" id="line-14"></span></li></ul></li><li><p class="line862">Check outputs: Load registration output over the standard brain or study template in <a class="nonexistent" href="./FSLView.html">FSLView</a> <span class="anchor" id="line-15"></span><span class="anchor" id="line-16"></span></li></ul><p class="line867">
+<h3 id="Diffusion_Registration">Diffusion Registration</h3>
+<span class="anchor" id="line-17"></span><ul><li><p class="line862">Usually conducted within the Registration tab of the <a href="./FDT.html">FDT</a> GUI. Must be run after <tt class="backtick">bedpostx</tt>.  <span class="anchor" id="line-18"></span></li><li>Registration from diffusion space to standard space is a two-step process, using a mid-point reference of a structural T1 image and concatenating the two steps to minimize resampling <span class="anchor" id="line-19"></span><ul><li><p class="line862">Step 1: Brain-extracted B0 images (<tt class="backtick">nodif_brain</tt>) are transformed into structural space.  <span class="anchor" id="line-20"></span></li><li>Step 2: Same as structural registration – FLIRT + FNIRT from structural to standard <span class="anchor" id="line-21"></span></li></ul></li><li>Check outputs: Check each step of the registration pathway separately as well as the total output, using FSLView to overlay the diffusion image resampled into structural space, and the structural image resampled into standard space <span class="anchor" id="line-22"></span><span class="anchor" id="line-23"></span></li></ul><p class="line867">
+<h3 id="FMRI_Registration">FMRI Registration</h3>
+<span class="anchor" id="line-24"></span><ul><li>Create fieldmaps (if using): <span class="anchor" id="line-25"></span><ul><li><p class="line862">Run <a class="nonexistent" href="./BET(2f)StepByStep.html">brain extraction</a> on the fieldmap magnitude image <span class="anchor" id="line-26"></span></li><li>Recommended: erode the brain-extracted magnitude image once (fslmaths –ero) for a tight mask <span class="anchor" id="line-27"></span></li><li>Create fieldmap using Fsl_prepare_fieldmap GUI (or fsl_prepare_fieldmap) in the command line <span class="anchor" id="line-28"></span><ul><li style="list-style-type:none"><p class="line891"><img alt="Example of Fieldmaps" class="attachment" height="200" src="attachments/FLIRT(2f)StepByStep/SbSRegFig1.png" title="Example of Fieldmaps" /> <span class="anchor" id="line-29"></span></li><li style="list-style-type:none"><p class="line891"><em>Magnitude Image (after BET) + Phase Image = Fieldmap </em> <span class="anchor" id="line-30"></span><span class="anchor" id="line-31"></span></li></ul></li></ul></li><li class="gap"><p class="line862">Registration can be conducted within the <a href="./FEAT.html">FEAT</a> GUI <span class="anchor" id="line-32"></span><ul><li>B0 unwarping using fieldmaps is conducted prior to registration in the Preprocessing tab of the FEAT GUI <span class="anchor" id="line-33"></span></li></ul></li><li>Registration from functional space to standard space is a two-step process, using a mid-point reference of a structural T1 image and concatenating the two steps to minimize resampling <span class="anchor" id="line-34"></span><ul><li style="list-style-type:none"><p class="line891"><img alt="Example of Two Stage Registration" class="attachment" height="200" src="attachments/FLIRT(2f)StepByStep/SbSRegFig2.png" title="Example of Two Stage Registration" /> <span class="anchor" id="line-35"></span></li><li style="list-style-type:none"><p class="line891"><em>Example result: Two-stage registration</em> <span class="anchor" id="line-36"></span></li><li style="list-style-type:none"><p class="line891"><em>EPI (functional) to T1 Structural to Standard Space</em> <span class="anchor" id="line-37"></span><span class="anchor" id="line-38"></span></li><li class="gap" style="list-style-type:none"><span class="anchor" id="line-39"></span></li><li style="list-style-type:none"><span class="anchor" id="line-40"></span></li><li>Step 1: boundary based registration (BBR) recommended from functional image to structural <span class="anchor" id="line-41"></span><ul><li>Command line tool is epi_reg (fieldmap distortion-correction can be included in this for stand-alone registrations) <span class="anchor" id="line-42"></span></li></ul></li><li>Step 2: Same as structural registration – FLIRT + FNIRT from structural to standard <span class="anchor" id="line-43"></span></li></ul></li><li>Check outputs: Check each step of the registration pathway separately as well as the total output, using FSLView to overlay the functional image resampled into structural space, and the structural image resampled into standard space <span class="anchor" id="line-44"></span><ul><li style="list-style-type:none"><p class="line891"><img alt="FMRI to Standard Space Example" class="attachment" height="180" src="attachments/FLIRT(2f)StepByStep/fmri2std_eg.png" title="FMRI to Standard Space Example" /> <span class="anchor" id="line-45"></span></li><li style="list-style-type:none"><span class="anchor" id="line-46"></span></li><li style="list-style-type:none"><p class="line891"><em>Example result: EPI (functional) resampled to standard space</em> <span class="anchor" id="line-47"></span></li><li style="list-style-type:none"><span class="anchor" id="line-48"></span><span class="anchor" id="line-49"></span></li></ul></li></ul><p class="line867">
+<h3 id="Partial_FOV_FMRI_Registration">Partial FOV FMRI Registration</h3>
+<span class="anchor" id="line-50"></span><ul><li>Partial field of view functional images: An additional step is inserted prior to step 1. A whole-brain functional scan with identical parameters (resolution and slice orientation) to the partial FOV needs to be acquired, and a limited (3 degrees of freedom) FLIRT registration is conducted from the partial FOV to whole-brain functional image. <span class="anchor" id="line-51"></span><ul><li style="list-style-type:none"><p class="line891"><img alt="Example of Three Stage Registration" class="attachment" height="200" src="attachments/FLIRT(2f)StepByStep/SbSRegFig3.png" title="Example of Three Stage Registration" /> <span class="anchor" id="line-52"></span></li><li style="list-style-type:none"><span class="anchor" id="line-53"></span></li><li style="list-style-type:none"><p class="line891"><em>Example result: Three-stage registration</em> <span class="anchor" id="line-54"></span></li><li style="list-style-type:none"><p class="line891"><em>Partial FOV EPI to Whole-brain EPI to T1 Structural to Standard Space</em> <span class="anchor" id="line-55"></span><span class="anchor" id="line-56"></span></li></ul></li><li class="gap" style="list-style-type:none"><span class="anchor" id="line-57"></span><ul><li style="list-style-type:none"><p class="line891"><img alt="Partial FOV to Standard Space Example" class="attachment" height="180" src="attachments/FLIRT(2f)StepByStep/SbSRegFig4.png" title="Partial FOV to Standard Space Example" /> <span class="anchor" id="line-58"></span><span class="anchor" id="line-59"></span></li><li class="gap" style="list-style-type:none"><span class="anchor" id="line-60"></span></li><li style="list-style-type:none"><p class="line891"><em>Example result: Partial FOV EPI (functional) resampled to standard space</em> <span class="anchor" id="line-61"></span></li><li style="list-style-type:none"><span class="anchor" id="line-62"></span></li></ul></ul><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:28
+</body>
+</html>

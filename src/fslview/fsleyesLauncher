@@ -1,0 +1,6 @@
+#!/bin/sh
+if [ `uname` = "Linux" ] ; then
+    ${FSLDIR}/bin/FSLeyes/fsleyes $@
+elif [ `uname` = "Darwin" ] ; then
+    ${FSLDIR}/bin/FSLeyes.app/Contents/MacOS/fsleyes $@
+fi

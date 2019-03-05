@@ -1,0 +1,67 @@
+a.SumSquare():        20882.3
+SumSquare(a):         20882.3
+r.SumSquare():        86.3431
+SumSquare(r):         86.3431
+c.SumSquare():        80.3559
+SumSquare(c):         80.3559
+a.SumAbsoluteValue(): 31316.7
+SumAbsoluteValue(a):  31316.7
+r.SumAbsoluteValue(): 127.454
+SumAbsoluteValue(r):  127.454
+c.SumAbsoluteValue(): 122.011
+SumAbsoluteValue(c):  122.011
+a.Sum():              31316.7
+Sum(a):               31316.7
+Sum(SP(a, a)):        20882.3
+r.Sum():              127.454
+Sum(r):               127.454
+c.Sum():              122.011
+Sum(c):               122.011
+a.Trace():            126.037
+Trace(a):             126.037
+a.Norm1():            138.612
+Norm1(a):             138.612
+r.Norm1():            0.997486
+Norm1(r):             0.997486
+c.Norm1():            122.011
+Norm1(c):             122.011
+a.NormInfinity():     136.39
+NormInfinity(a):      136.39
+r.NormInfinity():     127.454
+NormInfinity(r):      127.454
+c.NormInfinity():     0.998778
+NormInfinity(c):      0.998778
+a.NormFrobenius():    144.507
+NormFrobenius(a):     144.507
+r.NormFrobenius():    9.2921
+NormFrobenius(r):     9.2921
+c.NormFrobenius():    8.96414
+NormFrobenius(c):     8.96414
+a.Determinant():      -3.465e+110
+Determinant(c):       -3.465e+110
+a.LogDeterminant():   -1,255
+LogDeterminant(a):    -1,255
+a.IsZero():           0
+IsZero(a):            0
+z.IsZero():           1
+IsZero(z):            1
+Before reverse...
+a:   2.09e+04, (250, 250 [62500])
+r:   86.3, (1, 250 [250])
+c:   80.4, (250, 1 [250])
+a first 3: 0.0793,0.0966,0.0971
+a last 3:  0.145,0.709,0.157
+r first 3: 0.565,0.557,0.0492
+r last 3:  0.461,0.299,0.189
+c first 3: 0.63,0.292,0.325
+c last 3:  0.244,0.281,0.406
+After reverse...
+a:   2.09e+04, (250, 250 [62500])
+r:   86.3, (1, 250 [250])
+c:   80.4, (250, 1 [250])
+a first 3: 0.157,0.709,0.145
+a last 3:  0.0971,0.0966,0.0793
+r first 3: 0.189,0.299,0.461
+r last 3:  0.0492,0.557,0.565
+c first 3: 0.406,0.281,0.244
+c last 3:  0.325,0.292,0.63

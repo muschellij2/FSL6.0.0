@@ -1,0 +1,10 @@
+stages:
+ - test
+
+test:
+  stage: test
+  image: pauldmccarthy/armawrap-testing
+  tags:
+    - docker
+  script:
+    - bash ./tests/run_tests.sh

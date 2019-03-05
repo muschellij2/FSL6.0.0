@@ -1,0 +1,37 @@
+name: fslpython
+channels:
+ - https://fsl.fmrib.ox.ac.uk/fsldownloads/fslconda/channel
+ - defaults
+ - conda-forge
+dependencies:
+ - python=3.6.4
+ - ipython=5.1.0
+ - jinja2=2.8
+ - matplotlib=2.1.1
+ - numpy=1.14.0
+ - pandas=0.22.0
+ - pillow=5.0.0
+ - pyparsing=2.2.0
+ - scikit-learn=0.19.1
+ - scipy=1.0.0
+ - six=1.11.0
+ - vtk=8.1.0
+ - jsoncpp=1.8.3
+ - nibabel=2.2.1
+ - lxml=4.1.1
+ - python-dateutil=2.7.0
+ - networkx=1.11
+ - isodate=0.5.4
+ - mkl-service=1.1.2
+ - scikit-image=0.13.1
+ - seaborn=0.8.1
+ - fslpy=1.12.0
+ - paramiko=2.4.0
+ - flake8=3.5.0
+ - pylint=1.8.2
+ - wxpython=4.0.3
+ - docopt=0.6.2
+ - eddy_qc=1.0.0
+ - pip:
+   - nidmfsl
+

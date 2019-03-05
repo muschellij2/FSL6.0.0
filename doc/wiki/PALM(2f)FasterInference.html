@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>PALM/FasterInference</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">PALM/FasterInference</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><p class="line867"><div class="FslToolContents">
+<h1>Contents</h1>
+<ol><li><a href="./PALM.html">Introduction</a></li><li><a href="./PALM(2f)UserGuide.html">User Guide</a></li><li><a href="./PALM(2f)ExchangeabilityBlocks.html">Exchangeability Blocks</a></li><li><a href="./PALM(2f)JointInference.html">Joint Inference</a></li><li><a href="./PALM(2f)MasksAndVoxelwiseRegressors.html">Masks And Voxelwise Regressors</a></li><li>Faster Inference<div class="contentslist"><div class="table-of-contents"><p class="table-of-contents-heading">Contents<ol><li>
+<a href="#Overview">Overview</a></li><li>
+<a href="#Methods_available">Methods available</a><ol><li>
+<a href="#Few_permutations">Few permutations</a></li><li>
+<a href="#Negative_binomial">Negative binomial</a></li><li>
+<a href="#Tail_approximation">Tail approximation</a></li><li>
+<a href="#No_permutation">No permutation</a></li><li>
+<a href="#Gamma_approximation">Gamma approximation</a></li><li>
+<a href="#Low_rank_matrix_completion">Low rank matrix completion</a></li></ol></li><li>
+<a href="#Recommendations">Recommendations</a></li><li>
+<a href="#Advanced_usage">Advanced usage</a></li><li>
+<a href="#References">References</a></li></ol></div></div></li><li><a href="./PALM(2f)Examples.html">Examples</a></li><li><a href="./PALM(2f)FAQ.html">FAQ</a></li></ol></div> <span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-4"></span><span class="anchor" id="line-5"></span><p class="line867">
+<h1 id="Overview">Overview</h1>
+<span class="anchor" id="line-6"></span><p class="line874">Permutation tests are computationally intensive. For small, non-imaging datasets, recomputing a model thousands of times is seldom a problem, but for large, complex models this can be prohibitively slow, even with the availability of inexpensive computing power. PALM offers the possibility of accelerating the inference through properties of statistics used with the general linear model (GLM) and their distributions, in a way that is irrespective of software or hardware improvements. <span class="anchor" id="line-7"></span><div><table style="width: &amp;quot;100%&amp;quot"><tbody><tr>  <td><p class="line891"><strong>Method </strong> </td>
+  <td><p class="line891"><strong>Brief description </strong> </td>
+  <td><p class="line891"><strong>Availability</strong> </td>
+  <td><p class="line891"><strong>Basic usage </strong> </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-8"></span><p class="line891"><strong>Few permutations </strong> </td>
+  <td><p class="line862">Compute the p-values using just a few permutations, e.g., less than a thousand. </td>
+  <td><p class="line862">Univariate and multivariate tests (CMV and NPC), both uncorrected and corrected (FWER and FDR). Spatial statistics available (TFCE and cluster). </td>
+  <td><p class="line862">-n &lt;nperms&gt; </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-9"></span><p class="line891"><strong>Negative binomial </strong> </td>
+  <td><p class="line862">Run for each voxel as many permutations as needed until a predefined number of exceedances is found. Then divide this number of by the number of permutations. </td>
+  <td><p class="line862">Univariate tests, uncorrected and corrected (FDR). No spatial statistics with this method. </td>
+  <td><p class="line862">-accel negbin </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-10"></span><p class="line891"><strong>Tail approximation </strong> </td>
+  <td><p class="line862">Run a small number of permutations and, for the p-values below a certain threshold (e.g., 0.10), fit a generalised Pareto distribution, modelling the tail of the permutation distribution. </td>
+  <td><p class="line862">Univariate and multivariate tests (CMV and NPC), both uncorrected and corrected (FWER and FDR). Spatial statistics available (TFCE and cluster). </td>
+  <td><p class="line862">-accel tail </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-11"></span><p class="line891"><strong>No permutation </strong> </td>
+  <td><p class="line862">For statistics that can be written as trace(AW), where A = X*pinv(X), W = UU', USV = svd(RY), R = I-Z*pinv(Z), compute analytically the moments of the permutation distribution, then fit a gamma distribution. </td>
+  <td><p class="line862">Univariate and multivariate tests (CMV only), uncorrected and corrected (FDR). No spatial statistics with this method. </td>
+  <td><p class="line862">-accel noperm </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-12"></span><p class="line891"><strong>Gamma approximation </strong> </td>
+  <td><p class="line862">Run a small number of permutations, compute empirically the moments of the permutation distribution, then fit a gamma distribution. </td>
+  <td><p class="line862">Univariate and multivariate tests (CMV and NPC), both uncorrected and corrected (FWER and FDR). Spatial statistics available (TFCE and cluster). </td>
+  <td><p class="line862">-accel gamma </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-13"></span><p class="line891"><strong>Low rank matrix completion </strong> </td>
+  <td><p class="line862">Run a certain number of permutations, define orthonormal bases for matrices that are linear functions of the data and from which the statistic can be obtained; continue permuting a random subset of tests, filling the missing ones via projection to these bases. </td>
+  <td><p class="line862">Univariate tests, uncorrected and corrected (FWER and FDR). No spatial statistics for this method (theoretically possible, but not implemented). </td>
+  <td><p class="line862">-accel lowrank </td>
+</tr>
+</tbody></table></div><span class="anchor" id="line-14"></span><span class="anchor" id="line-15"></span><span class="anchor" id="line-16"></span><span class="anchor" id="line-17"></span><span class="anchor" id="line-18"></span><p class="line862">In the table, <strong>CMV</strong> stands for Classical Multivariate Tests (such as MANOVA, MANCOVA, CCA), whereas <strong>NPC</strong> stands for Non-Parametric Combination. See <a href="./PALM(2f)JointInference.html">here</a> for details. <span class="anchor" id="line-19"></span><span class="anchor" id="line-20"></span><p class="line874">The figure below summarises the methods: With permutations (i.e., few permutations, negative binomial, and low rank matrix completion), the p-value is the fraction of the test statistics obtained after permuting that are higher than in the unpermuted. In the tail approximation, the tail of the permutation distribution is subjected to the fit of a generalised Pareto distribution (GPD), from which the p-values are computed. In the method in which no permutations are performed, the first three moments of the permutation distribution are computed from data and model, and to these which a gamma distribution is fitted, and from which the p-values are computed. In the gamma approximation, the moments of the empirical permutation distribution are used to the fit of the gamma distribution. The figure is merely illustrative: the actual fit uses the cumulative distribution function directly, such that histograms are not constructed. <span class="anchor" id="line-21"></span><span class="anchor" id="line-22"></span><p class="line867"><img align="center" alt="curvefits.png" class="attachment" src="attachments/PALM(2f)FasterInference/curvefits.png" title="curvefits.png" /> <span class="anchor" id="line-23"></span><span class="anchor" id="line-24"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-25"></span><span class="anchor" id="line-26"></span><p class="line867">
+<h1 id="Methods_available">Methods available</h1>
+<span class="anchor" id="line-27"></span><p class="line867">
+<h2 id="Few_permutations">Few permutations</h2>
+<span class="anchor" id="line-28"></span><p class="line874">This method consists of simply choosing a small number of permutations, e.g., less than 1000. To run, use: <span class="anchor" id="line-29"></span><span class="anchor" id="line-30"></span><p class="line867"><span class="anchor" id="line-31"></span><span class="anchor" id="line-32"></span><span class="anchor" id="line-1-1"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-58f510da0bc1918fe05f225707caf2675bf7d9ba" lang="en"><span class="line"><span class="anchor" id="line-1-2"></span>palm [...] -n 500</span>
+</pre></div></div><span class="anchor" id="line-33"></span><p class="line867">
+<h2 id="Negative_binomial">Negative binomial</h2>
+<span class="anchor" id="line-34"></span><p class="line874">This method consists of running as many permutations as needed until a fixed, pre-defined number of exceedances is found. An exceedance is an event in which the statistic after permutation is larger or equal than in the unpermuted case. The procedure continues until all possible permutations have been exhausted, or until a very large limit is reached. To run, use: <span class="anchor" id="line-35"></span><span class="anchor" id="line-36"></span><p class="line867"><span class="anchor" id="line-37"></span><span class="anchor" id="line-38"></span><span class="anchor" id="line-1-3"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-c68688503b8875367c0f58223743b64e20460d19" lang="en"><span class="line"><span class="anchor" id="line-1-4"></span>palm [...] -accel negbin [nexced]</span>
+</pre></div></div><span class="anchor" id="line-39"></span><p class="line862">If the number of exceedances is omitted, the default is 2. The number of permutations to keep trying can be indicated with the option <strong>-n</strong>, but in this case, it would be a large number. For example: <span class="anchor" id="line-40"></span><span class="anchor" id="line-41"></span><p class="line867"><span class="anchor" id="line-42"></span><span class="anchor" id="line-43"></span><span class="anchor" id="line-1-5"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-2024cebc2129d894a18eac5ca626f066e1c40e8d" lang="en"><span class="line"><span class="anchor" id="line-1-6"></span>palm [...] -accel negbin <span class="Number">4</span> -n 100000</span>
+</pre></div></div><span class="anchor" id="line-44"></span><p class="line867">
+<h2 id="Tail_approximation">Tail approximation</h2>
+<span class="anchor" id="line-45"></span><p class="line874">This method consists of running a number of permutations, then fitting a Generalised Pareto Distribution (GPD) to the tail of the distribution. The p-values are computed from the GPD. To run, use: <span class="anchor" id="line-46"></span><span class="anchor" id="line-47"></span><p class="line867"><span class="anchor" id="line-48"></span><span class="anchor" id="line-49"></span><span class="anchor" id="line-1-7"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-46cf6787ad1172caeb0025e3d85b6a7ad1f9d077" lang="en"><span class="line"><span class="anchor" id="line-1-8"></span>palm [...] -accel tail [pthr]</span>
+</pre></div></div><span class="anchor" id="line-50"></span><p class="line874">The parameter pthr indicates the permutation p-value below which the GPD fit will be used. For the permutation p-values above this number, there will be no changes. The default pthr (if omitted) is 0.10. <span class="anchor" id="line-51"></span><span class="anchor" id="line-52"></span><p class="line862">The number of permutations used to build the initial null distribution is controlled by the option <strong>-n</strong>: <span class="anchor" id="line-53"></span><span class="anchor" id="line-54"></span><p class="line867"><span class="anchor" id="line-55"></span><span class="anchor" id="line-56"></span><span class="anchor" id="line-1-9"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-d6623ae14199e6f44e19431f72b3e8441e8b9706" lang="en"><span class="line"><span class="anchor" id="line-1-10"></span>palm [...] -accel tail -n 500</span>
+</pre></div></div><span class="anchor" id="line-57"></span><p class="line862">For large datasets, or for a large number of permutations, this method can be memory intensive for uncorrected and for FDR corrected p-values. In these cases, consider using the option <strong>-nouncorrected</strong>: <span class="anchor" id="line-58"></span><span class="anchor" id="line-59"></span><p class="line867"><span class="anchor" id="line-60"></span><span class="anchor" id="line-61"></span><span class="anchor" id="line-1-11"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-971247af13245d764a5d54152276183392ccd4e6" lang="en"><span class="line"><span class="anchor" id="line-1-12"></span>palm [...] -accel tail -n <span class="Number">500</span> -nouncorrected</span>
+</pre></div></div><span class="anchor" id="line-62"></span><p class="line867">
+<h2 id="No_permutation">No permutation</h2>
+<span class="anchor" id="line-63"></span><p class="line874">This method consists of first computing analytically the first three moments of the permutation distribution of test statistics that can be written in the form trace(AW), where A = X*pinv(X), W = UU', USV = svd(RY), R = I-Z*pinv(Z), and I is the identity matrix of size N, where N is the number of subjects. Once the moments have been estimated, gamma distribution (also known as Pearson type III distribution) with same moments is used to calculate the p-values. Differently than all other methods, permutations are not actually performed, yet the p-values are based on permutations. To run, use: <span class="anchor" id="line-64"></span><span class="anchor" id="line-65"></span><p class="line867"><span class="anchor" id="line-66"></span><span class="anchor" id="line-67"></span><span class="anchor" id="line-1-13"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-b48fa47f2528689dcb57a9907fb9e21fc1e29aa1" lang="en"><span class="line"><span class="anchor" id="line-1-14"></span>palm [...] -accel noperm</span>
+</pre></div></div><span class="anchor" id="line-68"></span><p class="line862">This method cannot be used in cases in which only sign-flippings would be used (<strong>-ise</strong>), nor with exchangeability blocks or variance groups, and cannot be used to test the intercept (i.e., the intercept must be entirely contained in the set of nuisance variables, but not among the variables of interest). The test can be used when the distribution of the errors is symmetric as a replacement to permutations. <span class="anchor" id="line-69"></span><span class="anchor" id="line-70"></span><p class="line867">
+<h2 id="Gamma_approximation">Gamma approximation</h2>
+<span class="anchor" id="line-71"></span><p class="line874">This method consists of running a number of permutations, then fitting a gamma distribution to the whole null distribution. The p-values are computed from the gamma distribution. To run, use: <span class="anchor" id="line-72"></span><span class="anchor" id="line-73"></span><p class="line867"><span class="anchor" id="line-74"></span><span class="anchor" id="line-75"></span><span class="anchor" id="line-1-15"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-458e8ce99b7ad6ba049d112e92018b1d815f5750" lang="en"><span class="line"><span class="anchor" id="line-1-16"></span>palm [...] -accel gamma</span>
+</pre></div></div><span class="anchor" id="line-76"></span><p class="line862">The number of permutations used to build the initial null distribution is controlled by the option <strong>-n</strong>: <span class="anchor" id="line-77"></span><span class="anchor" id="line-78"></span><p class="line867"><span class="anchor" id="line-79"></span><span class="anchor" id="line-80"></span><span class="anchor" id="line-1-17"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-4b0c5e1f33b9e302b37fea74c372a186a79379a0" lang="en"><span class="line"><span class="anchor" id="line-1-18"></span>palm [...] -accel gamma -n 500</span>
+</pre></div></div><span class="anchor" id="line-81"></span><p class="line862">As with the tail approximation, for large datasets, or for a large number of permutations, this method can also be memory intensive for uncorrected and for FDR corrected p-values. In these cases, consider using the option <strong>-nouncorrected</strong>: <span class="anchor" id="line-82"></span><span class="anchor" id="line-83"></span><p class="line867"><span class="anchor" id="line-84"></span><span class="anchor" id="line-85"></span><span class="anchor" id="line-1-19"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-a570759c823779a2cfb4446ee487c5fc8f474c1d" lang="en"><span class="line"><span class="anchor" id="line-1-20"></span>palm [...] -accel gamma -n <span class="Number">500</span> -nouncorrected</span>
+</pre></div></div><span class="anchor" id="line-86"></span><p class="line867">
+<h2 id="Low_rank_matrix_completion">Low rank matrix completion</h2>
+<span class="anchor" id="line-87"></span><p class="line874">This method consists of running a small number of permutations (call this number J0), then for the subsequent permutations, use only a subset containing a small number V0 of voxels. This subset is chosen randomly. The remaining voxels that are not tested have their exact test statistic computed from the others using low rank matrix completion theory. For this method, both J0 and V0 must be larger or equal than N(N+1)/2. To run, use: <span class="anchor" id="line-88"></span><span class="anchor" id="line-89"></span><p class="line867"><span class="anchor" id="line-90"></span><span class="anchor" id="line-91"></span><span class="anchor" id="line-1-21"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-4bdb3018dcb05e5f4afc80348518248300649d55" lang="en"><span class="line"><span class="anchor" id="line-1-22"></span>palm [...] -accel lowrank [val]</span>
+</pre></div></div><span class="anchor" id="line-92"></span><p class="line874">where val is either: <span class="anchor" id="line-93"></span><span class="anchor" id="line-94"></span><ul><li>A positive value less than 1, indicating the fraction of the total tests (usually voxels) that will be randomly sampled. <span class="anchor" id="line-95"></span></li><li>An integer greater than 1, indicating the number V0 of tests that will be randomly sampled. <span class="anchor" id="line-96"></span><span class="anchor" id="line-97"></span></li></ul><p class="line862">The default val is NaN, indicating that PALM will compute it from the sample size as V0 = N*(N+1)/2. The overall number of permutations (fully sampled plus the ones with values filled in) can be specified with the option <strong>-n</strong> as usual. <span class="anchor" id="line-98"></span><span class="anchor" id="line-99"></span><p class="line874">Gains in speed with low rank matrix completion are noticeable only for large images and small number of subjects. Otherwise, the other methods above tend to be faster. <span class="anchor" id="line-100"></span><span class="anchor" id="line-101"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-102"></span><span class="anchor" id="line-103"></span><p class="line867">
+<h1 id="Recommendations">Recommendations</h1>
+<span class="anchor" id="line-104"></span><p class="line862">From all the methods, the one that is the most general, applicable to a wider variety of situations, including corrected and uncorrected p-values, spatial and multivariate statistics (classical and NPC), and which also showed overall a good performance and a good tradeoff with resampling risk is the <strong>tail approximation</strong>, and this method is recommended generally. Other methods can also be considered in a variety of scenarios. <span class="anchor" id="line-105"></span><span class="anchor" id="line-106"></span><p class="line874">The flow chart below gives overall guidance on which method to use in particular applications. <span class="anchor" id="line-107"></span><span class="anchor" id="line-108"></span><p class="line867"><img align="center" alt="recomm.png" class="attachment" src="attachments/PALM(2f)FasterInference/recomm.png" title="recomm.png" /> <span class="anchor" id="line-109"></span><span class="anchor" id="line-110"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-111"></span><span class="anchor" id="line-112"></span><p class="line867">
+<h1 id="Advanced_usage">Advanced usage</h1>
+<span class="anchor" id="line-113"></span><span class="anchor" id="line-114"></span><p class="line874">The tail and gamma approximation can take one extra argument called &quot;out&quot;: <span class="anchor" id="line-115"></span><span class="anchor" id="line-116"></span><p class="line867"><span class="anchor" id="line-117"></span><span class="anchor" id="line-118"></span><span class="anchor" id="line-1-23"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-f5d81e8fa4dfa2260b9aa270c78fe5cbd72fb77a" lang="en"><span class="line"><span class="anchor" id="line-1-24"></span>palm [...] -accel tail [pthr] [out]</span>
+</pre></div></div><span class="anchor" id="line-119"></span><span class="anchor" id="line-120"></span><p class="line867"><span class="anchor" id="line-121"></span><span class="anchor" id="line-122"></span><span class="anchor" id="line-1-25"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-e71969016fd7e84cc2090be7b61d8a1642b91f5e" lang="en"><span class="line"><span class="anchor" id="line-1-26"></span>palm [...] -accel gamma [out]</span>
+</pre></div></div><span class="anchor" id="line-123"></span><span class="anchor" id="line-124"></span><p class="line874">This is a true/false indicating whether the unpermuted statistic should be left out of the null distribution. The default is false, indicating that the unpermuted statistic is included in the null. This setting rarely (if ever) needs to be changed. <span class="anchor" id="line-125"></span><span class="anchor" id="line-126"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-127"></span><span class="anchor" id="line-128"></span><p class="line867">
+<h1 id="References">References</h1>
+<span class="anchor" id="line-129"></span><p class="line874">The reference for the accelerated permutation tests is: <span class="anchor" id="line-130"></span><span class="anchor" id="line-131"></span><p class="line867"><span class="anchor" id="line-132"></span><span class="anchor" id="line-133"></span><div class="references"><span class="anchor" id="line-1-27"></span><p class="line862">* Winkler AM, Ridgway GR, Douaud G, Nichols TE, Smith SM. <a class="http" href="http://www.sciencedirect.com/science/article/pii/S1053811916301902">Faster permutation inference in brain imaging.</a> Neuroimage. 2016 Jun 7;141:502-516. (Open Access) </div><span class="anchor" id="line-134"></span><p class="line874">The main general reference for PALM is the same as for randomise: <span class="anchor" id="line-135"></span><span class="anchor" id="line-136"></span><p class="line867"><span class="anchor" id="line-137"></span><span class="anchor" id="line-138"></span><div class="references"><span class="anchor" id="line-1-28"></span><p class="line862">* Winkler AM, Ridgway GR, Webster MA, Smith SM, Nichols TE. <a class="http" href="http://www.sciencedirect.com/science/article/pii/S1053811914000913">Permutation inference for the general linear model.</a> <a class="nonexistent" href="./NeuroImage.html">NeuroImage</a>, 2014;92:381-397 (Open Access) </div><span class="anchor" id="line-139"></span><p class="line874">For NPC, CMV assessed with permutations, and for correction over contrasts and/or modalities (options -corrcon and -corrmod), the reference is: <span class="anchor" id="line-140"></span><span class="anchor" id="line-141"></span><p class="line867"><span class="anchor" id="line-142"></span><span class="anchor" id="line-143"></span><div class="references"><span class="anchor" id="line-1-29"></span><p class="line862">* Winkler AM, Webster MA, Brooks JC, Tracey I, Smith SM, Nichols TE. <a class="http" href="http://onlinelibrary.wiley.com/doi/10.1002/hbm.23115/epdf">Non-Parametric Combination and related permutation tests for neuroimaging.</a> Hum Brain Mapp. 2016 Apr;37(4):1486-511. (Open Access) </div><span class="anchor" id="line-144"></span><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:28
+</body>
+</html>

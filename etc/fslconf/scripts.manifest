@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+echo "fslpython_install.sh"
+echo "install_fsleyes.sh"
+if [ `uname -s` = "Darwin" ]; then 
+    echo "make_applications_links.sh"
+fi

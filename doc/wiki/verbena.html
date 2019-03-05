@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>verbena</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">verbena</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><span class="anchor" id="line-2"></span><p class="line867"><div class="FslToolContents">
+<h1>Contents</h1>
+<ol><li>Introduction<div class="contentslist"><div class="table-of-contents"><p class="table-of-contents-heading">Contents<ol><li>
+<a href="#VERBENA:_Vascular_Model_Based_Perfusion_Quantification_for_DSC-MRI">VERBENA: Vascular Model Based Perfusion Quantification for DSC-MRI</a></li><li>
+<a href="#Referencing">Referencing</a></li></ol></div></div></li><li><a href="./verbena(2f)UserGuide.html">User Guide</a></li><li><a href="./verbena(2f)Theory.html">Theory</a></li></ol></div> <span class="anchor" id="line-3"></span><span class="anchor" id="line-4"></span><p class="line867"><img align="right" alt="verbena_image.jpg" class="attachment" src="attachments/verbena/verbena_image.jpg" title="verbena_image.jpg" /> <span class="anchor" id="line-5"></span><span class="anchor" id="line-6"></span><p class="line867">
+<h1 id="VERBENA:_Vascular_Model_Based_Perfusion_Quantification_for_DSC-MRI">VERBENA: Vascular Model Based Perfusion Quantification for DSC-MRI</h1>
+<span class="anchor" id="line-7"></span><p class="line874">Verbena is a Bayesian Inference tool for quantification of perfusion and other haemodynamic parameters from Dynamic Susceptibility Contrast perfusion MRI of the brain. VERBENA complements the BASIL tools for the quantification of perfusion using Arterial Spin Labelling MRI and is built on the same core inference algorithm (FABBER). VERBENA uses a specific physiological model for capillary transit of contrast within the blood generally termed the 'vascular model' that was first described by Ostergaard (see below). In VERBENA the model has been extended to explicitly infer the mean transit time and also to optionally include correction for macro vascular contamination - contrast agent within arterial vessels - more information on the model can be found in the theory section. <span class="anchor" id="line-8"></span><span class="anchor" id="line-9"></span><p class="line874">VERBENA takes a model-based approach to the analysis of DSC-MRI data in contrast to alternative 'non-parametric' approaches, that often use a Singular Value based Deconvolution to quantify perfusion. An alternative Bayesian Deconvolution approach is also available, but not currently distributed as part of FSL. For more information see the reference below and contact the senior author. <span class="anchor" id="line-10"></span><span class="anchor" id="line-11"></span><p class="line874">VERBENA is scheduled for a future release of FSL (it is not to be found in the current release). However, if you are interested in using VERBENA, it is possible to provide a pre-release copy that is compatible with more recent FSL releases. <span class="anchor" id="line-12"></span><span class="anchor" id="line-13"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-14"></span>
+<h1 id="Referencing">Referencing</h1>
+<span class="anchor" id="line-15"></span><p class="line874">If you use VERBENA in your research, please make sure that you reference the first article listed below. <span class="anchor" id="line-16"></span><span class="anchor" id="line-17"></span><p class="line867"><span class="anchor" id="line-18"></span><span class="anchor" id="line-19"></span><div class="references"><span class="anchor" id="line-1-1"></span><p class="line874">Chappell, M.A., Mehndiratta, A., Calamante F., &quot;Correcting for large vessel contamination in DSC perfusion MRI by extension to a physiological model of the vasculature&quot;, e-print ahead of publication. doi: 10.1002/mrm.25390 </div><span class="anchor" id="line-20"></span><p class="line874">The following articles provide more background on the original vascular model from which the VERBENA model is derived: <span class="anchor" id="line-21"></span><span class="anchor" id="line-22"></span><p class="line867"><span class="anchor" id="line-23"></span><span class="anchor" id="line-24"></span><span class="anchor" id="line-25"></span><span class="anchor" id="line-26"></span><div class="references"><span class="anchor" id="line-1-2"></span><p class="line862">Mouridsen K, Friston K, Hjort N, Gyldensted L, Østergaard L, Kiebel S. Bayesian estimation of cerebral perfusion using a physiological model of microvasculature. <a class="nonexistent" href="./NeuroImage.html">NeuroImage</a> 2006;33:570–579. doi: 10.1016/j.neuroimage.2006.06.015. <span class="anchor" id="line-2-1"></span><span class="anchor" id="line-3-1"></span><p class="line874">Ostergaard L, Chesler D, Weisskoff R, Sorensen A, Rosen B. Modeling Cerebral Blood Flow and Flow Heterogeneity From Magnetic Resonance Residue Data. J Cereb Blood Flow Metab 1999;19:690–699. </div><span class="anchor" id="line-27"></span><p class="line874">An alternative Bayesian 'non-parametric' deconvolution approach has been published in: <span class="anchor" id="line-28"></span><span class="anchor" id="line-29"></span><p class="line867"><span class="anchor" id="line-30"></span><span class="anchor" id="line-31"></span><div class="references"><span class="anchor" id="line-1-3"></span><p class="line862">Mehndiratta A, <a class="nonexistent" href="./MacIntosh.html">MacIntosh</a> BJ, Crane DE, Payne SJ, Chappell MA. A control point interpolation method for the non-parametric quantification of cerebral haemodynamics from dynamic susceptibility contrast MRI. <a class="nonexistent" href="./NeuroImage.html">NeuroImage</a> 2013;64:560–570. doi: 10.1016/j.neuroimage.2012.08.083. </div><span class="anchor" id="line-32"></span><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:30
+</body>
+</html>

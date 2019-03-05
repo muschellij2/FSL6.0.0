@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Melview</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">Melview</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><p class="line867"><div class="table-of-contents"><p class="table-of-contents-heading">Contents<ol><li>
+<a href="#Downloading">Downloading</a></li><li>
+<a href="#Installation_Instructions">Installation Instructions</a><ol><li>
+<a href="#For_Mac_OS_X_users">For Mac OS X users</a></li><li>
+<a href="#For_RedHat.2FCentOS_users">For RedHat/CentOS users</a></li><li>
+<a href="#For_Ubuntu.2FDebian_users">For Ubuntu/Debian users</a></li><li>
+<a href="#For_EPD_users">For EPD users</a></li><li>
+<a href="#Manual_install_instructions">Manual install instructions</a></li></ol></li><li>
+<a href="#Errors_and_bugs">Errors and bugs</a></li></ol></div> <span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line867">
+<h1 id="Downloading">Downloading</h1>
+<span class="anchor" id="line-4"></span><p class="line874">Assuming you already have git on your machine (see the OS specific install instructions below if this is not the case). <span class="anchor" id="line-5"></span><span class="anchor" id="line-6"></span><p class="line867"><span class="anchor" id="line-7"></span><span class="anchor" id="line-8"></span><span class="anchor" id="line-9"></span><pre><span class="anchor" id="line-1"></span>cd ~
+<span class="anchor" id="line-2"></span>git clone https://git.fmrib.ox.ac.uk/fsl/melview.git</pre><span class="anchor" id="line-10"></span><p class="line867">
+<h1 id="Installation_Instructions">Installation Instructions</h1>
+<span class="anchor" id="line-11"></span><p class="line867">
+<h2 id="For_Mac_OS_X_users">For Mac OS X users</h2>
+<span class="anchor" id="line-12"></span><p class="line862">We recommend using MacPorts to obtain git, python and it's dependencies and melview itself. <span class="anchor" id="line-13"></span><span class="anchor" id="line-14"></span><p class="line862">melview can be installed using the MacPorts framework... but first you'll need to do some groundwork to setup (and customise) MacPorts. After the initial setup you will be able to add, remove and update the software with port commands.  <span class="anchor" id="line-15"></span><span class="anchor" id="line-16"></span><p class="line862">The following instructions assume you haven't already installed and/or used MacPorts. You should follow some/or all of the steps accordingly: <span class="anchor" id="line-17"></span><span class="anchor" id="line-18"></span><ol type="1"><li>First, if you haven't already done so, you may need to enable your command-line compiler tools. <span class="anchor" id="line-19"></span><span class="anchor" id="line-20"></span><span class="anchor" id="line-21"></span><pre><span class="anchor" id="line-1-1"></span> xcode-select --install</pre><span class="anchor" id="line-22"></span>Select the option to install the &quot;Command Line Tools&quot; from the resulting pop-up dialog. <span class="anchor" id="line-23"></span><span class="anchor" id="line-24"></span></li><li class="gap"><p class="line862">Download and install MacPorts (you will need Administrator rights for this) from www.macports.org... <span class="anchor" id="line-25"></span><span class="anchor" id="line-26"></span></li><li class="gap">Install git: <span class="anchor" id="line-27"></span><span class="anchor" id="line-28"></span><span class="anchor" id="line-29"></span><pre><span class="anchor" id="line-1-2"></span> sudo port install git</pre><span class="anchor" id="line-30"></span>You should now be able to download melview sources: <span class="anchor" id="line-31"></span><span class="anchor" id="line-32"></span><span class="anchor" id="line-33"></span><span class="anchor" id="line-34"></span><pre><span class="anchor" id="line-1-3"></span> cd ~
+<span class="anchor" id="line-2-1"></span> git clone https://git.fmrib.ox.ac.uk/fsl/melview.git</pre><span class="anchor" id="line-35"></span><span class="anchor" id="line-36"></span></li><li class="gap"><p class="line862">Now you will need to create your own local ports directory. Unfortunately you will also need to configure your MacPorts installation to look at this local repository... a full description can found at <a class="https" href="https://guide.macports.org/chunked/development.local-repositories.html">https://guide.macports.org/chunked/development.local-repositories.html</a> but I have summarised the steps here: <span class="anchor" id="line-37"></span><span class="anchor" id="line-38"></span><span class="anchor" id="line-39"></span><span class="anchor" id="line-40"></span><span class="anchor" id="line-41"></span><pre><span class="anchor" id="line-1-4"></span> mkdir -p ~/ports/python
+<span class="anchor" id="line-2-2"></span> cd ~/ports/python
+<span class="anchor" id="line-3"></span> cp -r ~/melview/ports/python/melview .</pre><span class="anchor" id="line-42"></span>Now edit your local macports sources file... <span class="anchor" id="line-43"></span><span class="anchor" id="line-44"></span><span class="anchor" id="line-45"></span><pre><span class="anchor" id="line-1-5"></span> sudo nano /opt/local/etc/macports/sources.conf</pre><span class="anchor" id="line-46"></span><p class="line862">The lines toward the end of this file lists possible sources where MacPorts can look for the ports. Add the following BEFORE the &quot;[default]&quot; URL at the end of the file (so it'll probably end up being the the second to last line in the file): <span class="anchor" id="line-47"></span><span class="anchor" id="line-48"></span><span class="anchor" id="line-49"></span><pre><span class="anchor" id="line-1-6"></span> file:///Users/&lt;your-user-name&gt;/ports</pre><span class="anchor" id="line-50"></span>Run &quot;portindex&quot; to incorporate our new Portfile: <span class="anchor" id="line-51"></span><span class="anchor" id="line-52"></span><span class="anchor" id="line-53"></span><span class="anchor" id="line-54"></span><pre><span class="anchor" id="line-1-7"></span> cd ~/ports
+<span class="anchor" id="line-2-3"></span> portindex</pre><span class="anchor" id="line-55"></span><span class="anchor" id="line-56"></span><span class="anchor" id="line-57"></span><span class="anchor" id="line-58"></span><span class="anchor" id="line-59"></span><span class="anchor" id="line-60"></span><span class="anchor" id="line-61"></span><span class="anchor" id="line-62"></span><span class="anchor" id="line-1-1"></span><div class="highlight console"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-d00622dc299b17fdee67fb66a1e9b3f7cd1cdd9a" lang="en"><span class="line"><span class="anchor" id="line-1-2"></span><span class="LineNumber"> Creating software index in /Users/&lt;your-user-name/ports</span></span>
+<span class="line"><span class="anchor" id="line-2-1"></span><span class="LineNumber"></span><span class="LineNumber"> Adding port python/melview</span></span>
+<span class="line"><span class="anchor" id="line-3-1"></span><span class="LineNumber"></span><span class="LineNumber"></span></span>
+<span class="line"><span class="anchor" id="line-4-1"></span><span class="LineNumber"></span><span class="LineNumber"> Total number of ports parsed:   1</span></span>
+<span class="line"><span class="anchor" id="line-5-1"></span><span class="LineNumber"></span><span class="LineNumber"> Ports successfully parsed:      1</span></span>
+<span class="line"><span class="anchor" id="line-6-1"></span><span class="LineNumber"></span><span class="LineNumber"> Ports failed:                   0</span></span>
+<span class="line"><span class="anchor" id="line-7-1"></span><span class="LineNumber"></span></span>
+</pre></div></div><span class="anchor" id="line-63"></span><span class="anchor" id="line-64"></span></li><li class="gap"><p class="line862">Now you can install/update melview using the normal MacPorts commands: <span class="anchor" id="line-65"></span><span class="anchor" id="line-66"></span><span class="anchor" id="line-67"></span><pre><span class="anchor" id="line-1-8"></span> sudo port install melview +pyside</pre><span class="anchor" id="line-68"></span><span class="anchor" id="line-69"></span></li></ol><p class="line862">This final step may take a long time (hours) as it may need to build all the gcc compilers and libraries from sources. More mature MacPorts releases, i.e., for older Mac OS X, may have these as binaries which will save some time. <span class="anchor" id="line-70"></span><span class="anchor" id="line-71"></span><p class="line874">From now on installing/upgrading/removing melview should be very fast and easy. <span class="anchor" id="line-72"></span><span class="anchor" id="line-73"></span><p class="line867">
+<h2 id="For_RedHat.2FCentOS_users">For RedHat/CentOS users</h2>
+<span class="anchor" id="line-74"></span><p class="line874">melview is available to install via the FMRIB repository. Unfortunately this isn't a public repo so, if you aren't at FMRIB, you will need to follow the manual installation instructions below. <span class="anchor" id="line-75"></span><span class="anchor" id="line-76"></span><p class="line874">NB. To satisfy the dependencies on RedHat/CentOS try the following: <span class="anchor" id="line-77"></span><span class="anchor" id="line-78"></span><p class="line867"><span class="anchor" id="line-79"></span><span class="anchor" id="line-80"></span><pre><span class="anchor" id="line-1-9"></span>sudo yum install python-Traits python-traitsui python-matplotlib python-pyside python-pyface python-configobj</pre><span class="anchor" id="line-81"></span><span class="anchor" id="line-82"></span><p class="line867">
+<h2 id="For_Ubuntu.2FDebian_users">For Ubuntu/Debian users</h2>
+<span class="anchor" id="line-83"></span><p class="line874">We haven't got a suitable installer prepared yet. Please follow the manual install instructions. <span class="anchor" id="line-84"></span><span class="anchor" id="line-85"></span><p class="line874">The package dependencies (on Ubuntu) were: <span class="anchor" id="line-86"></span><span class="anchor" id="line-87"></span><ul><li>python-configobj <span class="anchor" id="line-88"></span></li><li>python-enthoughtbase <span class="anchor" id="line-89"></span></li><li>python-matplotlib <span class="anchor" id="line-90"></span></li><li>python-nibabel <span class="anchor" id="line-91"></span></li><li>python-pyface <span class="anchor" id="line-92"></span></li><li>python-pyside <span class="anchor" id="line-93"></span></li><li>python-traits <span class="anchor" id="line-94"></span></li><li>python-traitsui <span class="anchor" id="line-95"></span><span class="anchor" id="line-96"></span></li></ul><p class="line867">
+<h2 id="For_EPD_users">For EPD users</h2>
+<span class="anchor" id="line-97"></span><p class="line874">While it is possible to install melview in EPD/Canopy environments Enthought have now made this product so hard to obtain, initially setup and, in my opinion, use that I feel it is no longer appropriate for all but the experienced users. <span class="anchor" id="line-98"></span><span class="anchor" id="line-99"></span><p class="line874">Having said that, if you've already installed EPD/Canopy and it's python is the default in your path then melview is installed manually using setuptools: <span class="anchor" id="line-100"></span><span class="anchor" id="line-101"></span><p class="line867"><span class="anchor" id="line-102"></span><span class="anchor" id="line-103"></span><span class="anchor" id="line-104"></span><span class="anchor" id="line-105"></span><pre><span class="anchor" id="line-1-10"></span>git clone https://git.fmrib.ox.ac.uk/fsl/melview.git
+<span class="anchor" id="line-2-4"></span>cd melview
+<span class="anchor" id="line-3-1"></span>sudo python ./setup.py install</pre><span class="anchor" id="line-106"></span><span class="anchor" id="line-107"></span><p class="line867">
+<h2 id="Manual_install_instructions">Manual install instructions</h2>
+<span class="anchor" id="line-108"></span><p class="line874">melview has the following Python (current target is Python 2.7) package dependencies: <span class="anchor" id="line-109"></span><span class="anchor" id="line-110"></span><ul><li>traits <span class="anchor" id="line-111"></span></li><li>traitsui <span class="anchor" id="line-112"></span></li><li>nibabel <span class="anchor" id="line-113"></span></li><li>matplotlib <span class="anchor" id="line-114"></span></li><li>pyside <span class="anchor" id="line-115"></span></li><li>pyface <span class="anchor" id="line-116"></span></li><li>configobj <span class="anchor" id="line-117"></span><span class="anchor" id="line-118"></span></li></ul><p class="line874">Assuming these are present, and you have Administrator (sudo) rights, then you should be able to run: <span class="anchor" id="line-119"></span><span class="anchor" id="line-120"></span><p class="line867"><span class="anchor" id="line-121"></span><span class="anchor" id="line-122"></span><pre><span class="anchor" id="line-1-11"></span>sudo python ./setup.py install</pre><span class="anchor" id="line-123"></span><p class="line867">
+<h1 id="Errors_and_bugs">Errors and bugs</h1>
+<span class="anchor" id="line-124"></span><p class="line862">If you have any issues, either with melview or the install instructions, then please e-mail <a class="mailto" href="mailto:fsl-bugs@fmrib.ox.ac.uk">fsl-bugs@fmrib.ox.ac.uk</a> <span class="anchor" id="line-125"></span><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:28
+</body>
+</html>

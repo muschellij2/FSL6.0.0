@@ -1,0 +1,214 @@
+#!/usr/bin/env fslpython
+#   Copyright (C) 2016 University of Oxford 
+#   Part of FSL - FMRIB's Software Library
+#   http://www.fmrib.ox.ac.uk/fsl
+#   fsl@fmrib.ox.ac.uk
+#   
+#   Developed at FMRIB (Oxford Centre for Functional Magnetic Resonance
+#   Imaging of the Brain), Department of Clinical Neurology, Oxford
+#   University, Oxford, UK
+#   
+#   
+#   LICENCE
+#   
+#   FMRIB Software Library, Release 5.0 (c) 2012, The University of
+#   Oxford (the "Software")
+#   
+#   The Software remains the property of the University of Oxford ("the
+#   University").
+#   
+#   The Software is distributed "AS IS" under this Licence solely for
+#   non-commercial use in the hope that it will be useful, but in order
+#   that the University as a charitable foundation protects its assets for
+#   the benefit of its educational and research purposes, the University
+#   makes clear that no condition is made or to be implied, nor is any
+#   warranty given or to be implied, as to the accuracy of the Software,
+#   or that it will be suitable for any particular purpose or for use
+#   under any specific conditions. Furthermore, the University disclaims
+#   all responsibility for the use which is made of the Software. It
+#   further disclaims any liability for the outcomes arising from using
+#   the Software.
+#   
+#   The Licensee agrees to indemnify the University and hold the
+#   University harmless from and against any and all claims, damages and
+#   liabilities asserted by third parties (including claims for
+#   negligence) which arise directly or indirectly from the use of the
+#   Software or the sale of any products based on the Software.
+#   
+#   No part of the Software may be reproduced, modified, transmitted or
+#   transferred in any form or by any means, electronic or mechanical,
+#   without the express permission of the University. The permission of
+#   the University is not required if the said reproduction, modification,
+#   transmission or transference is done without financial return, the
+#   conditions of this Licence are imposed upon the receiver of the
+#   product, and all original and amended source code is included in any
+#   transmitted product. You may be held legally responsible for any
+#   copyright infringement that is caused or encouraged by your failure to
+#   abide by these terms and conditions.
+#   
+#   You are not permitted under this Licence to use this Software
+#   commercially. Use for which any financial return is received shall be
+#   defined as commercial use, and includes (1) integration of all or part
+#   of the source code or the Software into a product for sale or license
+#   by or on behalf of Licensee to third parties or (2) use of the
+#   Software or any derivative of it for research with the final aim of
+#   developing software products for sale or license to a third party or
+#   (3) use of the Software or any derivative of it for research with the
+#   final aim of developing non-software products for sale or license to a
+#   third party, or (4) use of the Software to provide any service to an
+#   external organisation for which payment is received. If you are
+#   interested in using the Software commercially, please contact Oxford
+#   University Innovation ("OUI"), the technology transfer company of the
+#   University, to negotiate a licence. Contact details are:
+#   Innovation@innovation.ox.ac.uk quoting reference DE/9564.
+
+import argparse
+import numpy as np
+import os
+import sys
+
+fsldir = os.environ['FSLDIR']
+sys.path.append(fsldir + '/python/mist')
+import meshutils
+
+ap = argparse.ArgumentParser(description = 'Mesh utilities for mmsubseg')
+
+sps = ap.add_subparsers(dest = 'verb', help = 'Mode')
+
+sp_mean = sps.add_parser('volume', help = 'Compute mesh volume')
+sp_mean.add_argument('mesh', help = 'Filename of input mesh')
+
+sp_rewrite = sps.add_parser('rewrite', help = 'Rewrite mesh')
+sp_rewrite.add_argument('inmesh', help = 'Filename of input mesh')
+sp_rewrite.add_argument('outmesh', help = 'Filename of output mesh')
+
+sp_gifti = sps.add_parser('gifti', help = 'Convert mesh to gifti')
+sp_gifti.add_argument('inmesh', help = 'Filename of input mesh')
+sp_gifti.add_argument('outmesh', help = 'Filename of output mesh')
+sp_gifti.add_argument('refnii', help = 'Reference nifti image')
+
+sp_reg = sps.add_parser('register', help = 'Register shape to reference')
+sp_reg.add_argument('refmesh', help = 'Filename of reference mesh')
+sp_reg.add_argument('inmesh', help = 'Filename of input mesh')
+sp_reg.add_argument('outmesh', help = 'Filename for registered mesh')
+sp_reg.add_argument('--translateonly', action = 'store_true', help = 'Register shapes before computing distances using translation only')
+
+sp_dists = sps.add_parser('distances', help = 'Compute distances of points on input meshes to reference mesh')
+sp_dists.add_argument('refmesh', help = 'Filename of reference mesh')
+sp_dists.add_argument('inmeshes', nargs = '+', help = 'Filenames of input meshes')
+sp_dists.add_argument('--register', action = 'store_true', help = 'Register shapes before computing distances')
+sp_dists.add_argument('--translate', action = 'store_true', help = 'Register shapes before computing distances using translation only')
+
+sp_dists_paired = sps.add_parser('paireddistances', help = 'Compute difference between two timepoints in distance to reference mesh')
+sp_dists_paired.add_argument('refmesh', help = 'Filename of reference mesh')
+sp_dists_paired.add_argument('inmeshes', nargs = '+', help = 'Filenames of input meshes (two per subject)')
+sp_dists_paired.add_argument('--register', action = 'store_true', help = 'Register shapes before computing distances')
+sp_dists_paired.add_argument('--translate', action = 'store_true', help = 'Register shapes before computing distances using translation only')
+
+sp_nonoverlapping = sps.add_parser('nonoverlapping', help = 'Create non-overlapping voxelwise segmentation from meshes')
+sp_nonoverlapping.add_argument('refvol', help = 'Reference volume')
+sp_nonoverlapping.add_argument('meshes', nargs = '+', help = 'Meshes to generate segmentation from')
+sp_nonoverlapping.add_argument('--outvol', required = True, help = 'Filename of output volumes')
+sp_nonoverlapping.add_argument('--resolve', action = 'store_true', help = 'Assign overlapping voxels to structure for which they are most interior')
+
+sp_mean = sps.add_parser('mean', help = 'Calculate mean of meshes with same polys')
+sp_mean.add_argument('meshes', nargs = '+', help = 'Input meshes')
+sp_mean.add_argument('--outmesh', required = True, help = 'Output mesh')
+sp_mean.add_argument('--preregmesh', help = 'Preregistration target for two-pass mode')
+
+sp_affine = sps.add_parser('affinetransform', help = 'Apply affine transformation')
+sp_affine.add_argument('inmesh', help = 'Filename of input mesh')
+sp_affine.add_argument('affine', help = 'Filename of transformation matrix')
+sp_affine.add_argument('outmesh', help = 'Filename of output mesh')
+
+sp_warp = sps.add_parser('warp', help = 'Apply warp')
+sp_warp.add_argument('inmesh', help = 'Filename of input mesh')
+sp_warp.add_argument('warp', help = 'Filename of warpfield')
+sp_warp.add_argument('invol', help = 'Input reference volume')
+sp_warp.add_argument('refvol', help = 'Output reference volume')
+sp_warp.add_argument('outmesh', help = 'Filename of output mesh')
+
+args = ap.parse_args()
+
+if args.verb == 'volume':
+    print(meshutils.meshvolume(meshutils.loadmesh(args.mesh)))
+elif args.verb == 'rewrite':
+    meshutils.writemesh(args.outmesh, meshutils.loadmesh(args.inmesh))
+elif args.verb == 'gifti':
+    meshutils.writegifti(args.outmesh, meshutils.loadmesh(args.inmesh), args.refnii)
+elif args.verb == 'register':
+    mesh = meshutils.loadmesh(args.inmesh)
+    reference = meshutils.loadmesh(args.refmesh)
+   
+    registered = meshutils.register(mesh, reference, not args.translateonly, False)
+
+    meshutils.writemesh(args.outmesh, registered)
+elif args.verb == 'distances':
+    if args.translate and args.register:
+        raise Exception('--translate and --register are mutually exclusive')
+    
+    regref = meshutils.loadmesh(args.refmesh)
+    registered = list()
+    for fn in args.inmeshes:
+        mesh = meshutils.loadmesh(fn)
+        if args.translate:
+            rmesh = meshutils.register(mesh, regref, False, False)
+        elif args.register:
+            rmesh = meshutils.register(mesh, regref, True, False, large_rot_ok = True)
+        else:
+            rmesh = mesh
+
+        registered.append(rmesh)
+        
+    if args.disttomean:
+        distref = meshutils.meanmesh(registered)
+    else:
+        distref = regref
+        
+    rows = list()
+    for m in registered:
+        if args.pointtosurf:
+            rows.append(meshutils.point_to_mesh_distances(m, distref))
+        else:
+            rows.append(meshutils.point_distances(m, distref))
+    
+    np.savetxt(sys.stdout, np.vstack(rows))
+elif args.verb == 'paireddistances':
+    reference = meshutils.loadmesh(args.refmesh)
+    rows = list()
+    for i in range(0, len(args.inmeshes), 2):
+        mesh1 = meshutils.loadmesh(args.inmeshes[i])
+        mesh2 = meshutils.loadmesh(args.inmeshes[i + 1])
+        
+        if args.translate and args.register:
+            raise Exception('--translate and --register are mutually exclusive')
+        elif args.translate:
+            mesh1 = meshutils.register(mesh1, reference, False, False)
+            mesh2 = meshutils.register(mesh2, reference, False, False)
+        if args.register:
+            mesh1 = meshutils.register(mesh1, reference, True, False)
+            mesh2 = meshutils.register(mesh2, reference, True, False)
+
+        dists1 = meshutils.point_distances(mesh1, reference)
+        dists2 = meshutils.point_distances(mesh2, reference)
+
+        rows.append(dists2 - dists1)
+    
+    np.savetxt(sys.stdout, np.vstack(rows))
+elif args.verb == 'nonoverlapping':
+    meshutils.non_overlapping_segmentation(args.meshes, args.refvol, args.resolve).to_filename(args.outvol)
+elif args.verb == 'mean':
+    inmeshes = [meshutils.loadmesh(fn) for fn in args.meshes]
+
+    if args.preregmesh is not None:
+        ref = meshutils.loadmesh(args.preregmesh)
+        preregmeshes = [meshutils.register(mesh, ref, True, False) for mesh in inmeshes]
+    else:
+        preregmeshes = inmeshes
+        
+    meshutils.writemesh(args.outmesh, meshutils.meanmesh(preregmeshes))
+elif args.verb == 'affinetransform':
+    meshutils.writemesh(args.outmesh, meshutils.affine_transform(meshutils.loadmesh(args.inmesh), np.loadtxt(args.affine)))
+elif args.verb == 'warp':
+    meshutils.writemesh(args.outmesh, meshutils.warp(meshutils.loadmesh(args.inmesh), args.warp, args.invol, args.refvol))
+

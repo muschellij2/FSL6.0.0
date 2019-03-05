@@ -1,0 +1,127 @@
+Identity matrix: 
+i.Minimum:              1
+i.Maximum:              1
+i.MinimumAbsoluteValue: 1
+i.MaximumAbsoluteValue: 1
+i.SumSquare:            10
+i.SumAbsoluteValue:     10
+i.Sum:                  10
+i.Trace:                10
+i.Norm1:                1
+i.NormInfinity:         1
+i.NormFrobenius:        3.16228
+i.Determinant:          1
+i.LogDeterminant:       1
+i.IsZero:               0
+
+Identity matrix = 5:
+i.Minimum:              5
+i.Maximum:              5
+i.MinimumAbsoluteValue: 5
+i.MaximumAbsoluteValue: 5
+i.SumSquare:            250
+i.SumAbsoluteValue:     50
+i.Sum:                  50
+i.Trace:                50
+i.Norm1:                5
+i.NormInfinity:         5
+i.NormFrobenius:        15.8114
+i.Determinant:          9.76562e+06
+i.LogDeterminant:       9.76562e+06
+i.IsZero:               0
+
+Identity matrix = -5:
+i.Minimum:              -5
+i.Maximum:              -5
+i.MinimumAbsoluteValue: 5
+i.MaximumAbsoluteValue: 5
+i.SumSquare:            250
+i.SumAbsoluteValue:     50
+i.Sum:                  -50
+i.Trace:                -50
+i.Norm1:                5
+i.NormInfinity:         5
+i.NormFrobenius:        15.8114
+i.Determinant:          9.76562e+06
+i.LogDeterminant:       9.76562e+06
+i.IsZero:               0
+
+Identity matrix = 0:
+i.Minimum:              0
+i.Maximum:              0
+i.MinimumAbsoluteValue: 0
+i.MaximumAbsoluteValue: 0
+i.SumSquare:            0
+i.SumAbsoluteValue:     0
+i.Sum:                  0
+i.Trace:                0
+i.Norm1:                0
+i.NormInfinity:         0
+i.NormFrobenius:        0
+i.Determinant:          0
+i.LogDeterminant:       0
+i.IsZero:               1
+
+Diagonal matrix = [1, 10]:
+d.Minimum:              1
+d.Maximum:              10
+d.MinimumAbsoluteValue: 1
+d.MaximumAbsoluteValue: 10
+d.SumSquare:            385
+d.SumAbsoluteValue:     55
+d.Sum:                  55
+d.Trace:                55
+d.Norm1:                10
+d.NormInfinity:         10
+d.NormFrobenius:        19.6214
+d.Determinant:          3.6288e+06
+d.LogDeterminant:       3.6288e+06
+d.IsZero:               0
+
+Diagonal matrix = [-5, 4]:
+d.Minimum:              -5
+d.Maximum:              4
+d.MinimumAbsoluteValue: 0
+d.MaximumAbsoluteValue: 5
+d.SumSquare:            85
+d.SumAbsoluteValue:     25
+d.Sum:                  -5
+d.Trace:                -5
+d.Norm1:                5
+d.NormInfinity:         5
+d.NormFrobenius:        9.21954
+d.Determinant:          0
+d.LogDeterminant:       0
+d.IsZero:               0
+
+Diagonal matrix = -10:
+d.Minimum:              -10
+d.Maximum:              -10
+d.MinimumAbsoluteValue: 10
+d.MaximumAbsoluteValue: 10
+d.SumSquare:            1000
+d.SumAbsoluteValue:     100
+d.Sum:                  -100
+d.Trace:                -100
+d.Norm1:                10
+d.NormInfinity:         10
+d.NormFrobenius:        31.6228
+d.Determinant:          1e+10
+d.LogDeterminant:       1e+10
+d.IsZero:               0
+
+Diagonal matrix = 12:
+d.Minimum:              12
+d.Maximum:              12
+d.MinimumAbsoluteValue: 12
+d.MaximumAbsoluteValue: 12
+d.SumSquare:            1440
+d.SumAbsoluteValue:     120
+d.Sum:                  120
+d.Trace:                120
+d.Norm1:                12
+d.NormInfinity:         12
+d.NormFrobenius:        37.9473
+d.Determinant:          6.19174e+10
+d.LogDeterminant:       6.19174e+10
+d.IsZero:               0

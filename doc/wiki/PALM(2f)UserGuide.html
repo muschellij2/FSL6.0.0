@@ -1,0 +1,540 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>PALM/UserGuide</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">PALM/UserGuide</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><p class="line867"><div class="FslToolContents">
+<h1>Contents</h1>
+<ol><li><a href="./PALM.html">Introduction</a></li><li>User Guide<div class="contentslist"><div class="table-of-contents"><p class="table-of-contents-heading">Contents<ol><li>
+<a href="#Downloading_and_installing_PALM">Downloading and installing PALM</a><ol><li>
+<a href="#Running_as_a_standalone_command">Running as a standalone command</a></li><li>
+<a href="#Running_inside_Matlab">Running inside Matlab</a></li><li>
+<a href="#Running_inside_Octave">Running inside Octave</a></li></ol></li><li>
+<a href="#Using_PALM">Using PALM</a><ol><li>
+<a href="#Input_files">Input files</a><ol><li>
+<a href="#Support_for_NIFTI_files">Support for NIFTI files</a></li><li>
+<a href="#Support_for_FreeSurfer_files">Support for FreeSurfer files</a></li><li>
+<a href="#Support_for_CSV_files">Support for CSV files</a></li><li>
+<a href="#Support_for_MSET_files">Support for MSET files</a></li><li>
+<a href="#Support_for_CIFTI_files">Support for CIFTI files</a></li><li>
+<a href="#Support_for_GIFTI_files">Support for GIFTI files</a></li><li>
+<a href="#Support_for_other_file_formats">Support for other file formats</a></li></ol></li><li>
+<a href="#Permutations_or_sign-flips.3F">Permutations or sign-flips?</a></li><li>
+<a href="#Defining_exchangeability_blocks">Defining exchangeability blocks</a></li><li>
+<a href="#Output_files">Output files</a></li><li>
+<a href="#PALM_or_randomise.3F">PALM or randomise?</a></li></ol></li><li>
+<a href="#References">References</a></li></ol></div></div></li><li><a href="./PALM(2f)ExchangeabilityBlocks.html">Exchangeability Blocks</a></li><li><a href="./PALM(2f)JointInference.html">Joint Inference</a></li><li><a href="./PALM(2f)MasksAndVoxelwiseRegressors.html">Masks And Voxelwise Regressors</a></li><li><a href="./PALM(2f)FasterInference.html">Faster Inference</a></li><li><a href="./PALM(2f)Examples.html">Examples</a></li><li><a href="./PALM(2f)FAQ.html">FAQ</a></li></ol></div> <span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-4"></span><span class="anchor" id="line-5"></span><p class="line867">
+<h1 id="Downloading_and_installing_PALM">Downloading and installing PALM</h1>
+<span class="anchor" id="line-6"></span><p class="line862">To download latest packaged version, please <strong><a class="http" href="http://dl.dropboxusercontent.com/u/2785709/outbox/palm/palm-alpha105.tar.gz">click here</a></strong>. <span class="anchor" id="line-7"></span><span class="anchor" id="line-8"></span><p class="line862">Alternatively, visit <a class="https" href="https://github.com/andersonwinkler/PALM">the repository on GitHub</a>. <span class="anchor" id="line-9"></span><span class="anchor" id="line-10"></span><p class="line874">PALM can run as a standalone command (i.e., executed directly from the command line/terminal), or inside Octave or Matlab. In Linux and in Mac systems, it can be executed in any of these ways. In Windows, it can be executed inside Matlab or Octave. <span class="anchor" id="line-11"></span><span class="anchor" id="line-12"></span><p class="line867">
+<h2 id="Running_as_a_standalone_command">Running as a standalone command</h2>
+<span class="anchor" id="line-13"></span><p class="line874">It may be much simpler to run PALM as a command directly from the shell in Linux or in Mac, and it can easily be called from scripts. To do so: <span class="anchor" id="line-14"></span><span class="anchor" id="line-15"></span><ol type="1"><li>Uncompress the downloaded file. <span class="anchor" id="line-16"></span></li><li><p class="line862">Open the file <strong>palm</strong> (not to be confused with <strong>palm.m</strong>). This is a script, inside which you can set whether the script should use Octave or Matlab. If the one that is chosen isn't in the $PATH variable, make sure to specify also the path to the directory that contains the executable for either of these (whichever you choose). <span class="anchor" id="line-17"></span></li><li><p class="line862">To invoke PALM, simply type <strong>./palm</strong> in the directory where it was installed. The path can also be added to the system's $PATH variable, so that it can be easily called from any directory just by typing <strong>palm</strong>. <span class="anchor" id="line-18"></span><span class="anchor" id="line-19"></span></li></ol><p class="line874">If you are using Mac, and choose Octave, note that reading of NIFTI files need the option '-noniiclass' to work properly (more details below). <span class="anchor" id="line-20"></span><span class="anchor" id="line-21"></span><p class="line867">
+<h2 id="Running_inside_Matlab">Running inside Matlab</h2>
+<span class="anchor" id="line-22"></span><p class="line862">Uncompress the downloaded file, open Matlab, and add the newly created directory to the Matlab path (menu File --&gt; Set Path). Typing <strong>palm</strong> at the prompt without arguments shows usage information. This works for Linux, Mac and Windows. <span class="anchor" id="line-23"></span><span class="anchor" id="line-24"></span><p class="line867">
+<h2 id="Running_inside_Octave">Running inside Octave</h2>
+<span class="anchor" id="line-25"></span><p class="line874">Uncompress the downloaded file, start Octave, and add the newly created directory to the Octave path. This can be done with the command addpath: <span class="anchor" id="line-26"></span><span class="anchor" id="line-27"></span><p class="line867"><span class="anchor" id="line-28"></span><span class="anchor" id="line-29"></span><span class="anchor" id="line-1-1"></span><div class="highlight matlab"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-aab3210dec86894d8fc23c7b17ffa4e5d99b0061" lang="en"><span class="line"><span class="anchor" id="line-1-2"></span><span class="ID">addpath</span>(<span class="String">'</span><span class="String">/full/path/to/palm'</span>)</span>
+</pre></div></div><span class="anchor" id="line-30"></span><p class="line862">This line can be added to the ~/.octaverc file, so that the change becomes permanent (if the ~/.octaverc doesn't exist, an empty file can be created, then the line added). Typing <strong>palm</strong> at the prompt without arguments shows usage information. This works for Linux and Mac. It can work also with Windows if the paths are entered using the Windows filesystem convention (e.g., C:\example). <span class="anchor" id="line-31"></span><span class="anchor" id="line-32"></span><p class="line874">For Octave for Mac, note that reading of NIFTI files need the option '-noniiclass' to work properly (more details below). <span class="anchor" id="line-33"></span><span class="anchor" id="line-34"></span><p class="line874">For spatial statistics (cluster extent, cluster mass, and TFCE), the package 'image' is required. <span class="anchor" id="line-35"></span><span class="anchor" id="line-36"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-37"></span>
+<h1 id="Using_PALM">Using PALM</h1>
+<span class="anchor" id="line-38"></span><p class="line862">A description of the main options is below. The same information can be seen if the command <strong>palm</strong> is executed without arguments. <span class="anchor" id="line-39"></span><div><table><tbody><tr>  <td><p class="line891"><strong>Option</strong> </td>
+  <td><p class="line891"><strong>Description</strong> </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-40"></span><p class="line862">-i &lt;file&gt; </td>
+  <td><p class="line862">Input(s). More than one can be specified, each one preceded by its own -i. All input files must contain the same number of observations (e.g., the same number of subjects). Except for NPC and MV, mixing is allowed (e.g., voxelwise, vertexwise and non-imaging data can be all loaded at once, and later will be all corrected across). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-41"></span><p class="line862">-m &lt;file&gt; </td>
+  <td><p class="line862">Mask(s). Either one for all inputs, or one per input supplied in the same order as the respective -i appear. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-42"></span><p class="line862">-s &lt;filesurf&gt; [filearea] </td>
+  <td><p class="line862">Surface file(s). When more than one is supplied, each -s should be entered in the same order as the respective -i. This option is needed when the input data is a scalar field over a surface and cluster extent or TFCE have been enabled. The first argument is the surface file itself. The second is an optional area-per-vertex or area-per-face file, or simply a number. If only the surface file is provided, its area is calculated and used for the computation of spatial statistics (cluster extent and TFCE). If the second argument is given, it should contain the areas, which are then used (e.g., average areas from native geometry after areal interpolation). Alternatively, if the areas are not meaningful for cluster extent or TFCE, this argument can be simply a number, such as &quot;1&quot;, which is then used as the area of all vertices or faces. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-43"></span><p class="line862">-d &lt;file&gt; </td>
+  <td><p class="line862">Design matrix. It can be in csv format, or in fsl's vest format. For information on how to construct the design matrix, see the <a class="http" href="http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/GLM">FSL GLM manual</a>. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-44"></span><p class="line862">-t &lt;file&gt; </td>
+  <td><p class="line891"><em>t</em>-contrasts file, in csv or vest format (the format used by FSL). The option -t can be used more than once, so that more than one <em>t</em>-contrasts file can be loaded. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-45"></span><p class="line862">-f &lt;file&gt; </td>
+  <td><p class="line891"><em>F</em>-contrasts file, in csv or vest format. The option -f can be used more than once, so that more than one <em>F</em>-contrasts file can be loaded. Each file supplied with a -f corresponds to the file supplied with the option -t immediately before. The option -f cannot be used more than the number of times the option -t is used. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-46"></span><p class="line862">-fonly </td>
+  <td><p class="line862">Run only the F-contrasts, not the t-contrasts. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-47"></span><p class="line862">-n &lt;integer&gt; </td>
+  <td><p class="line862">Number of permutations. Use -n 0 to run all permutations and/or sign-flips exhaustively. Default is 10000. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-48"></span><p class="line862">-eb &lt;file&gt; </td>
+  <td><p class="line862">Exchangeability blocks file, in csv or vest format. If omitted, all observations are treated as exchangeable and belonging to a single large exchangeability block. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-49"></span><p class="line862">-within </td>
+  <td><p class="line862">If the file supplied with -eb has a single column, this option runs within-block permutation (default). Can be used with '-whole'. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-50"></span><p class="line862">-whole </td>
+  <td><p class="line862">If the file supplied with -eb has a single column, this option runs whole-block permutation. Can be used with '-within'. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-51"></span><p class="line862">-ee </td>
+  <td><p class="line862">Assume exchangeable errors (EE), to allow permutations (more details below). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-52"></span><p class="line862">-ise </td>
+  <td><p class="line862">Assume independent and symmetric errors (ISE), to allow sign-flipping (more details below). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-53"></span><p class="line862">-vg &lt;file&gt; </td>
+  <td><p class="line862">Variance groups file, in csv or vest format. If omitted, all observations are assumed to belong to the same variance group (i.e. the data is treated as homoscedastic. Use '-vg auto' to define the automatically using a structure that is compatible with the exchangeability blocks (option -eb). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-54"></span><p class="line862">-npcmethod &lt;method&gt; </td>
+  <td><p class="line862">Do a modified non-parametric combination (NPC), using the the specified method (combining function), which can be one of: Tippett, Fisher, Stouffer, Wilkinson &lt;alpha&gt;, Winer, Edgington, Mudholkar-George, Friston &lt;u&gt;, Darlington-Hayes &lt;r&gt;, Zaykin &lt;alpha&gt;, Dudbridge-Koeleman &lt;r&gt;, Dudbridge-Koeleman2 &lt;r&gt; &lt;alpha&gt;, Taylor-Tibshirani or Jiang &lt;alpha&gt;. Default is Fisher. Note that some methods require 1 or 2 additional parameters to be provided. All methods except Darlington-Hayes and Jiang can also be used to produce parametric p-values (under certain assumptions) and spatial statistics. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-55"></span><p class="line862">-npcmod </td>
+  <td><p class="line862">Enable NPC over modalities. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-56"></span><p class="line862">-npccon </td>
+  <td><p class="line862">Enable NPC over contrasts. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-57"></span><p class="line862">-npc </td>
+  <td><p class="line862">Shortcut to &quot;-npcmethod &lt;default method&gt; -npcmod&quot;. The default method is Fisher (this can be changed in the file palm_defaults.m). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-58"></span><p class="line862">-mv &lt;statistic&gt; </td>
+  <td><p class="line862">Do classical multivariate analysis (MV), such as MANOVA and MANCOVA, using the the specified statistic, which can be one of: <a class="nonexistent" href="./HotellingTsq.html">HotellingTsq</a>, Wilks, Lawley-Hotelling, Pillai, Roy_ii or Roy_iii. All but the last can also be used to calculate parametric p-values and spatial statistics. Alternatively, use CCA to do a Canonical Correlation Analysis with permutation test on the indicated k-th canonical correlation (default is 1). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-59"></span><p class="line862">-pearson </td>
+  <td><p class="line862">Instead of <em>t</em>, <em>F</em>, <em>v</em> or <em>G</em>, compute the Pearson's correlation coefficient, <em>r</em> (if the constrast has rank=1), or the coefficient of determination, <em>R</em><sup>2</sup> (if the constrast has rank&gt;1). For the contrasts in which some EVs are zeroed out, this option computes the multiple correlation coefficient (or <em>R</em><sup>2</sup>) corresponding to the EVs of interest. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-60"></span><p class="line862">-T </td>
+  <td><p class="line862">Enable TFCE inference for univariate (partial) tests, as well as for NPC and/or MV if these options have been enabled. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-61"></span><p class="line862">-C &lt;real&gt; </td>
+  <td><p class="line862">Enable cluster inference for univariate (partial) tests, with the supplied cluster-forming threshold (supplied as the equivalent z-score), as well as for NPC and/or MV if these options have been enabled. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-62"></span><p class="line862">-Cstat &lt;name&gt; </td>
+  <td><p class="line862">Choose which cluster statistic should be used. Accepted statistics are &quot;extent&quot; and &quot;mass&quot;. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-63"></span><p class="line862">-tfce1D </td>
+  <td><p class="line862">Set TFCE parameters for 1D data (timeseries), i.e., <em>H</em> = 2, <em>E</em> = 2, <em>C</em> = 6. Use this option together with -T. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-64"></span><p class="line862">-tfce2D </td>
+  <td><p class="line862">Set TFCE parameters for 2D data (surface, TBSS), i.e., <em>H</em> = 2, <em>E</em> = 1, <em>C</em> = 26. Use this option together with -T. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-65"></span><p class="line862">-corrmod </td>
+  <td><p class="line862">Apply FWER-correction of p-values over multiple modalities. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-66"></span><p class="line862">-corrcon </td>
+  <td><p class="line862">Apply FWER-correction of p-values over multiple contrasts. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-67"></span><p class="line862">-fdr </td>
+  <td><p class="line862">Produce FDR-adjusted p-values. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-68"></span><p class="line862">-o &lt;string&gt; </td>
+  <td><p class="line862">Output prefix. It may itself be prefixed by a path. Default is <strong>palm</strong>. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-69"></span><p class="line862">-save1-p </td>
+  <td><p class="line862">Save (1-p) instead of the actual p-values. Instead of -save1-p, consider using <strong>-logp</strong>. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-70"></span><p class="line862">-logp </td>
+  <td><p class="line862">Save the output p-values as -log10(p) (or -log10(1-p) if the option -save1-p is also used; using both together is not recommended). The -logp is not default but it is <strong>strongly recommended</strong>. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-71"></span><p class="line862">-demean </td>
+  <td><p class="line862">Mean center the data, as well as all columns of the design matrix. If the original design had an intercept, the intercept is removed. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-72"></span><p class="line862">-twotail </td>
+  <td><p class="line862">Run two-tailed tests for all the t-contrasts instead of one-tailed. If NPC is used, it also becomes two-tailed for the methods which statistic are symmetric around zero under the null. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-73"></span><p class="line862">-concordant </td>
+  <td><p class="line862">For the NPC, favour alternative hypotheses with concordant signs. Cannot be used with &quot;-twotail&quot;. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-74"></span><p class="line862">-accel &lt;method&gt; </td>
+  <td><p class="line862">Run one of various acceleration methods (negbin, tail, noperm, gamma, lowrank). Click <a href="./PALM(2f)FasterInference.html">here</a> for details. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-75"></span><p class="line862">-reversemasks </td>
+  <td><p class="line862">Reverse 0/1 in the masks, so that the zero values are then used to select the voxels/vertices/faces. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-76"></span><p class="line862">-quiet </td>
+  <td><p class="line862">Don't show progress as the shufflings are performed. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-77"></span><p class="line862">-advanced </td>
+  <td><p class="line862">Show advanced options (see below). </td>
+</tr>
+</tbody></table></div><span class="anchor" id="line-78"></span><span class="anchor" id="line-79"></span><span class="anchor" id="line-80"></span><span class="anchor" id="line-81"></span><span class="anchor" id="line-82"></span><p class="line874">Advanced options are: <span class="anchor" id="line-83"></span><div><table><tbody><tr>  <td><p class="line891"><strong>Option</strong> </td>
+  <td><p class="line891"><strong>Description</strong> </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-84"></span><p class="line862">-con &lt;file1&gt; &lt;file2&gt; </td>
+  <td><p class="line862">Contrast file(s) in .mset format. For hypotheses of the form H0: C'*Beta*D, file1 contains a set of C contrasts, and file2 (optional) contains a set of D contrasts, that are performed in pairs (C,D). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-85"></span><p class="line862">-tonly </td>
+  <td><p class="line862">Run only the t-contrasts, not the F-contrasts. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-86"></span><p class="line862">-cmcp </td>
+  <td><p class="line862">Ignore the possibility of repeated permutations. This option will be ignored if the number of shufflings chosen is larger than the maximum number of possible shufflings, in which case all possible shufflings will be performed. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-87"></span><p class="line862">-cmcx </td>
+  <td><p class="line862">Ignore the possibility of repeated rows in X when constructing the set of permutations, such that each row is treated as unique, regardless of potential repetitions (ties). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-88"></span><p class="line862">-conskipcount &lt;integer&gt; </td>
+  <td><p class="line862">Normally the contrasts are numbered from 1, but this option allows staring the counter from the specified number. This option doesn't affect which contrasts are performed. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-89"></span><p class="line862">-Cuni &lt;real&gt; </td>
+  <td><p class="line862">Enable cluster inference for univariate (partial) tests, with the supplied cluster-forming threshold (as a z-score). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-90"></span><p class="line862">-Cnpc &lt;real&gt; </td>
+  <td><p class="line862">Enable cluster inference for NPC, with the supplied cluster-forming threshold (as a z-score). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-91"></span><p class="line862">-Cmv &lt;real&gt; </td>
+  <td><p class="line862">Enable cluster inference for MV, with the supplied cluster-forming threshold (as a z-score). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-92"></span><p class="line862">-designperinput </td>
+  <td><p class="line862">Use one design file for each input modality. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-93"></span><p class="line862">-ev4vg </td>
+  <td><p class="line862">Add to the design one EV modelling the mean of each VG. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-94"></span><p class="line862">-evperdat &lt;string&gt; [integer] [integer] </td>
+  <td><p class="line862">Treat the design matrix supplied with -d as having one column for each column in the observed data (entered with -i). This enables voxelwise/facewise/vertexwise regressors. For details, <a href="./PALM(2f)MasksAndVoxelwiseRegressors.html">click here</a>. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-95"></span><p class="line862">-inormal </td>
+  <td><p class="line862">Apply an inverse-normal transformation to the data. This procedure can go faster if the data is known to be quantitative (in which case, use '-inormal quanti'). There are four different methods available, which can be specified as '-inormal &lt;method&gt;' or '-inormal quanti &lt;method&gt;'. The methods are Waerden (default), Blom, Tukey and Bliss. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-96"></span><p class="line862">-probit </td>
+  <td><p class="line862">Apply a probit transformation to the data. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-97"></span><p class="line862">-inputmv </td>
+  <td><p class="line862">Treat the (sole) input as multivariate, that is, each column is a variable in a multivariate model, as opposed to independent univariate tests. Useful with non-imaging data. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-98"></span><p class="line862">-noranktest </td>
+  <td><p class="line862">For MV, don't check the rank of the data before trying to compute the multivariate statistics. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-99"></span><p class="line862">-noniiclass </td>
+  <td><p class="line862">Do not use the NIFTI class (use this option only if you have problems and even so, only for small datasets). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-100"></span><p class="line862">-nounivariate </td>
+  <td><p class="line862">Don't save univariate results. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-101"></span><p class="line862">-nouncorrected </td>
+  <td><p class="line862">Don't save uncorrected results. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-102"></span><p class="line862">-pmethodp </td>
+  <td><p class="line862">Partition method used when defining the set of permutations. Can be Guttman, Beckmann, Ridgway or None. Default is Beckmann. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-103"></span><p class="line862">-pmethodr </td>
+  <td><p class="line862">Partition method used during the regression. Valid values are Guttman, Beckmann, Ridgway or None. Default is Beckmann. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-104"></span><p class="line862">-removevgbysize &lt;integer&gt; </td>
+  <td><p class="line862">Remove from the data and design those observations that are in VGs of size smaller or equal than specified. This is specially useful with the option '-vg auto'. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-105"></span><p class="line862">-rmethod &lt;string&gt; </td>
+  <td><p class="line862">Method for regression/permutation. It can be one of Freedman-Lane, Dekker, terBraak, Manly, Draper-Stoneman, Still-White and Huh-Jhun. Default, and recommended, is Freedman-Lane. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-106"></span><p class="line862">-savedof </td>
+  <td><p class="line862">Save file with the degrees of freedom. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-107"></span><p class="line862">-savemask </td>
+  <td><p class="line862">Save the effective masks used for each modality, as well as an intersection mask used for NPC and/or MV of these have been selected. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-108"></span><p class="line862">-savemetrics </td>
+  <td><p class="line862">Save a csv file with various permutation metrics. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-109"></span><p class="line862">-saveparametric </td>
+  <td><p class="line862">Save also uncorrected parametric p-values. These are only valid if all assumptions are met, including iid and normality. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-110"></span><p class="line862">-saveglm </td>
+  <td><p class="line862">Save COPEs and VARCOPEs in the first permutation. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-111"></span><p class="line862">-saveperms </td>
+  <td><p class="line862">Save one statistic image per permutation, as well as a csv file with the permutation indices (one permutation per row, one index per column; sign-flips are represented by the negative indices). Use cautiously, as this may consume large amounts of disk space. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-112"></span><p class="line862">-nounivariate </td>
+  <td><p class="line862">For classical multivariate and NPC, don't save the univariate results. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-113"></span><p class="line862">-seed &lt;positive&gt; </td>
+  <td><p class="line862">Seed used for the random number generator. Use a positive integer up to 2<sup>32</sup>. Default is 0. To start with a random number, use the word 'twist' instead of the integer. Note that a given seed used in Matlab isn't equivalent to the same seed used in Octave. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-114"></span><p class="line862">-syncperms </td>
+  <td><p class="line862">If possible, use synchronized permutations even they wouldn't be used by default. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-115"></span><p class="line862">-subjidx &lt;file&gt; </td>
+  <td><p class="line862">Indices of input data to keep in the design. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-116"></span><p class="line862">-tfce_H &lt;real&gt; </td>
+  <td><p class="line862">Set the TFCE <em>H</em> parameter (height power). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-117"></span><p class="line862">-tfce_E &lt;real&gt; </td>
+  <td><p class="line862">Set the TFCE <em>E</em> parameter (extent power). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-118"></span><p class="line862">-tfce_C &lt;integer&gt; </td>
+  <td><p class="line862">Set the TFCE <em>C</em> parameter (connectivity). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-119"></span><p class="line862">-tfce_dh &lt;real&gt; </td>
+  <td><p class="line862">Set the &quot;delta h&quot; for the calculation of TFCE. Default is &quot;auto&quot; (or 0), i.e., defined on a per-case basis, with max(:)/100 for each map. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-120"></span><p class="line862">-Tuni </td>
+  <td><p class="line862">Enable TFCE inference for univariate (partial) tests. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-121"></span><p class="line862">-Tnpc </td>
+  <td><p class="line862">Enable TFCE inference for NPC. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-122"></span><p class="line862">-Tmv </td>
+  <td><p class="line862">Enable TFCE inference for MV. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-123"></span><p class="line862">-transposedata </td>
+  <td><p class="line862">For input data (-i) that are csv tables, transpose rows and columns. If -evperdat is used, these are also transposed. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-124"></span><p class="line862">-verbosefilenames </td>
+  <td><p class="line862">Use lengthy filenames, even if the numbering goes up to 1 only. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-125"></span><p class="line862">-vgdemean </td>
+  <td><p class="line862">Mean center the data, as well as all columns of the design matrix, within each VG. Intercepts are removed. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-126"></span><p class="line862">-zstat </td>
+  <td><p class="line862">Convert the original statistic (<em>t</em>, <em>F</em>, <em>v</em>, <em>G</em>, <em>r</em>, <em>R</em><sup>2</sup>, or any of the NPC or MV statistics) to a normally distributed, <em>z</em>-statistic. </td>
+</tr>
+</tbody></table></div><span class="anchor" id="line-127"></span><span class="anchor" id="line-128"></span><span class="anchor" id="line-129"></span><span class="anchor" id="line-130"></span><span class="anchor" id="line-131"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-132"></span>
+<h2 id="Input_files">Input files</h2>
+<span class="anchor" id="line-133"></span><p class="line874">Input files are recognised by the file extension: <span class="anchor" id="line-134"></span><div><table><tbody><tr>  <td><p class="line891"><strong>Extension</strong> </td>
+  <td><p class="line891"><strong>Read as</strong> </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-135"></span><p class="line862">.nii, .hdr, .img </td>
+  <td><p class="line862">NIFTI file. Can be used to input data (option -i) and mask (-m). Note that the old ANALYZE format is not supported. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-136"></span><p class="line862">.nii.gz </td>
+  <td><p class="line862">Compressed NIFTI file. Should be uncompressed manually (with gunzip) and loaded as nii (it uses more disk space, but far less memory). Or can be read directly with the option -noniiclass, but beware that for large datasets, the data may easily occupy <strong>'all</strong>' the computer memory. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-137"></span><p class="line862">.mgh, .mgz </td>
+  <td><p class="line891"><a href="./FreeSurfer.html">FreeSurfer</a> data, either volumetric or surface-based. Can be used to input data (option -i) or mask for the same kind of data (option -m). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-138"></span><p class="line862">.dpv, .dpf, .dpx </td>
+  <td><p class="line862">Data-per-vertex (vertexwise), data-per-face (facewise), or unspecified surface-based data. Can be used to specify a mask (option -m) for surface-based data. Multiple such files can be merged into a csv table, and then input with the option -i; see details below. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-139"></span><p class="line862">.csv </td>
+  <td><p class="line862">Table in csv format. Can be used to specify input data (option -i), mask for the same kind of data (option -m), design matrix (option -d), contrasts (options -t and -f), exchangeability blocks (-eb) and variance groups (-vg). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-140"></span><p class="line862">.mat, .con, .fts, .grp </td>
+  <td><p class="line862">Table in the FSL vest format. Can be used essentially in the same way as csv files, i.e., to specify input data (option -i), mask for the same kind of data (-m) design matrix (-d), contrasts (options -t and -f), exchangeability blocks (-eb) and variance groups (-vg). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-141"></span><p class="line862">.mset </td>
+  <td><p class="line862">Multiple tables (arrays) in a single ASCII file. This format can be used with the option -con. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-142"></span><p class="line862">.srf </td>
+  <td><p class="line862">Surface in ASCII format (option -s). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-143"></span><p class="line862">.inflated, .nofix, .orig, .pial, .smoothwm, .sphere, .reg, .white </td>
+  <td><p class="line862">Files with these extensions are read as <a href="./FreeSurfer.html">FreeSurfer</a> surface (option -s). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-144"></span><p class="line862">.gii </td>
+  <td><p class="line862">GIFTI file. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-145"></span><p class="line862">.dtseries.nii, .ptseries.nii, .dscalar.nii, .pscalar.nii </td>
+  <td><p class="line862">CIFTI file. Support is currently available only for .dscalar.nii, .dtseries.nii, .pscalar.nii and .ptseries.nii and even so as long as it contains just surface-based data (volume-data will be ignored). It is expected that in the future there will be complete support for CIFTI files. </td>
+</tr>
+</tbody></table></div><span class="anchor" id="line-146"></span><span class="anchor" id="line-147"></span><span class="anchor" id="line-148"></span><span class="anchor" id="line-149"></span><span class="anchor" id="line-150"></span><p class="line874">Files with extensions not listed above won't be read. <span class="anchor" id="line-151"></span><span class="anchor" id="line-152"></span><p class="line867">
+<h3 id="Support_for_NIFTI_files">Support for NIFTI files</h3>
+<span class="anchor" id="line-153"></span><p class="line874">Support for NIFTI files is provided, internally, by the publicly available NIFTI class. This allows reading and writing even huge files without using too much computer memory. However, the NIFTI class does not operate on compressed files, i.e., with extension .nii.gz. To read these files, it is recommended that they are uncompressed (with gunzip). <span class="anchor" id="line-154"></span><span class="anchor" id="line-155"></span><p class="line862">Alternatively, if the datasets are small, and if either FSL or <a href="./FreeSurfer.html">FreeSurfer</a> are installed, the NIFTI class can be disabled with the option -noniiclass. This allows to read/write these .nii.gz files directly. However, if the files are too large, this can easily use all the computer memory and the system may become unstable/unusable. The option -noniiclass should be used with great caution for large datasets. <span class="anchor" id="line-156"></span><span class="anchor" id="line-157"></span><p class="line874">The NIFTI class, that is used by default, already comes with precompiled binaries for Matlab in various platforms, and for Octave for most 64-bit Linux distributions. Nonetheless, if compilation is needed, try using: <span class="anchor" id="line-158"></span><span class="anchor" id="line-159"></span><p class="line867"><span class="anchor" id="line-160"></span><span class="anchor" id="line-161"></span><span class="anchor" id="line-162"></span><span class="anchor" id="line-1-3"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-5303af7e0bffdd8b4d662fc0c5554758a0c14812" lang="en"><span class="line"><span class="anchor" id="line-1-4"></span><span class="ResWord">cd</span> /full/path/to/palm/fileio/@file_array/private</span>
+<span class="line"><span class="anchor" id="line-2-1"></span>./compile.sh</span>
+</pre></div></div><span class="anchor" id="line-163"></span><p class="line867">
+<h3 id="Support_for_FreeSurfer_files">Support for FreeSurfer files</h3>
+<span class="anchor" id="line-164"></span><p class="line862">To be able to read/write <a href="./FreeSurfer.html">FreeSurfer</a> binary files (surfaces and curvatures), <a href="./FreeSurfer.html">FreeSurfer</a> needs to be installed and configured correctly. Surface files in ASCII format are read directly by PALM as long as their file extension is srf, so <a href="./FreeSurfer.html">FreeSurfer</a> isn't necessary for these files. <span class="anchor" id="line-165"></span><span class="anchor" id="line-166"></span><p class="line862">Freesurfer &quot;curvature&quot; files converted to ASCII (asc/dpv/dpf/dpx) need to be merged and converted to csv tables. To generate a valid csv file, use the command <strong>dpx2csv</strong> (available <strong><a class="https" href="https://dl.dropboxusercontent.com/u/2785709/outbox/palm/dpx2csv">here</a></strong>) to make the csv file, initially with one column per subject and one row per vertex or face, then transpose the rows and columns of this file with the command <strong>transpose</strong> (available <strong><a class="https" href="https://dl.dropboxusercontent.com/u/2785709/outbox/palm/transpose">here</a></strong>). <span class="anchor" id="line-167"></span><span class="anchor" id="line-168"></span><p class="line867">
+<h3 id="Support_for_CSV_files">Support for CSV files</h3>
+<span class="anchor" id="line-169"></span><p class="line862">Although PALM was created with imaging in mind, it can be used for non-imaging data. Any kind of data that can be arranged in a table and saved as comma-separated values file (csv) (i.e., <em>any</em> data) can be used as input. Each row constitutes a subject or observation, and each column represents a measurement. The csv files must contain numeric fields only, i.e., title labels are not accepted and will cause errors. <span class="anchor" id="line-170"></span><span class="anchor" id="line-171"></span><p class="line874">If the data is arranged as space- or tab-separated values instead of comma-separated values, it can be converted quickly using awk (or gawk): <span class="anchor" id="line-172"></span><span class="anchor" id="line-173"></span><p class="line867"><span class="anchor" id="line-174"></span><span class="anchor" id="line-175"></span><span class="anchor" id="line-1-5"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-7085703fb7625a9b2ea87adc483e8ccdf4c46843" lang="en"><span class="line"><span class="anchor" id="line-1-6"></span>awk <span class="String">'BEGIN { OFS=&quot;,&quot; } { $1=$1; print $0 }'</span> oldfile.txt &gt; newfile.csv</span>
+</pre></div></div><span class="anchor" id="line-176"></span><p class="line874">If your data has any other separator, e.g., a semicolon, the same applies with using a small modification: <span class="anchor" id="line-177"></span><span class="anchor" id="line-178"></span><p class="line867"><span class="anchor" id="line-179"></span><span class="anchor" id="line-180"></span><span class="anchor" id="line-1-7"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-95110fa017da65d460eda79514d3a440b538ace4" lang="en"><span class="line"><span class="anchor" id="line-1-8"></span>awk <span class="String">'BEGIN { FS=&quot;x&quot;; OFS=&quot;,&quot; } { $1=$1; print $0 }'</span> oldfile.txt &gt; newfile.csv</span>
+</pre></div></div><span class="anchor" id="line-181"></span><p class="line874">where the &quot;x&quot; should be replaced by the separator in the original table (e.g., a semicolon). <span class="anchor" id="line-182"></span><span class="anchor" id="line-183"></span><p class="line867">
+<h3 id="Support_for_MSET_files">Support for MSET files</h3>
+<span class="anchor" id="line-184"></span><p class="line874">To allow multivariate contrasts, PALM uses a simple ASCII format that can contain multiple matrices. An example of such file is: <span class="anchor" id="line-185"></span><span class="anchor" id="line-186"></span><p class="line867"><span class="anchor" id="line-187"></span><span class="anchor" id="line-188"></span><span class="anchor" id="line-189"></span><span class="anchor" id="line-190"></span><span class="anchor" id="line-191"></span><span class="anchor" id="line-192"></span><span class="anchor" id="line-193"></span><span class="anchor" id="line-1-9"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-2357f7be1cc9095b39d471610793a098404894d0" lang="en"><span class="line"><span class="anchor" id="line-1-10"></span>Matrix <span class="Number">1</span> 3</span>
+<span class="line"><span class="anchor" id="line-2-2"></span><span class="Number">1</span> -1 0</span>
+<span class="line"><span class="anchor" id="line-3-1"></span></span>
+<span class="line"><span class="anchor" id="line-4-1"></span>Matrix <span class="Number">2</span> 3</span>
+<span class="line"><span class="anchor" id="line-5-1"></span><span class="Number">1</span> -1 0</span>
+<span class="line"><span class="anchor" id="line-6-1"></span><span class="Number">1</span> <span class="Number">0</span> -1</span>
+</pre></div></div><span class="anchor" id="line-194"></span><p class="line862">In the example, the first matrix is defined as having 1 row and 3 columns (the numbers after the keyword &quot;Matrix&quot;). The second matrix is defined as having 2 rows and 3 columns. Files as these are meant to be used to test multivariate hypotheses as H: C'*Beta*D using the option <strong>-con &lt;file1&gt; &lt;file2&gt;</strong>, where &lt;file1&gt; is a file with multiple contrasts C and &lt;file2&gt; with multiple contrasts D. Each contrast in C pairs with a contrast in D. <span class="anchor" id="line-195"></span><span class="anchor" id="line-196"></span><p class="line867">
+<h3 id="Support_for_CIFTI_files">Support for CIFTI files</h3>
+<span class="anchor" id="line-197"></span><p class="line862">Surface data in CIFTI files that are of the type &quot;dtseries&quot;, &quot;ptseries&quot;, &quot;dscalar&quot; and &quot;pscalar&quot; can be read directly (volume-data will be ignored). However, it is possible to manually split the CIFTI files into GIFTI and NIFTI parts, which then can be loaded (see examples <a href="./PALM(2f)Examples.html">in this page</a>). The <a class="http" href="http://www.humanconnectome.org/software/connectome-workbench.html">Connectome Workbench</a> must be installed. CIFTI can be used with PALM in Octave (both Mac and Linux) and in Matlab (Linux only). <span class="anchor" id="line-198"></span><span class="anchor" id="line-199"></span><p class="line867">
+<h3 id="Support_for_GIFTI_files">Support for GIFTI files</h3>
+<span class="anchor" id="line-200"></span><p class="line874">GIFTI files are supported. However, note that the access to the actual data depends on parsing a potentially large XML tree, which can be slow in both Matlab and Octave. Other equivalent formats are usually faster to load. <span class="anchor" id="line-201"></span><span class="anchor" id="line-202"></span><p class="line867">
+<h3 id="Support_for_other_file_formats">Support for other file formats</h3>
+<span class="anchor" id="line-203"></span><p class="line874">If there is a file format that cannot be easily converted to csv, and which you'd like to be able to read directly in PALM, feel free to contact us. New formats may be added for future releases. <span class="anchor" id="line-204"></span><span class="anchor" id="line-205"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-206"></span>
+<h2 id="Permutations_or_sign-flips.3F">Permutations or sign-flips?</h2>
+<span class="anchor" id="line-207"></span><p class="line874">Exchangeable errors (EE) are assumed by default, such that permutations are performed. If the option -ise is supplied, the errors are instead assumed to be independent and symmetric (ISE) and only sign-flips are performed. If both -ee and -ise options are given, the errors are treated as being exchangeable, independent and symmetric, and both permutations and sign-flips are performed. <span class="anchor" id="line-208"></span><span class="anchor" id="line-209"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-210"></span>
+<h2 id="Defining_exchangeability_blocks">Defining exchangeability blocks</h2>
+<span class="anchor" id="line-211"></span><p class="line874">A basic definition of exchangeability blocks (EBs) can be made using a text file containing a single column of positive integers representing the blocks, i.e., one value per line. This file is supplied with the option -eb, and indicates that the observations corresponding to each line can only be shuffled within block of the same index. If a file with this simple structure is given with -eb and the option -whole is used, then the blocks are permuted as a whole, with the order of observations inside each block being kept unchanged. If the option -ise is used, sign-flips ignore block definitions unless the option -whole is given, in which case the signs of the blocks as a whole are flipped. If the option -whole is used together with the option -within, permutations happen for the blocks as a whole, and further within each block. <span class="anchor" id="line-212"></span><span class="anchor" id="line-213"></span><p class="line874">While the simple block specification as above, with just one column of indices, can cover various designs with structured dependence between observations, cases of more complex dependence can be accommodated using multiple, nested block definitions. In this case, the file containing the block definitions needs not just one, but multiple columns, each with a sequentially deeper level of dependence. Indices on one level indicate how the indices of the next level should be permuted. Positive indices at one level indicate that the corresponding indices of the next level should be permuted as a whole, akin to whole-block permutation with the &quot;-whole&quot; option described above. Negative indices at one level indicate that the corresponding indices in the next level should not be permutted, and their own subindices should be permuted within block, akin to within-block permutation described above. With this more complex structure, the option &quot;-whole&quot;, even if supplied, is ignored, as this information is embedded, at multiple levels, in the file with the block definitions. <span class="anchor" id="line-214"></span><span class="anchor" id="line-215"></span><p class="line862">For more details and examples, <a href="./PALM(2f)ExchangeabilityBlocks.html">click here</a>. <span class="anchor" id="line-216"></span><span class="anchor" id="line-217"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-218"></span>
+<h2 id="Output_files">Output files</h2>
+<span class="anchor" id="line-219"></span><p class="line862">All output file names are prefixed by the string supplied with the option -o. If this option is not supplied, the outputs will be saved to the directory from which palm is executed, all named as <strong>palm_*</strong>. The file names follow a consistent convention described below. <span class="anchor" id="line-220"></span><span class="anchor" id="line-221"></span><p class="line862">The file format of the outputs is the same as the input data (supplied with the option -i, collapsed along the dimension of the observations, i.e., the 4th dimension for 4D datasets (NIFTI or <a href="./FreeSurfer.html">FreeSurfer</a> surface formats), or the 1st dimension (rows) of csv files or 2D NIFTI files. <span class="anchor" id="line-222"></span><span class="anchor" id="line-223"></span><p class="line874">There are 2 outputs of general interest: the statistic image and its associated p-value. If the option -saveperms is used, the statistic computed for each permutation is also saved, as well as a table with the permutation indices for these images. These files are named according to the following convention: <span class="anchor" id="line-224"></span><div><table><tbody><tr>  <td><p class="line891"><strong>File name</strong> </td>
+  <td><p class="line891"><strong>File contents</strong> </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-225"></span><p class="line862">{prefix}_{unit}_{stat}_m{#}_d{#}_c{#}.{ext} </td>
+  <td><p class="line862">Statistic for the modality m{#}, for the design d{#} and for contrast c{#}. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-226"></span><p class="line862">{prefix}_{unit}_{stat}_{pval}_m{#}_d{#}_c{#}.{ext} </td>
+  <td><p class="line862">P-value for the modality m{#}, for the design d{#} and for contrast c{#}. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-227"></span><p class="line862">{prefix}_{unit}_{stat}_m{#}_d{#}_c{#}.dof </td>
+  <td><p class="line862">A text file containing the degrees of freedom for the statistic computed for the modality m{#}, for the design d{#} and for contrast c{#}. This is only useful to refer to the parametric distribution to find the p-values (which can, nonetheless, be produced directly with the option -saveparametric. For the <em>v</em> and <em>G</em> statistics, the dof of the errors are saved in the same format as the inputs. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-228"></span><p class="line862">{prefix}_{unit}_{stat}_m{#}_d{#}_c{#}_perm{#}.{ext} </td>
+  <td><p class="line862">Statistic for the permutation perm{#} for the modality m{#}, for the design d{#} and for contrast c{#}, if the option -saveperms is used. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-229"></span><p class="line862">{prefix}_{unit}_{stat}_m{#}_d{#}_c{#}_permidx.csv </td>
+  <td><p class="line862">Permutation indices, with negatives for the sign flips, if the option -saveperms is used. This csv file has one row per permutation and one column per permutation index. </td>
+</tr>
+</tbody></table></div><span class="anchor" id="line-230"></span><span class="anchor" id="line-231"></span><span class="anchor" id="line-232"></span><span class="anchor" id="line-233"></span><span class="anchor" id="line-234"></span><p class="line874">Each of these fields are: <span class="anchor" id="line-235"></span><div><table><tbody><tr>  <td><p class="line891"><strong>Field</strong> </td>
+  <td><p class="line891"><strong>Description</strong> </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-236"></span><p class="line862">{prefix} </td>
+  <td><p class="line862">The prefix supplied with the option -o, which can contain full path information. If -o isn't supplied, the default prefix is <strong>palm</strong>. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-237"></span><p class="line862">{unit} </td>
+  <td><p class="line862">The unit in space in which the statistic is calculated. This can be <em>vox</em> for voxelwise, <em>vtx</em> for vertexwise, <em>fac</em> for facewise, <em>dpx</em> for surface-data without specification (it can be vertexwise or facewise if the actual surface geometry wasn't supplied with the -s option), <em>dat</em> for any data that doesn't necessarily have a spatial meaning (e.g., data entered in csv format), <em>clustere</em> for cluster extent, <em>clusterm</em> for cluster mass, or <em>tfce</em> for TFCE. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-238"></span><p class="line862">{stat} </td>
+  <td><p class="line862">The name of the statistic, which can be <em>tstat</em> for the <em>t</em>-statistic, <em>fstat</em> for the <em>F</em>-statistic, <em>vstat</em> for the Aspin–Welch's <em>v</em>-statistic, <em>gstat</em> for the generalised <em>G</em>-statistic, <em>rstat</em> for the Person's <em>r</em> correlation coefficient, <em>rsqstat</em> for the <em>R</em><sup>2</sup> coefficient of determination. For NPC, it is <em>npc</em>, appended by the name of the combining function. For MV, it is <em>mv</em> appended by the name of the statistic, or by <em>tsqstat</em> for Hotelling's <em>T</em><sup>2</sup>. If the option -zstat was enabled, all these names are prefixed by the letter <em>z</em>. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-239"></span><p class="line862">{pval} </td>
+  <td><p class="line862">The type of p-value stored in the image. It can be <em>uncp</em> for uncorrected permutation p-values, <em>fwep</em> for the p-values FWER-corrected within modality and contrast, <em>cfwep</em> for the p-values FWER-corrected across contrasts if the option -corrcon was used (so, within modality), <em>mfwep</em> for the p-values FWER-corrected across modalities if the option -corrmod was used (so, within contrast), <em>mcfwep</em> for the p-values FWER-corrected across modalities and contrasts, <em>fdrp</em> for p-values FDR-adjusted within modality and contrast, <em>uncparap</em> uncorrected parametric p-value and <em>fdrparap</em> parametric FDR-corrected p-values. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-240"></span><p class="line862">m{#} </td>
+  <td><p class="line862">Modality index, in the same order as supplied as input with the option -i. This is omitted for the NPC over modalities and for MV statistics, or if there is just one modality. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-241"></span><p class="line862">d{#} </td>
+  <td><p class="line862">Design index, in the same order as supplied with the option -d. This is omitted if there is just one design. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-242"></span><p class="line862">c{#} </td>
+  <td><p class="line862">Contrast index, in the same order as in the files supplied with the -t and/or -f options. This is omitted if there is just one contrast. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-243"></span><p class="line862">perm{#} </td>
+  <td><p class="line862">Statistic map for the permutation perm{#} if the option -saveperms is used. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-244"></span><p class="line862">{ext} </td>
+  <td><p class="line862">File extension. This will typically be the same extension as the corresponding input files. </td>
+</tr>
+</tbody></table></div><span class="anchor" id="line-245"></span><span class="anchor" id="line-246"></span><span class="anchor" id="line-247"></span><span class="anchor" id="line-248"></span><span class="anchor" id="line-249"></span><p class="line862">In addition, other files are created: a small text file is saved containing the degrees of freedom associated with the statistic. For the <em>v</em> and <em>G</em> statistics, the degrees of freedom associated with the errors vary for each image point and are saved as a map. A configuration file with all the input options is also saved. This file can be used as the sole argument to palm to run the same analysis again. <span class="anchor" id="line-250"></span><span class="anchor" id="line-251"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-252"></span>
+<h2 id="PALM_or_randomise.3F">PALM or randomise?</h2>
+<span class="anchor" id="line-253"></span><p class="line874">Compared to randomise, PALM performs overall the same type of test, i.e., permutation, but offering various additional or novel features: <span class="anchor" id="line-254"></span><div><table><tbody><tr>  <td><p class="line891"><strong>Feature</strong> </td>
+  <td><p class="line891"><strong>randomise</strong> </td>
+  <td><p class="line891"><strong>PALM</strong> </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-255"></span><p class="line862">Input formats </td>
+  <td><p class="line862">NIFTI. </td>
+  <td><p class="line862">NIFTI, CSV, GIFTI, <a href="./FreeSurfer.html">FreeSurfer</a> (surface formats, MGH files, curvature, including ASCII vertexwise and facewise). Partial support for CIFTI. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-256"></span><p class="line862">Univariate statistics </td>
+  <td><p class="line891"><em>t</em> and <em>F.</em> </td>
+  <td><p class="line891"><em>t</em>, <em>F</em>, Aspin–Welch's <em>v</em>, <em>G</em>, Pearson's <em>r</em> and <em>R</em><sup>2</sup>. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-257"></span><p class="line862">Multivariate statistics </td>
+  <td><p class="line862">None </td>
+  <td><p class="line862">CCA, Hotelling's <em>T</em><sup>2</sup>, Wilks' lambda, Pillai's trace, Lawley–Hotelling's trace, Roy's largest root (both variants), assessed parametrically and non-parametrically. Details <a href="./PALM(2f)JointInference.html">here</a>. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-258"></span><p class="line862">Spatial statistics </td>
+  <td><p class="line862">Cluster extent, cluster mass, TFCE. All of these can be volume-based (voxelwise). </td>
+  <td><p class="line862">Cluster extent, cluster mass, TFCE. All of these can be volume-based (voxelwise) or surface-based (vertexwise or facewise). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-259"></span><p class="line862">Regression and permutation strategies </td>
+  <td><p class="line862">Freedman–Lane. </td>
+  <td><p class="line862">Draper–Stoneman, Still–White, Freedman–Lane, ter Braak, Manly, Huh–Jhun, Smith and parametric (no permutation). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-260"></span><p class="line862">Shuffling possibilities </td>
+  <td><p class="line862">Permutations or sign-flippings. </td>
+  <td><p class="line862">Permutations, sign-flippings, and permutations with sign-flippings. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-261"></span><p class="line862">Block permutation </td>
+  <td><p class="line862">Either whole-block or within-block. </td>
+  <td><p class="line862">Whole-block and/or within-block, either in isolation or in arbitrary combinations, with multiple and complex levels of tree-like dependence between observations. Details <a href="./PALM(2f)ExchangeabilityBlocks.html">here</a>. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-262"></span><p class="line862">Variance groups </td>
+  <td><p class="line862">One. Cannot be changed. </td>
+  <td><p class="line862">Multiple. Can be set automatically or defined by the user. Details <a href="./PALM(2f)ExchangeabilityBlocks.html">here</a>. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-263"></span><p class="line862">Input datasets (modalities) </td>
+  <td><p class="line862">One. </td>
+  <td><p class="line862">Multiple. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-264"></span><p class="line862">Input designs matrices </td>
+  <td><p class="line862">One. </td>
+  <td><p class="line862">Multiple. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-265"></span><p class="line862">Joint permutation inference across modalities and/or contrasts </td>
+  <td><p class="line862">No. </td>
+  <td><p class="line862">Yes. Various combining functions available: Tippett, Fisher, Pearson–David, Stouffer, Wilkinson, Winer, Edgington, Mudholkar–George, Friston, Darlington–Hayes, Zaykin, Dudbridge–Koeleman (2 variants), Taylor–Tibshirani and Jiang. Most of these can also be assessed parametrically. Details <a href="./PALM(2f)JointInference.html">here</a>. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-266"></span><p class="line862">FWER correction </td>
+  <td><p class="line862">Within each contrast only. </td>
+  <td><p class="line862">Within contrast, across contrasts, within modality, across modalities, and across modalities and contrasts. For correction across modalities, these don't need to have the same resolution or geometry; in fact, they don't need to be imaging data (and images can be mixed with non-images). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-267"></span><p class="line862">FDR correction </td>
+  <td><p class="line862">Yes, separate command. Correction within each contrast only. </td>
+  <td><p class="line862">Yes, built-in. Correction can be within contrast, across contrasts, within modality, across modalities, and across modalities and contrasts. For correction across modalities, these don't need to have the same resolution or geometry; in fact, they don't need to be imaging data (and images can be mixed with non-images). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-268"></span><p class="line862">Non-stationarity correction </td>
+  <td><p class="line862">Yes. </td>
+  <td><p class="line862">No. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-269"></span><p class="line862">Voxelwise regressors </td>
+  <td><p class="line862">Yes. </td>
+  <td><p class="line862">Yes. Details <a href="./PALM(2f)MasksAndVoxelwiseRegressors.html">here</a>. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-270"></span><p class="line862">Fast approximations </td>
+  <td><p class="line862">No. </td>
+  <td><p class="line862">Yes, various methods described <a href="./PALM(2f)FasterInference.html">here</a>. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-271"></span><p class="line862">Parametric p-values </td>
+  <td><p class="line862">No. </td>
+  <td><p class="line862">Yes, for univariate, multivariate, and most of the NPC combining functions (uncorrected and FDR-corrected). </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-272"></span><p class="line862">Permutation metrics </td>
+  <td><p class="line862">None. </td>
+  <td><p class="line862">Average Hamming distance, Hubermann–Hogg complexity and entropy measurements. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-273"></span><p class="line862">Overall performance </td>
+  <td><p class="line862">Generally a bit slower, except for spatial statistics. </td>
+  <td><p class="line862">Generally a bit faster, except for spatial statistics, that can be extremely slow. Includes acceleration methods (details <a href="./PALM(2f)FasterInference.html">here</a>) </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-274"></span><p class="line862">Parallel processing </td>
+  <td><p class="line862">Yes, with a separate script (randomise_parallel). </td>
+  <td><p class="line862">No. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-275"></span><p class="line862">Language </td>
+  <td><p class="line862">Written in C++. </td>
+  <td><p class="line862">Written in Matlab/Octave. </td>
+</tr>
+<tr>  <td><span class="anchor" id="line-276"></span><p class="line862">License </td>
+  <td><p class="line862">Free for academic use. </td>
+  <td><p class="line862">Free (<a class="http" href="http://www.gnu.org/licenses/gpl.html">GPL</a>). </td>
+</tr>
+</tbody></table></div><span class="anchor" id="line-277"></span><span class="anchor" id="line-278"></span><span class="anchor" id="line-279"></span><span class="anchor" id="line-280"></span><span class="anchor" id="line-281"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-282"></span>
+<h1 id="References">References</h1>
+<span class="anchor" id="line-283"></span><p class="line862">The main reference for PALM is the same as for <strong>randomise</strong>: <span class="anchor" id="line-284"></span><span class="anchor" id="line-285"></span><p class="line867"><span class="anchor" id="line-286"></span><span class="anchor" id="line-287"></span><div class="references"><span class="anchor" id="line-1-11"></span><p class="line862">* Winkler AM, Ridgway GR, Webster MA, Smith SM, Nichols TE. <a class="http" href="http://www.sciencedirect.com/science/article/pii/S1053811914000913">Permutation inference for the general linear model.</a> <a class="nonexistent" href="./NeuroImage.html">NeuroImage</a>, 2014;92:381-397 (Open Access) </div><span class="anchor" id="line-288"></span><p class="line874">For the multi-level exchangeability blocks, the reference is: <span class="anchor" id="line-289"></span><span class="anchor" id="line-290"></span><p class="line867"><span class="anchor" id="line-291"></span><span class="anchor" id="line-292"></span><div class="references"><span class="anchor" id="line-1-12"></span><p class="line862">* Winkler AM, Webster MA, Vidaurre D, Nichols TE, Smith SM. <a class="http" href="http://www.sciencedirect.com/science/article/pii/S105381191500508X">Multi-level block permutation.</a> Neuroimage. 2015;123:253-68. (Open Access) </div><span class="anchor" id="line-293"></span><p class="line874">For Non-Parametric Combination (NPC), classical multivariate tests (MANOVA, MANCOVA, CCA) assessed with permutations, and for correction over contrasts and/or modalities (options -corrcon and -corrmod), the reference is: <span class="anchor" id="line-294"></span><span class="anchor" id="line-295"></span><p class="line867"><span class="anchor" id="line-296"></span><span class="anchor" id="line-297"></span><div class="references"><span class="anchor" id="line-1-13"></span><p class="line862">* Winkler AM, Webster MA, Brooks JC, Tracey I, Smith SM, Nichols TE. <a class="http" href="http://onlinelibrary.wiley.com/doi/10.1002/hbm.23115/epdf">Non-Parametric Combination and related permutation tests for neuroimaging.</a> Hum Brain Mapp. 2016 Apr;37(4):1486-511. (Open Access) </div><span class="anchor" id="line-298"></span><p class="line874">For the accelerated permutation inference (options -accel or -approx), the reference is: <span class="anchor" id="line-299"></span><span class="anchor" id="line-300"></span><p class="line867"><span class="anchor" id="line-301"></span><span class="anchor" id="line-302"></span><div class="references"><span class="anchor" id="line-1-14"></span><p class="line862">* Winkler AM, Ridgway GR, Douaud G, Nichols TE, Smith SM. <a class="http" href="http://www.sciencedirect.com/science/article/pii/S1053811916301902">Faster permutation inference in brain imaging.</a> Neuroimage. 2016 (Open Access, in press) </div><span class="anchor" id="line-303"></span><p class="line874">For additional theory of permutation tests in neuroimaging, please see and cite: <span class="anchor" id="line-304"></span><span class="anchor" id="line-305"></span><p class="line867"><span class="anchor" id="line-306"></span><span class="anchor" id="line-307"></span><span class="anchor" id="line-308"></span><span class="anchor" id="line-309"></span><div class="references"><span class="anchor" id="line-1-15"></span><p class="line862">* Nichols TE, Holmes AP. <a class="http" href="http://dx.doi.org/10.1002/hbm.1058">Nonparametric permutation tests for functional neuroimaging: a primer with examples.</a> Hum Brain Mapp. 2002 Jan;15(1):1-25. <span class="anchor" id="line-2-3"></span><span class="anchor" id="line-3-2"></span><p class="line862">* Holmes AP, Blair RC, Watson JD, Ford I. <a class="http" href="http://dx.doi.org/10.1097/00004647-199601000-00002">Nonparametric analysis of statistic images from functional mapping experiments.</a> J Cereb Blood Flow Metab. 1996 Jan;16(1):7-22. </div><span class="anchor" id="line-310"></span><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:28
+</body>
+</html>

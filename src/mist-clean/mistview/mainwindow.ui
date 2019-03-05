@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>711</width>
+    <height>560</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MIST Viewer</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QSplitter" name="splitter">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="handleWidth">
+       <number>7</number>
+      </property>
+      <property name="childrenCollapsible">
+       <bool>false</bool>
+      </property>
+      <widget class="QWidget" name="layoutWidget">
+       <layout class="QHBoxLayout" name="orthoLayout">
+        <item>
+         <layout class="QVBoxLayout" name="sagittalLayout">
+          <item>
+           <widget class="QSlider" name="sagittalSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="coronalLayout">
+          <item>
+           <widget class="QSlider" name="coronalSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="transverseLayout">
+          <item>
+           <widget class="QSlider" name="transverseSlider">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="layoutWidget">
+       <layout class="QHBoxLayout" name="bottomRowLayout" stretch="0,0">
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <layout class="QGridLayout" name="controlsLayout" columnstretch="0,0,0">
+          <item row="9" column="1">
+           <widget class="QCheckBox" name="hideOverlaysCheckBox">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>mm</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="xLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>X</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Window</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Shape</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="modalityLabel">
+            <property name="text">
+             <string>Image</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>mm</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="2">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>mm</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="adjustLabel">
+            <property name="text">
+             <string>Adjust</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>mm</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="2">
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>mm</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="vertexLabel">
+            <property name="text">
+             <string>Vertex</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Selection slab</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1" colspan="2">
+           <widget class="QLabel" name="shapeNameLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>[name]</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>Hide overlays</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QDoubleSpinBox" name="slabThicknessSpinBox">
+            <property name="minimum">
+             <double>0.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QDoubleSpinBox" name="xMmSpinBox"/>
+          </item>
+          <item row="6" column="1">
+           <widget class="QSpinBox" name="vertexIdSpinBox"/>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="zMmSpinBox"/>
+          </item>
+          <item row="4" column="2">
+           <widget class="QDoubleSpinBox" name="windowMaxSpinBox">
+            <property name="minimum">
+             <double>-999999999.990000009536743</double>
+            </property>
+            <property name="maximum">
+             <double>999999999.990000009536743</double>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QComboBox" name="modalityComboBox"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="yLabel">
+            <property name="text">
+             <string>Y</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="yMmSpinBox"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="zLabel">
+            <property name="text">
+             <string>Z</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QDoubleSpinBox" name="windowMinSpinBox">
+            <property name="minimum">
+             <double>-999999999.990000009536743</double>
+            </property>
+            <property name="maximum">
+             <double>999999999.990000009536743</double>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QDoubleSpinBox" name="adjustMmSpinBox">
+            <property name="minimum">
+             <double>-10.000000000000000</double>
+            </property>
+            <property name="maximum">
+             <double>10.000000000000000</double>
+            </property>
+            <property name="singleStep">
+             <double>0.200000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="2">
+           <widget class="QCheckBox" name="markersOnlyCheckBox">
+            <property name="text">
+             <string>Markers only</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="normalViewsLayout">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetDefaultConstraint</enum>
+          </property>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>711</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="openAction"/>
+    <addaction name="closeAction"/>
+    <addaction name="loadAction"/>
+    <addaction name="saveAction"/>
+    <addaction name="separator"/>
+    <addaction name="showProfileFitAction"/>
+    <addaction name="showMultiShapeAction"/>
+    <addaction name="separator"/>
+    <addaction name="saveSlicesPNGAction"/>
+    <addaction name="separator"/>
+    <addaction name="setupFilenamesAction"/>
+    <addaction name="separator"/>
+    <addaction name="quitAction"/>
+   </widget>
+   <addaction name="menuFile"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="openAction">
+   <property name="text">
+    <string>&amp;Open Subject</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="quitAction">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::QuitRole</enum>
+   </property>
+  </action>
+  <action name="saveAction">
+   <property name="text">
+    <string>&amp;Save Adjustments</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="setupFilenamesAction">
+   <property name="text">
+    <string>Setup &amp;Filenames</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="closeAction">
+   <property name="text">
+    <string>&amp;Close Subject</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="loadAction">
+   <property name="text">
+    <string>&amp;Load Adjustments</string>
+   </property>
+  </action>
+  <action name="showProfileFitAction">
+   <property name="text">
+    <string>Show &amp;profile fit</string>
+   </property>
+  </action>
+  <action name="loadModelAction">
+   <property name="text">
+    <string>Load model</string>
+   </property>
+  </action>
+  <action name="showMultiShapeAction">
+   <property name="text">
+    <string>Show multiple shapes</string>
+   </property>
+  </action>
+  <action name="saveSlicesPNGAction">
+   <property name="text">
+    <string>Save slices as PNG</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>xMmSpinBox</tabstop>
+  <tabstop>yMmSpinBox</tabstop>
+  <tabstop>zMmSpinBox</tabstop>
+  <tabstop>modalityComboBox</tabstop>
+  <tabstop>windowMinSpinBox</tabstop>
+  <tabstop>windowMaxSpinBox</tabstop>
+  <tabstop>vertexIdSpinBox</tabstop>
+  <tabstop>adjustMmSpinBox</tabstop>
+  <tabstop>slabThicknessSpinBox</tabstop>
+  <tabstop>hideOverlaysCheckBox</tabstop>
+  <tabstop>markersOnlyCheckBox</tabstop>
+  <tabstop>sagittalSlider</tabstop>
+  <tabstop>coronalSlider</tabstop>
+  <tabstop>transverseSlider</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

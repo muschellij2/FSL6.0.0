@@ -1,0 +1,38 @@
+#!/bin/sh
+
+if [ $# -ge 1 ] ; then
+  PROJECTS="$@";
+else
+  MASTERPROJECTS="CiftiLib-master utils znzlib NewNifti niftiio fslio giftiio miscmaths newimage libhfunc libvis first_lib \ 
+meshclass fslvtkio misc_tcl basisfield warpfns bint shapeModel MVdisc fslvtkconv fslsurface libmeshutils newmesh \
+DiscreteOpt FastPDlib MSMRegLib \
+misc_c avwutils basil bet2 cluster dpm copain tissue fast4 feat5 film filmbabe flirt fabber baycest \
+fslpres fslvbm mcflirt melodic miscvis mm nma gps \
+randomise siena slicetimer susan tbss fnirt fugue asl_mfree \
+ifit load_varian load_dicom misc_scripts fdt first possum sgeutils \
+flameo oxford_asl relax qboot topup ptx2 lesions eddy dwssfp verbena MSM bianca mist-clean";
+  PROJECTS="extras" #Extras is special project
+  for project in ${MASTERPROJECTS}; do
+      if [ -d src/${project} ]; then
+	  PROJECTS="${PROJECTS} ${project} "
+      fi
+  done
+  #Two loops to ensure all newSrc are built last
+  for project in ${MASTERPROJECTS}; do
+      if [ -d src/newSrc/${project} ]; then
+	  PROJECTS="${PROJECTS} newSrc/${project} "
+      fi
+  done
+fi
+
+echo "Building projects - see build.log file for progress..."
+./config/common/buildproj $PROJECTS > ./build.log 2>&1
+finalStatus=$?
+if [ $finalStatus -eq 0 ]; then
+    echo "Build completed successfully.";
+else
+    echo "Build failed to build all projects.";
+fi
+exit $finalStatus
+
+
