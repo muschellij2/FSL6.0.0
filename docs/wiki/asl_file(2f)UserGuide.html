@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>asl_file/UserGuide</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">asl_file/UserGuide</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><span class="anchor" id="line-4"></span><p class="line867"><div class="FslToolContents">
+<h1>Contents</h1>
+<ol><li><a href="./asl_file.html">Introduction</a></li><li>User Guide<div class="contentslist"><div class="table-of-contents"><p class="table-of-contents-heading">Contents<ol><li>
+<a href="#Usage">Usage</a></li><li>
+<a href="#Input_options">Input options</a></li><li>
+<a href="#Output_Options">Output Options</a></li><li>
+<a href="#Pre-output_Operations">Pre-output Operations</a></li><li>
+<a href="#Output_Operations">Output Operations</a></li></ol></div></div></li><li><a href="./asl_file(2f)Tutorial.html">Tutorial</a></li></ol></div> <span class="anchor" id="line-5"></span>
+<h1 id="Usage">Usage</h1>
+<span class="anchor" id="line-6"></span><span class="anchor" id="line-7"></span><p class="line874">The basic usage is <span class="anchor" id="line-8"></span><tt class="backtick">asl_file&nbsp;--data=&lt;asldata&gt;&nbsp;--ntis=&lt;number_if_inflow_times&gt;</tt> <span class="anchor" id="line-9"></span>This specifies the ASl data source file and the number of inflow-times present in the data. Various options exits to specify the output required and, where needed, the structure of the data in the source and output files. <span class="anchor" id="line-10"></span><span class="anchor" id="line-11"></span><p class="line867">
+<h1 id="Input_options">Input options</h1>
+<span class="anchor" id="line-12"></span><p class="line862">By default <tt class="backtick">asl_file</tt> assumes that the input data is 'difference data', i.e. tag-control subtraction has already been performed. It is often useful to use asl_file with data in the form of tag-control pairs, this can be specified using the <tt class="backtick">--iaf</tt> option.  <span class="anchor" id="line-13"></span><span class="anchor" id="line-14"></span><p class="line867"><tt class="backtick">--iaf=diff</tt> Input data is differenced, pairwise tag-control subtraction has already been performed. <span class="anchor" id="line-15"></span><span class="anchor" id="line-16"></span><p class="line867"><tt class="backtick">--iaf=tc</tt>   Input data is tag-control pairs, with the first volume being a tag (labelled) image. <span class="anchor" id="line-17"></span><span class="anchor" id="line-18"></span><p class="line867"><tt class="backtick">--iaf=ct</tt>   Input data is tag-control pairs, with the first volume being a control image.  <span class="anchor" id="line-19"></span><span class="anchor" id="line-20"></span><p class="line874">Additionally where the data contains repeated volumes at different inflow times (multi inflow-time) it may be necessary to specify the 'block format', i.e. whether repeated measurements at the same inflow time are grouped together or appear grouped by repeat number. <span class="anchor" id="line-21"></span><span class="anchor" id="line-22"></span><p class="line867"><tt class="backtick">--ibf=rpt</tt> Volumes with the same inflow times have been grouped together. <span class="anchor" id="line-23"></span><span class="anchor" id="line-24"></span><p class="line867"><tt class="backtick">--inf=tis</tt> Volumes are grouped as repeated of the same set of inflow-times. This is most common, since it reflects a usual acquisition strategy to inter ate through the inflow times repeatedly. <span class="anchor" id="line-25"></span><span class="anchor" id="line-26"></span><p class="line867">
+<h1 id="Output_Options">Output Options</h1>
+<span class="anchor" id="line-27"></span><p class="line862">A filename for the output volume is specified by the <tt class="backtick">--out=&lt;filename&gt;</tt> option. For multi inflow-time data the 'block format' for the output data can be specified (see above) using the <tt class="backtick">--obf</tt> option, by default this matches the value of <tt class="backtick">--ibf</tt>. <span class="anchor" id="line-28"></span><span class="anchor" id="line-29"></span><p class="line867">
+<h1 id="Pre-output_Operations">Pre-output Operations</h1>
+<span class="anchor" id="line-30"></span><p class="line874">A number of operations can be applied to the data prior to output (these cannot be combined). <span class="anchor" id="line-31"></span><span class="anchor" id="line-32"></span><p class="line867"><tt class="backtick">--diff</tt>   Do a pairwise subtraction of odd volumes from even volumes. <span class="anchor" id="line-33"></span><span class="anchor" id="line-34"></span><p class="line867"><tt class="backtick">--spairs</tt> Split pairs within the data, i.e. split tag and control images. The output from each output option will create two (rather than one) files with <tt class="backtick">_odd</tt> and <tt class="backtick">_even</tt> appended to the name given to the output option. These contain the result of the output operation odd and even volumes respectively. <span class="anchor" id="line-35"></span><span class="anchor" id="line-36"></span><p class="line867">
+<h1 id="Output_Operations">Output Operations</h1>
+<span class="anchor" id="line-37"></span><p class="line874">Apart from outputting the data subject to rearrangement of the internal structure using the output options or pre-output operations, further outputs can be generated after other operations have been performed. <span class="anchor" id="line-38"></span><span class="anchor" id="line-39"></span><p class="line867"><tt class="backtick">--mean=&lt;filename&gt;</tt>  Take the mean over the volumes, e.g. for the creation of the mean difference image from tag control pairs using the <tt class="backtick">--diff</tt> option. For multi-delay data the mean is taken within each inflow-time, thus the final image will contain the same number of volumes as inflow-times specified by the <tt class="backtick">--ti</tt> option. <span class="anchor" id="line-40"></span><span class="anchor" id="line-41"></span><p class="line867"><tt class="backtick">--split=&lt;filenameroot&gt;</tt> For multi inflow-time data split the data into separate files for each inflow time. <span class="anchor" id="line-42"></span><span class="anchor" id="line-43"></span><p class="line867"><tt class="backtick">--epoch=&lt;filenameroot&gt;</tt> Outputs as separate images the mean within individual epochs of the data. <span class="anchor" id="line-44"></span><ul><li style="list-style-type:none">Parameters of the epochs are defined by <span class="anchor" id="line-45"></span><span class="anchor" id="line-46"></span><p class="line891"><tt class="backtick">--elen=&lt;value&gt;</tt>  The length of each epoch in the specified epoch units. <span class="anchor" id="line-47"></span><span class="anchor" id="line-48"></span><p class="line891"><tt class="backtick">--eol=&lt;value&gt;</tt>   The amount of overlap between epochs in the specified epoch units. <span class="anchor" id="line-49"></span><span class="anchor" id="line-50"></span><p class="line891"><tt class="backtick">--eunit=&lt;...&gt;</tt> The units to be used for the creation of the epochs. <span class="anchor" id="line-51"></span><span class="anchor" id="line-52"></span><ul><li style="list-style-type:none"><p class="line891"><tt class="backtick">--eunit=rpt</tt> (default) Epochs are calculated with the unit of calculation being the number of repeats, this would always be appropriate for single inflow-time data. For multi inflow-time data the mean would be taken within each inflow-time in each epoch, thus each image would contain the same number of volumes as inflow-times specified by the <tt class="backtick">--ti</tt> option. <span class="anchor" id="line-53"></span><span class="anchor" id="line-54"></span><p class="line891"><tt class="backtick">--eunit=tis</tt> Specific to multi-inflow time data (and a very advanced option). This permits the creation of epochs from the raw time series such that each epoch will contain the specified number of volumes from the input data given by <tt class="backtick">--elen</tt>, this could be a mixture of inflow-times (and repeats thereof) depending upon the ordering in the data. <span class="anchor" id="line-55"></span></li></ul></li></ul><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-56"></span><a href="./CategoryBASIL.html">CategoryBASIL</a> <span class="anchor" id="line-57"></span><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:30
+</body>
+</html>

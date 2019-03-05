@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>FLIRT/Schedule.html</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">FLIRT/Schedule.html</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><p class="line867">
+<h1 id="FLIRT_schedule_language_reference">FLIRT schedule language reference</h1>
+<span class="anchor" id="line-2"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-3"></span>This document describes the commands that can be used within a schedule file for flirt via the -schedule option.  <span class="anchor" id="line-4"></span><hr /><p class="line874"> <span class="anchor" id="line-5"></span>
+<h2 id="VARIABLES">VARIABLES</h2>
+<span class="anchor" id="line-6"></span><span class="anchor" id="line-7"></span><p class="line874">There are two types of data variables that are manipulated in a schedule file: scalar and matrix data. <span class="anchor" id="line-8"></span><span class="anchor" id="line-9"></span><p class="line867">
+<h3 id="Scalar_data">Scalar data</h3>
+<span class="anchor" id="line-10"></span><span class="anchor" id="line-11"></span><p class="line874">Any constant can be used as a scalar value in the schedule file. In addition token names can be used, and the following token names are currently defined: <span class="anchor" id="line-12"></span><ul><li>MAXDOF  <span class="anchor" id="line-13"></span></li></ul><p class="line874">the user-defined maximum degrees of freedom (via the -dof option). <span class="anchor" id="line-14"></span><ul><li>MINSAMPLING  <span class="anchor" id="line-15"></span></li></ul><p class="line874">the minimum sampling that is sensible, as calculated from the input volumes - defined as Max(Min(refvol voxel dims),Min(testvol voxel dims)). <span class="anchor" id="line-16"></span><span class="anchor" id="line-17"></span><p class="line867">
+<h3 id="Matrix_data">Matrix data</h3>
+<span class="anchor" id="line-18"></span><span class="anchor" id="line-19"></span><p class="line874">Most data in a schedule file is manipulated in matrix form. Each matrix has 17 columns, with the first column representing the cost function value and the remaining 16 a reshaped version of the 4 by 4 affine matrix that corresponds to that cost function measurement. (paragraph: The matrices that can be accessed are: S P U UA UB ... UZ.  <span class="anchor" id="line-20"></span>Note that S P and U have special functions while UA UB ... UZ are provided for user manipulation. ) (paragraph: In addition, a subset of rows of a given matrix can be used in place of any matrix.  <span class="anchor" id="line-21"></span>The form of this reference is: mat:r1-r2  <span class="anchor" id="line-22"></span>where mat is the matrix name (e.g. UB), r1 is the first row, and r2 the last row to be used. Note that some parts of this may be omitted so that mat:r1- specifies the matrix from row r1 to the end, and mat:r1 just specifies a single row ( r1).  <span class="anchor" id="line-23"></span>NB: The first row of any matrix has an index of 1. ) (paragraph: Matrix U is special as it is used to store the results of the current optimisation. ) (paragraph: Matrices S and P are used to store the (corresponding) results of the 8mm search algorithm. ) <span class="anchor" id="line-24"></span><hr /><p class="line874"> <span class="anchor" id="line-25"></span>
+<h1 id="COMMANDS">COMMANDS</h1>
+<span class="anchor" id="line-26"></span><span class="anchor" id="line-27"></span><ul><li>#  <span class="anchor" id="line-28"></span></li></ul><p class="line874">Comment line <span class="anchor" id="line-29"></span><ul><li>clear mat  <span class="anchor" id="line-30"></span></li></ul><p class="line874">Clears the matrix mat. <span class="anchor" id="line-31"></span><ul><li>copy mat1 mat2  <span class="anchor" id="line-32"></span></li></ul><p class="line874">Copies (appends) the contents of matrix mat1 into matrix mat2. It does not affect the contents of matrix mat1. <span class="anchor" id="line-33"></span><ul><li>print mat  <span class="anchor" id="line-34"></span></li></ul><p class="line874">Prints the contents of matrix mat to the screen. <span class="anchor" id="line-35"></span><ul><li>save mat filename  <span class="anchor" id="line-36"></span></li></ul><p class="line874">Saves an ascii copy of the contents of matrix mat to the file named by filename. <span class="anchor" id="line-37"></span><ul><li>read mat filename  <span class="anchor" id="line-38"></span></li></ul><p class="line874">Reads an ascii file ( filename) and stores the contents in matrix mat. <span class="anchor" id="line-39"></span><ul><li>printparams mat  <span class="anchor" id="line-40"></span></li></ul><p class="line874">Prints the contents of matrix mat to the screen as parameter values (rather than reshaped 4 by 4 affine matrices). <span class="anchor" id="line-41"></span><ul><li>saveparams mat filename  <span class="anchor" id="line-42"></span></li></ul><p class="line874">Saves an ascii copy of the contents of matrix mat, as parameter values, to the file named by filename. <span class="anchor" id="line-43"></span><ul><li>readparams mat filename  <span class="anchor" id="line-44"></span></li></ul><p class="line874">Reads an ascii file ( filename) where each line represents 1 cost value followed by 12 parameter values. It then converts these parameters to reshaped affine matrices and stores the contents in matrix mat. <span class="anchor" id="line-45"></span>* setrow mat v1 v2 ... v16  <span class="anchor" id="line-46"></span>Adds a row to the end of matrix mat with the value given by the reshaped matrix: v1 v2 ... v16. Note that only the 16 matrix values are used, not the cost value (which is initialised to 0). <span class="anchor" id="line-47"></span><ul><li>aligncog mat  <span class="anchor" id="line-48"></span></li></ul><p class="line874">Takes all transforms in mat, aligns the cog returning the result in U. <span class="anchor" id="line-49"></span><ul><li>alignpaxes mat  <span class="anchor" id="line-50"></span></li></ul><p class="line874">Takes all transforms in mat, aligns the principle axes, returning the result in U (NB: previous transform values are ignored). <span class="anchor" id="line-51"></span><ul><li>setoption option v1 v2 ...  <span class="anchor" id="line-52"></span></li></ul><p class="line874">Sets the value of certain defined options. The name of the option is specified as the first parameter, then all remaining parameters are treated as a vector of scalars. Note that no matrix arguments can be used here. At present the available options are smoothing, fuzzyfraction, tolerance, rescaletolerance, paramsubset, nosubset and boundguess. <span class="anchor" id="line-53"></span><ul><li>sort mat  <span class="anchor" id="line-54"></span></li></ul><p class="line874">Sorts the rows of matrix mat into ascending order based on the first column entries of each row (the cost function values). <span class="anchor" id="line-55"></span><ul><li>dualsort mat1 mat2  <span class="anchor" id="line-56"></span></li></ul><p class="line874">Sorts the rows of matrix mat1 and mat2 into ascending order based on the first column entries mat1 only (the cost function values). <span class="anchor" id="line-57"></span><ul><li>search [ dof ]  <span class="anchor" id="line-58"></span></li></ul><p class="line874">Performs the 8mm search algorithm on the currently defined image pair. The result is returned in matrices S and P where S contains the optimised values (which are sorted), and P the pre-optimised values from the search grid. The rows of the two matrices correspond to each other. The optional argument dof specifies the number of degrees of freedom for the search (only 6 or 7 are currently sensible). <span class="anchor" id="line-59"></span><ul><li>optimise dof mat [ perturbation_vector rel/abs max_iterations ]  <span class="anchor" id="line-60"></span></li></ul><p class="line874">Performs a single optimisation on the currently defined image pair. Number of degrees of freedom are specified by dof and initial parameter values are taken from mat. In addition a perturbation vector can be applied to the parameters, using either relative rel or absolute abs addition (relative is in terms of specially chosen parameter perturbations so that a 1 unit relative change should be a small but measurable change). The perturbation vector may be of any length, terminated by either rel or abs - if the vector is longer than the number of parameters, extra values are ignored. The final parameter (which must follow either rel or abs) is the maximum number of iterations that the optimisation is allowed.  <span class="anchor" id="line-61"></span>Note that the minimum of dof and the user-defined maximum degrees of freedom ( MAXDOF) will always be used. <span class="anchor" id="line-62"></span><ul><li>measurecost dof mat [ perturbation_vector rel/abs ]  <span class="anchor" id="line-63"></span></li></ul><p class="line874">Measures (or re-measures) the cost function specified by the transformations stored in the matrix mat. It stores the results in U. Other syntax is the same as for optimise. <span class="anchor" id="line-64"></span><ul><li>setscale scale  <span class="anchor" id="line-65"></span></li></ul><p class="line874">Sets the scaling (subsampling) of the current image pair. Permissable values of scale are: 8, 4, 2 and 1. <span class="anchor" id="line-66"></span><ul><li>if val1 op val2  <span class="anchor" id="line-67"></span></li></ul><p class="line862">Determines whether the next line only is executed. The test condition compares two scalars: val1 and val2 using the boolean operation op. There are 6 permissable values for op, which are: &lt; , &gt; , == , != , &lt;= , &gt;= <span class="anchor" id="line-68"></span><hr /><p class="line874"> <span class="anchor" id="line-69"></span>
+<h1 id="EXAMPLE">EXAMPLE</h1>
+<span class="anchor" id="line-70"></span><span class="anchor" id="line-71"></span><p class="line874">The default flirt schedule file is: <span class="anchor" id="line-72"></span><span class="anchor" id="line-73"></span><span class="anchor" id="line-74"></span><span class="anchor" id="line-75"></span><span class="anchor" id="line-76"></span><span class="anchor" id="line-77"></span><span class="anchor" id="line-78"></span><span class="anchor" id="line-79"></span><span class="anchor" id="line-80"></span><span class="anchor" id="line-81"></span><span class="anchor" id="line-82"></span><span class="anchor" id="line-83"></span><span class="anchor" id="line-84"></span><span class="anchor" id="line-85"></span><span class="anchor" id="line-86"></span><span class="anchor" id="line-87"></span><span class="anchor" id="line-88"></span><span class="anchor" id="line-89"></span><span class="anchor" id="line-90"></span><span class="anchor" id="line-91"></span><span class="anchor" id="line-92"></span><span class="anchor" id="line-93"></span><span class="anchor" id="line-94"></span><span class="anchor" id="line-95"></span><span class="anchor" id="line-96"></span><span class="anchor" id="line-97"></span><span class="anchor" id="line-98"></span><span class="anchor" id="line-99"></span><span class="anchor" id="line-100"></span><span class="anchor" id="line-101"></span><span class="anchor" id="line-102"></span><span class="anchor" id="line-103"></span><span class="anchor" id="line-104"></span><span class="anchor" id="line-105"></span><span class="anchor" id="line-106"></span><span class="anchor" id="line-107"></span><span class="anchor" id="line-108"></span><span class="anchor" id="line-109"></span><span class="anchor" id="line-110"></span><span class="anchor" id="line-111"></span><span class="anchor" id="line-112"></span><span class="anchor" id="line-113"></span><span class="anchor" id="line-114"></span><span class="anchor" id="line-115"></span><span class="anchor" id="line-116"></span><span class="anchor" id="line-117"></span><span class="anchor" id="line-118"></span><span class="anchor" id="line-119"></span><span class="anchor" id="line-120"></span><span class="anchor" id="line-121"></span><span class="anchor" id="line-122"></span><span class="anchor" id="line-123"></span><span class="anchor" id="line-124"></span><span class="anchor" id="line-125"></span><span class="anchor" id="line-126"></span><span class="anchor" id="line-127"></span><span class="anchor" id="line-128"></span><span class="anchor" id="line-129"></span><span class="anchor" id="line-130"></span><span class="anchor" id="line-131"></span><span class="anchor" id="line-132"></span><span class="anchor" id="line-133"></span><span class="anchor" id="line-134"></span><span class="anchor" id="line-135"></span><span class="anchor" id="line-136"></span><span class="anchor" id="line-137"></span><span class="anchor" id="line-138"></span><span class="anchor" id="line-139"></span><span class="anchor" id="line-140"></span><span class="anchor" id="line-141"></span><span class="anchor" id="line-142"></span><span class="anchor" id="line-143"></span><span class="anchor" id="line-144"></span><span class="anchor" id="line-145"></span><span class="anchor" id="line-146"></span><span class="anchor" id="line-147"></span><span class="anchor" id="line-148"></span><span class="anchor" id="line-149"></span><span class="anchor" id="line-150"></span><span class="anchor" id="line-151"></span><span class="anchor" id="line-152"></span><span class="anchor" id="line-153"></span><pre><span class="anchor" id="line-1"></span># 8mm scale
+<span class="anchor" id="line-2"></span>setscale 8
+<span class="anchor" id="line-3"></span>clear S
+<span class="anchor" id="line-4"></span>clear P
+<span class="anchor" id="line-5"></span>search
+<span class="anchor" id="line-6"></span>
+<span class="anchor" id="line-7"></span>
+<span class="anchor" id="line-8"></span># 4mm scale
+<span class="anchor" id="line-9"></span>setscale 4
+<span class="anchor" id="line-10"></span>clear U
+<span class="anchor" id="line-11"></span>clear UA 
+<span class="anchor" id="line-12"></span>clear UB
+<span class="anchor" id="line-13"></span>clear US
+<span class="anchor" id="line-14"></span>clear UP
+<span class="anchor" id="line-15"></span>
+<span class="anchor" id="line-16"></span># remeasure costs at this scale
+<span class="anchor" id="line-17"></span>measurecost 7 S 0 0 0 0 0 0 rel
+<span class="anchor" id="line-18"></span>copy U US
+<span class="anchor" id="line-19"></span>clear U
+<span class="anchor" id="line-20"></span>measurecost 7 P 0 0 0 0 0 0 rel
+<span class="anchor" id="line-21"></span>copy U UP
+<span class="anchor" id="line-22"></span>dualsort US UP
+<span class="anchor" id="line-23"></span>
+<span class="anchor" id="line-24"></span># optimise best 3 candidates (pre and post 8mm optimisations)
+<span class="anchor" id="line-25"></span>clear U
+<span class="anchor" id="line-26"></span>optimise 7 US:1-3  0.0   0.0   0.0   0.0   0.0   0.0   0.0  rel 4
+<span class="anchor" id="line-27"></span>optimise 7 UP:1-3  0.0   0.0   0.0   0.0   0.0   0.0   0.0  rel 4
+<span class="anchor" id="line-28"></span>sort U
+<span class="anchor" id="line-29"></span>copy U UA
+<span class="anchor" id="line-30"></span>
+<span class="anchor" id="line-31"></span># select best 3 optimised solutions and try perturbations of these
+<span class="anchor" id="line-32"></span>clear U
+<span class="anchor" id="line-33"></span>copy UA:1-3 U
+<span class="anchor" id="line-34"></span>optimise 7 UA:1-3  1.0   0.0   0.0   0.0   0.0   0.0   0.0  rel 4
+<span class="anchor" id="line-35"></span>optimise 7 UA:1-3 -1.0   0.0   0.0   0.0   0.0   0.0   0.0  rel 4
+<span class="anchor" id="line-36"></span>optimise 7 UA:1-3  0.0   1.0   0.0   0.0   0.0   0.0   0.0  rel 4
+<span class="anchor" id="line-37"></span>optimise 7 UA:1-3  0.0  -1.0   0.0   0.0   0.0   0.0   0.0  rel 4
+<span class="anchor" id="line-38"></span>optimise 7 UA:1-3  0.0   0.0   1.0   0.0   0.0   0.0   0.0  rel 4
+<span class="anchor" id="line-39"></span>optimise 7 UA:1-3  0.0   0.0  -1.0   0.0   0.0   0.0   0.0  rel 4
+<span class="anchor" id="line-40"></span>optimise 7 UA:1-3  0.0   0.0   0.0   0.0   0.0   0.0   0.1  abs 4
+<span class="anchor" id="line-41"></span>optimise 7 UA:1-3  0.0   0.0   0.0   0.0   0.0   0.0  -0.1  abs 4
+<span class="anchor" id="line-42"></span>optimise 7 UA:1-3  0.0   0.0   0.0   0.0   0.0   0.0   0.2  abs 4
+<span class="anchor" id="line-43"></span>optimise 7 UA:1-3  0.0   0.0   0.0   0.0   0.0   0.0  -0.2  abs 4
+<span class="anchor" id="line-44"></span>sort U
+<span class="anchor" id="line-45"></span>copy U UB
+<span class="anchor" id="line-46"></span>
+<span class="anchor" id="line-47"></span>
+<span class="anchor" id="line-48"></span># 2mm scale
+<span class="anchor" id="line-49"></span>setscale 2
+<span class="anchor" id="line-50"></span>clear U
+<span class="anchor" id="line-51"></span>clear UC
+<span class="anchor" id="line-52"></span>clear UD
+<span class="anchor" id="line-53"></span>clear UE
+<span class="anchor" id="line-54"></span>clear UF
+<span class="anchor" id="line-55"></span>
+<span class="anchor" id="line-56"></span># remeasure costs at this scale
+<span class="anchor" id="line-57"></span>measurecost 7 UB 0 0 0 0 0 0 rel
+<span class="anchor" id="line-58"></span>sort U
+<span class="anchor" id="line-59"></span>copy U UC
+<span class="anchor" id="line-60"></span>
+<span class="anchor" id="line-61"></span>clear U
+<span class="anchor" id="line-62"></span>optimise 7  UC:1  0.0   0.0   0.0   0.0   0.0   0.0   0.0  rel 4
+<span class="anchor" id="line-63"></span>copy U UD
+<span class="anchor" id="line-64"></span>if MAXDOF &gt; 7
+<span class="anchor" id="line-65"></span> clear U
+<span class="anchor" id="line-66"></span>if MAXDOF &gt; 7
+<span class="anchor" id="line-67"></span> optimise 9  UD:1  0.0   0.0   0.0   0.0   0.0   0.0   0.0  rel 1
+<span class="anchor" id="line-68"></span>copy U UE
+<span class="anchor" id="line-69"></span>if MAXDOF &gt; 9
+<span class="anchor" id="line-70"></span> clear U
+<span class="anchor" id="line-71"></span>if MAXDOF &gt; 9
+<span class="anchor" id="line-72"></span> optimise 12 UE:1  0.0   0.0   0.0   0.0   0.0   0.0   0.0  rel 2
+<span class="anchor" id="line-73"></span>sort U
+<span class="anchor" id="line-74"></span>copy U UF
+<span class="anchor" id="line-75"></span>
+<span class="anchor" id="line-76"></span># 1mm scale
+<span class="anchor" id="line-77"></span>setscale 1
+<span class="anchor" id="line-78"></span>clear U
+<span class="anchor" id="line-79"></span>optimise 12 UF:1  0.0   0.0   0.0   0.0   0.0   0.0   0.0  rel 1
+<span class="anchor" id="line-80"></span>sort U</pre><span class="anchor" id="line-154"></span><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:28
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>PALM/MasksAndVoxelwiseRegressors</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">PALM/MasksAndVoxelwiseRegressors</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><p class="line867"><div class="FslToolContents">
+<h1>Contents</h1>
+<ol><li><a href="./PALM.html">Introduction</a></li><li><a href="./PALM(2f)UserGuide.html">User Guide</a></li><li><a href="./PALM(2f)ExchangeabilityBlocks.html">Exchangeability Blocks</a></li><li><a href="./PALM(2f)JointInference.html">Joint Inference</a></li><li>Masks And Voxelwise Regressors<div class="contentslist"><div class="table-of-contents"><p class="table-of-contents-heading">Contents<ol><li>
+<a href="#Without_voxelwise_EVs">Without voxelwise EVs</a><ol><li>
+<a href="#Single_input_file">Single input file</a></li><li>
+<a href="#Multiple_input_files">Multiple input files</a></li></ol></li><li>
+<a href="#With_voxelwise_EVs">With voxelwise EVs</a><ol><li>
+<a href="#One_design_per_input">One design per input</a></li><li>
+<a href="#All_designs_vs._all_inputs">All designs vs. all inputs</a></li></ol></li><li>
+<a href="#References">References</a></li></ol></div></div></li><li><a href="./PALM(2f)FasterInference.html">Faster Inference</a></li><li><a href="./PALM(2f)Examples.html">Examples</a></li><li><a href="./PALM(2f)FAQ.html">FAQ</a></li></ol></div> <span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line862">It is possible to include one regressor (explanatory variable, EV) for each variable from the input files, that is, voxelwise EVs (or vertexwise, facewise, edgewise, columnwise, depending on the type of data). This is done with the option <strong>-evperdat</strong>. Below, the term &quot;voxelwise EV&quot; is used generically, even if it may actually be a vertexwise or any other type of columnwise EV. <span class="anchor" id="line-4"></span><span class="anchor" id="line-5"></span><p class="line862">With or without -evperdat, each input file (supplied with -i) can have their own mask. If <strong>-mv</strong> or <strong>-npc</strong> is used, an intersection mask is produced and used for all the tests. For the voxelwise EVs, further masks are generated internally to remove tests that would have constant EVs, as well as to remove the invalid values <em>NaN</em> and <em>Inf</em> if present. These masks created internally can be saved with the option <strong>-savemask</strong>, which will create one file for each effective mask used for each modality. <span class="anchor" id="line-6"></span><span class="anchor" id="line-7"></span><p class="line862">Whatever is the case, the option <strong>-m</strong> pairs with the option -i, in the same order. The option -m does not pair with the option -evperdat. Masks for the voxelwise EVs are defined based on the image modalities for which they will be used. Thus, the number of times -m can be given is zero, one, or the same number of times as -i is used. Any other number of masks entered with -m will cause an error. <span class="anchor" id="line-8"></span><span class="anchor" id="line-9"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-10"></span><span class="anchor" id="line-11"></span><p class="line867">
+<h1 id="Without_voxelwise_EVs">Without voxelwise EVs</h1>
+<span class="anchor" id="line-12"></span><p class="line874">If there are no voxelwise EVs, the possible mask cases are: <span class="anchor" id="line-13"></span><span class="anchor" id="line-14"></span><p class="line867">
+<h2 id="Single_input_file">Single input file</h2>
+<span class="anchor" id="line-15"></span><p class="line874">If there is just one input file (-i) and: <span class="anchor" id="line-16"></span><span class="anchor" id="line-17"></span><ul><li><p class="line891"><strong>No masks are supplied:</strong> A mask is created for the input file. <span class="anchor" id="line-18"></span></li><li><p class="line891"><strong>A mask is supplied:</strong> This mask is used for the input file. <span class="anchor" id="line-19"></span><span class="anchor" id="line-20"></span></li></ul><p class="line867">
+<h2 id="Multiple_input_files">Multiple input files</h2>
+<span class="anchor" id="line-21"></span><p class="line874">If there are multiple input files and: <span class="anchor" id="line-22"></span><span class="anchor" id="line-23"></span><ul><li><p class="line891"><strong>No masks are supplied:</strong> A mask is created for each input modality. <span class="anchor" id="line-24"></span></li><li><p class="line891"><strong>Only one mask is supplied:</strong> This mask is used for all input modalities, which therefore need to be all with compatible sizes/geometries. <span class="anchor" id="line-25"></span></li><li><p class="line891"><strong>One mask is supplied for each input:</strong> It is used for each respective input, and do not need to be all of the same geometry (except for MV and NPC, for which they need to be compatible). <span class="anchor" id="line-26"></span><span class="anchor" id="line-27"></span></li></ul><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-28"></span><span class="anchor" id="line-29"></span><p class="line867">
+<h1 id="With_voxelwise_EVs">With voxelwise EVs</h1>
+<span class="anchor" id="line-30"></span><p class="line874">Voxelwise EVs are entered with the option -evperdat. This option can take up to three arguments: <span class="anchor" id="line-31"></span><span class="anchor" id="line-32"></span><p class="line867"><span class="anchor" id="line-33"></span><span class="anchor" id="line-34"></span><span class="anchor" id="line-1-1"></span><div class="highlight bash"><div class="codearea" dir="ltr" lang="en"><pre dir="ltr" id="CA-b53c71781048c7b823413833b74d7a5ba73594ec" lang="en"><span class="line"><span class="anchor" id="line-1-2"></span>palm [...] -evperdat &lt;file&gt; [evpos] [desnum] [...]</span>
+</pre></div></div><span class="anchor" id="line-35"></span><p class="line862">Where &lt;file&gt; is the file with one voxelwise EV, [evpos] is the column number (position) of this EV in the design matrix, and [desnum] is the design number, i.e., the design in which this EV should be added. Designs (-d) are numbered in the order as entered. If [desnum] is omitted, the default is 1. If [evpos] is also omitted, the default is 1. If [evpos] is 1 and a [desnum] is provided, but the respective design doesn't exist, a design containing a single EV is created. <span class="anchor" id="line-36"></span><span class="anchor" id="line-37"></span><p class="line874">If there are voxelwise EVs, the possible mask cases depend on the number of input files, and whether there is one design per input (option -designperinput) or not. <span class="anchor" id="line-38"></span><span class="anchor" id="line-39"></span><p class="line867">
+<h2 id="One_design_per_input">One design per input</h2>
+<span class="anchor" id="line-40"></span><p class="line862">If there is one input (-i) and one design (-d), or if there are more than one input files and the option <strong>-designperinput</strong> is used, and: <span class="anchor" id="line-41"></span><span class="anchor" id="line-42"></span><ul><li><p class="line891"><strong>No masks are supplied:</strong> For each input modality, a mask is created. For each EV file for that input, a mask is also created. The intersection of the input mask and the EV masks is used to mask the input and the EVs. <span class="anchor" id="line-43"></span></li><li><p class="line891"><strong>Only one mask is supplied:</strong> This mask is used for all input modalities and all EV files, which therefore need to be all of the same size. <span class="anchor" id="line-44"></span></li><li><p class="line891"><strong>One mask is supplied for each input:</strong> It is used for each respective input and for the respective EV files. The size of the masks need to match the respective inputs and EV files, but don't otherwise have to match each other (except for MV and NPC). <span class="anchor" id="line-45"></span><span class="anchor" id="line-46"></span></li></ul><p class="line867">
+<h2 id="All_designs_vs._all_inputs">All designs vs. all inputs</h2>
+<span class="anchor" id="line-47"></span><p class="line874">If there is more than input or design, the option -designperinput is omitted, and: <span class="anchor" id="line-48"></span><span class="anchor" id="line-49"></span><ul><li><p class="line891"><strong>No masks are supplied:</strong> For each input modality, a mask is created. For each EV file, a mask is also created. The intersection of all these masks, for all the inputs and EV files, is used for all of them. This means all input files and voxelwise EVs need to be of same size. <span class="anchor" id="line-50"></span></li><li><p class="line891"><strong>Only one mask is supplied:</strong> This mask is used for all input modalities and all EV files, which therefore need to be all of the same size. <span class="anchor" id="line-51"></span><span class="anchor" id="line-52"></span></li></ul><p class="line874">Other combinations of masks, inputs, designs, and EVs will cause an error and PALM will stop. <span class="anchor" id="line-53"></span><span class="anchor" id="line-54"></span><p class="line874">Note that voxelwise EVs cause the runs to take longer to complete. <span class="anchor" id="line-55"></span><span class="anchor" id="line-56"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-57"></span>
+<h1 id="References">References</h1>
+<span class="anchor" id="line-58"></span><p class="line874">The main reference for PALM is the same as for randomise: <span class="anchor" id="line-59"></span><span class="anchor" id="line-60"></span><p class="line867"><span class="anchor" id="line-61"></span><span class="anchor" id="line-62"></span><div class="references"><span class="anchor" id="line-1-3"></span><p class="line862">* Winkler AM, Ridgway GR, Webster MA, Smith SM, Nichols TE. <a class="http" href="http://www.sciencedirect.com/science/article/pii/S1053811914000913">Permutation inference for the general linear model.</a> <a class="nonexistent" href="./NeuroImage.html">NeuroImage</a>, 2014;92:381-397 (Open Access) </div><span class="anchor" id="line-63"></span><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:28
+</body>
+</html>

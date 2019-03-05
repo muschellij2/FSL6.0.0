@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>FIX</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">FIX</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><p class="line867"><img align="right" alt="artefact.png" class="attachment" src="attachments/FIX/artefact.png" title="artefact.png" width="400" /> <div class="FslToolContents">
+<h1>Contents</h1>
+<ol><li>Introduction<div class="contentslist"><div class="table-of-contents"><p class="table-of-contents-heading">Contents<ol><li>
+<a href="#Overview_-_FMRIB.27s_ICA-based_Xnoiseifier_-_FIX_v1.065_beta">Overview - FMRIB's ICA-based Xnoiseifier - FIX v1.065 beta</a></li></ol></div></div></li><li><a href="./FIX(2f)UserGuide.html">User Guide</a></li><li><a href="./FIX(2f)FAQ.html">FAQ</a></li></ol></div> <span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-4"></span>
+<h1 id="Overview_-_FMRIB.27s_ICA-based_Xnoiseifier_-_FIX_v1.065_beta">Overview - FMRIB's ICA-based Xnoiseifier - FIX v1.065 beta</h1>
+<span class="anchor" id="line-5"></span><p class="line862">FIX attempts to auto-classify ICA components into &quot;good&quot; vs &quot;bad&quot; components, so that the bad components can be removed from the 4D FMRI data. FIX is intended to be run on single-session <a href="./MELODIC.html">MELODIC</a> ICA output.  See <a class="http" href="http://www.fmrib.ox.ac.uk/analysis/FIX-training/fix_eg.html">example raw data movies</a> showing the (potentially huge) effect of FIX cleanup. This beta-version of FIX is a set of R, MATLAB and shell scripts and hence requires you to have various other software than just FSL - and for now is not bundled as part of FSL. If you use FIX, please cite these papers: <span class="anchor" id="line-6"></span><span class="anchor" id="line-7"></span><p class="line867"><span class="anchor" id="line-8"></span><span class="anchor" id="line-9"></span><span class="anchor" id="line-10"></span><span class="anchor" id="line-11"></span><div class="references"><span class="anchor" id="line-1-1"></span><p class="line867"><a class="http" href="http://www.ncbi.nlm.nih.gov/pubmed/24389422">1.</a> G. Salimi-Khorshidi, G. Douaud, C.F. Beckmann, M.F. Glasser, L. Griffanti S.M. Smith. Automatic denoising of functional MRI data: Combining independent component analysis and hierarchical fusion of classifiers. NeuroImage, 90:449-68, 2014 <span class="anchor" id="line-2-1"></span><span class="anchor" id="line-3-1"></span><p class="line867"><a class="http" href="http://www.ncbi.nlm.nih.gov/pubmed/24657355">2.</a>  L. Griffanti, G. Salimi-Khorshidi, C.F. Beckmann, E.J. Auerbach, G. Douaud, C.E. Sexton, E. Zsoldos, K. Ebmeier, N. Filippini, C.E. Mackay, S. Moeller, J.G. Xu, E. Yacoub, G. Baselli, K. Ugurbil, K.L. Miller, and S.M. Smith. ICA-based artefact removal and accelerated fMRI acquisition for improved resting state network imaging. NeuroImage, 95:232-47, 2014 </div><span class="anchor" id="line-12"></span><p class="line874">The latest version (1.06) can now be run without MATLAB, using either the supplied precompiled-matlab binaries, or with Octave.  The other change from v1.05 is a change in the top-level meta-classifier, which gives a tiny average improvement in classification accuracy. There is no need to rerun feature generation from v1.05 for use in v1.06, but the old trained-weights files cannot be used with v1.06 (and any custom trained-weights files will need regenerating). (Minor updates: v1.061 has a tiny change from 1.06, in that it can work with the newest flavours of R that had started to create problems for 1.06. 1.061 can be used with features from 1.05-1.06 and training files from 1.06.  v1.062 has a couple of minor changes to matlab code that means that near-rank-deficiency across the cleanup timeseries is more robustly handled. v1.063 and v1.064 have a couple of minor bugfixes in matlab code. v1.065 has a minor change to be compatible with an upcoming change in a future FSL release of smoothest (while still being compatible with older FSL versions).) <span class="anchor" id="line-13"></span><span class="anchor" id="line-14"></span><p class="line862">For FIX to work well, it is very important that it is run using good &quot;training data&quot;.  While a few example trained-weights files are supplied with FIX, for major studies we would strongly recommend training FIX on your own study data (see details in the User Guide section).  You can find example training-input data, including our hand-labellings, <a class="http" href="http://www.fmrib.ox.ac.uk/analysis/FIX-training">here</a> (note that you do not need this example training-input data in order to run FIX; you just need the download linked in the User Guide - Downloading and Installing FIX section) , which includes several trained-weights files). <span class="anchor" id="line-15"></span><span class="anchor" id="line-16"></span><p class="line867"><hr /><p class="line874"> <span class="anchor" id="line-17"></span><a href="./CategoryOther.html">CategoryOther</a> <a class="nonexistent" href="./CategoryFIX.html">CategoryFIX</a> <span class="anchor" id="line-18"></span><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:28
+</body>
+</html>

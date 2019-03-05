@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>FDT/StepByStep</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">FDT/StepByStep</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line867">
+<h1 id="Step_by_Step_Guide">Step by Step Guide</h1>
+<span class="anchor" id="line-4"></span><p class="line867">
+<h2 id="Diffusion_tensor_fitting">Diffusion tensor fitting</h2>
+<span class="anchor" id="line-5"></span><ul><li><p class="line891"><a href="./InitialProcessing.html">Initial processing</a> <span class="anchor" id="line-6"></span></li><li><p class="line862">Create <tt class="backtick">bvecs</tt> and <tt class="backtick">bvals</tt> (may be made automatically from conversion to NIFTI, or may need to obtain them from scanner console/operator separately) <span class="anchor" id="line-7"></span></li><li><p class="line862">Make sure that files are named correctly (<tt class="backtick">data,&nbsp;nodif_brain_mask,&nbsp;bvecs,&nbsp;bvals</tt>) <span class="anchor" id="line-8"></span></li><li>Identify and extract a nodif (b=0) scan <span class="anchor" id="line-9"></span></li><li><p class="line862">Run <a class="nonexistent" href="./BET(2f)StepByStep.html">brain extraction</a> on the nodif scan <span class="anchor" id="line-10"></span></li><li><p class="line862">Run <a href="./FDT(2f)UserGuide.html#DTIFIT">DTIFIT</a> (easiest from GUI, but can be done from command line too) <span class="anchor" id="line-11"></span></li><li>Check that the orientation of the diffusion vectors in FSLView are anatomically correct (in all three views) <span class="anchor" id="line-12"></span></li><li><p class="line862">Run <a class="nonexistent" href="./Topup.html">Topup</a> for distortion correction <span class="anchor" id="line-13"></span></li><li><p class="line862">Run <a class="nonexistent" href="./Eddy.html">Eddy</a> correction (includes motion correction) <span class="anchor" id="line-14"></span></li><li><p class="line862">Run <a href="./FDT(2f)UserGuide.html#DTIFIT">DTIFIT</a> again <span class="anchor" id="line-15"></span><ul><li>Check that the directions viewed in FSLView are anatomically correct <span class="anchor" id="line-16"></span><span class="anchor" id="line-17"></span></li></ul></li></ul><p class="line867">
+<h2 id="Probabilistic_model_fitting">Probabilistic model fitting</h2>
+<span class="anchor" id="line-18"></span><ul><li>Make sure you have run all the steps above (diffusion tensor fitting) <span class="anchor" id="line-19"></span></li><li><p class="line862">Run <a href="./FDT(2f)UserGuide.html#BEDPOSTX">BEDPOSTX</a> to fit a non-tensor model used for tractography and registration (allow 15 hours). <span class="anchor" id="line-20"></span></li><li><p class="line862">Register your <tt class="backtick">nodif_brain</tt> images to standard space using the <a href="./FDT(2f)UserGuide.html#Registration">FDT</a> Gui. <span class="anchor" id="line-21"></span></li><li>Create target masks to be used for tractography. <span class="anchor" id="line-22"></span></li><li><p class="line862">Run <a href="./FDT(2f)UserGuide.html#ProbtrackX">PROBTRACKX</a> to isolate tracts of interest. <span class="anchor" id="line-23"></span></li><li><p class="line862">Use Fslview to check the output of <tt class="backtick">probtrackx</tt> makes sense anatomically. <span class="anchor" id="line-24"></span></li><li><p class="line862">Use <tt class="backtick">probtrackx</tt> results to determine probability of connections between regions or to create masks for comparing other diffusion values of interest. <span class="anchor" id="line-25"></span></li></ul><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:28
+</body>
+</html>

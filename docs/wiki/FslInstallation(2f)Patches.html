@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>FslInstallation/Patches</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">FslInstallation/Patches</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line867">
+<h1 id="Patches">Patches</h1>
+<span class="anchor" id="line-4"></span><p class="line874">Patches are released for minor upgrades of FSL: e.g. 5.0.1 to 5.0.2 <span class="anchor" id="line-5"></span><span class="anchor" id="line-6"></span><p class="line874">Applying a patch depends on what Operating System you are using: <span class="anchor" id="line-7"></span><span class="anchor" id="line-8"></span><ol type="1"><li>Debian/Ubuntu <span class="anchor" id="line-9"></span><ul><li><p class="line862">The recommended way is to apply the patch with the neurodebian repository via <tt class="backtick">system&nbsp;update</tt> or <tt class="backtick">apt-get</tt> <span class="anchor" id="line-10"></span></li></ul></li><li>Binary packages - all other systems (Mac/Linux/Windows) <span class="anchor" id="line-11"></span><ul><li>Download the patch file ( see link below ) for your system (you can choose between an upgrade from the previous version - e.g. 5.0.1 to 5.0.2 - or an upgrade from the base version - e.g. 5.0.0 to 5.0.2) <span class="anchor" id="line-12"></span></li><li><p class="line862">The patch file is a <tt class="backtick">*.tar.gz</tt> file - try to avoid double-clicking on it or running anything that might unpack it <span class="anchor" id="line-13"></span></li><li>Find where the patch file has been saved (e.g. ~/Downloads/) or put the patch file in a standard place (e.g. ~/Desktop/) <span class="anchor" id="line-14"></span></li><li>Start a terminal and do: <span class="anchor" id="line-15"></span><ul><li><p class="line891"><tt class="backtick">cd&nbsp;$FSLDIR/..</tt> <span class="anchor" id="line-16"></span></li><li><p class="line891"><tt class="backtick">sudo&nbsp;tar&nbsp;-zxvf&nbsp;~/Downloads/fsl-macosx-patch-5.0.2_from_5.0.1.tar.gz</tt> <span class="anchor" id="line-17"></span></li></ul></li><li>Note that you must use the appropriate path and name of the patch file in the above command (i.e. alter the name of the file to match the name of the specific version you downloaded, and also if it not saved in ~/Downloads/ then change ~/Downloads/ to ~/Desktop/ or wherever it is located) <span class="anchor" id="line-18"></span></li><li><p class="line862">If the file was unzipped when it was downloaded (e.g. it no longer ends with <tt class="backtick">.tar.gz</tt> but now ends with just <tt class="backtick">.tar</tt>) then you must use the new name (ending with just <tt class="backtick">.tar</tt>) and you also need to use <tt class="backtick">-xvf</tt> instead of <tt class="backtick">-zxvf</tt> in the second command. <span class="anchor" id="line-19"></span></li><li><p class="line862">You can avoid using <tt class="backtick">sudo</tt> in the above command if you wish, as long as FSL was installed in a local directory (i.e. in a place you do normally have write permissions).  However, using <tt class="backtick">sudo</tt> will not cause any problems. <span class="anchor" id="line-20"></span></li></ul></li><li>Source packages - all systems <span class="anchor" id="line-21"></span><ul><li>As above, download and install the source patch and then recompile following the usual source compilation installation instructions <span class="anchor" id="line-22"></span><span class="anchor" id="line-23"></span></li></ul></li></ol><p class="line862">Patch files can be downloaded (for methods 2 or 3 above) from: <a class="http" href="http://fsl.fmrib.ox.ac.uk/fsldownloads/patches/">http://fsl.fmrib.ox.ac.uk/fsldownloads/patches/</a> <span class="anchor" id="line-24"></span><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:28
+</body>
+</html>

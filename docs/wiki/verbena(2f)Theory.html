@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>verbena/Theory</title>
+<link rel="stylesheet" type="text/css" media="all" charset="utf-8" href="fsl/css/common.css">
+<link rel="stylesheet" type="text/css" media="screen" charset="utf-8" href="fsl/css/screen.css">
+<link rel="stylesheet" type="text/css" media="print" charset="utf-8" href="fsl/css/print.css">
+<style type="text/css">
+ul.pagetitle{
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+li.pagetitle{
+  display: inline;
+  margin: 0;
+}
+td.noborder {
+  border: 0;
+}
+</style>
+</head>
+<body>
+<table>
+<tr>
+<td class="noborder">
+<img src="logo.png">
+</td>
+<td class="noborder">
+<ul class="pagetitle">
+<li class="pagetitle"><a class="backlink">verbena/Theory</a>
+</ul>
+<br><br>
+[<a href="FSL.html">FSL</a>]&nbsp;[<a href="TitleIndex.html">TitleIndex</a>]&nbsp;[<a href="WordIndex.html">WordIndex</a>]&nbsp;
+</td>
+</tr>
+</table>
+<hr>
+<div id="page">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><span class="anchor" id="line-2"></span><p class="line867"><div class="FslToolContents">
+<h1>Contents</h1>
+<ol><li><a href="./verbena.html">Introduction</a></li><li><a href="./verbena(2f)UserGuide.html">User Guide</a></li><li>Theory<div class="contentslist"><div class="table-of-contents"><p class="table-of-contents-heading">Contents<ol><li>
+<a href="#The_Vascular_Model">The Vascular Model</a></li><li>
+<a href="#The_Modified_Vascular_Model">The Modified Vascular Model</a></li><li>
+<a href="#Macro_Vascular_Contamination">Macro Vascular Contamination</a></li></ol></div></div></li></ol></div> <span class="anchor" id="line-3"></span><span class="anchor" id="line-4"></span><p class="line867">
+<h1 id="The_Vascular_Model">The Vascular Model</h1>
+<span class="anchor" id="line-5"></span><p class="line862">The Vascular Model was originally proposed by Ostergaard <em>et al.</em> and was used for the analysis of DSC data (within a Bayesian like algorithm) by Mouridsen <em>et al.</em> in 2006. The basic principle follows all tracer kinetic studies and treats the concentration of contrast agent in the tissue as the convolution of an arterial input function (AIF) and a residue function. The AIF describes the delivery of agent to the tissue region by in the blood, the residue function describes what happens to it once it has arrived - for example how long a unit of contrast agent remains before it is removed to the venous vasculature. In the context of DSC-MRI the convolution model is applied to each voxel in turn and the residue function represents the residence of the agent within the tissue volume described by the voxel.  In the healthy brain the Gadolinium tracer that is used in DSC-MRI does not leave the vasculature and thus the residue function encapsulates the transit of the contrast agent through the capillary bed. In fact the residue function is the integral of the distribution of transit times for blood passing through the voxel - a key parameter of which is the mean transit time (MTT), which is routinely used in DSC perfusion as a surrogate measure of perfusion (although it is often calculated without finding the transit distribution itself). The Vascular Model assumes that the transit time distribution can be modelled as series of parallel pathways of differing lengths that can be summered by a gamma distribution of transit times. This can be converted to the equivalent residue function by integration. Once this has been convolved with the residue function the concentration time curve in the tissue can be calculated. In practice DSC measures the effect that this concentration of contrast agent has on the T2* of the voxel which is described by a non-linear transformation. In VERBENA it is this final estimated signal that is compared to the data and used to find the optimal parameters using a Bayesian inference algorithm. Additionally the potential for a time delay between the supplied AIF (often measured at a remote location from the tissue) and the tissue signal is included in the model. <span class="anchor" id="line-6"></span><span class="anchor" id="line-7"></span><p class="line867">
+<h1 id="The_Modified_Vascular_Model">The Modified Vascular Model</h1>
+<span class="anchor" id="line-8"></span><p class="line862">VERBENA implements a modified version of the Vascular Model whereby the MTT is not pre-calcualted from the data, but instead is a further parameter to be estimated as part of the inference applied to the data, see Chappell <em>et al.</em>. This removes the risk of bias from the separate MTT calculation and also allows for a separate macro vascular component to be implemented within the model. <span class="anchor" id="line-9"></span><span class="anchor" id="line-10"></span><p class="line867">
+<h1 id="Macro_Vascular_Contamination">Macro Vascular Contamination</h1>
+<span class="anchor" id="line-11"></span><p class="line862">VERBENA has the option to include a macro vascular component to the model. This combines the estimated concentration time curve from the (modified) vascular model with a scaled version of the AIF, where the AIF is representative of contrast that is still within the large arteries during imaging and the scaling is a (relative) measure of arterial blood volume. The component is subject to a 'shrinkage prior' that aims to provide a conservative estimate - so that this component is only included in voxels where the data supports its inclusion, recognising that macro vascular contamination will be be universally present within the brain, but only occur in voxels that contain large arteries. The combination of tissue and macro vascular contributions could be done in terms of the concentrations of contrast in the voxel. However, since in DSC it is the T2* effect of the concentration that is measured, the summation might be better done with the signals once their effect on T2* has been accounted for. VERBENA offers the option to do either, there is currently no clear evidence as to which is most physically accurate and it is likely that both are an incomplete representation of the reality, see Chappell <em>et al.</em>. <span class="anchor" id="line-12"></span><span class="anchor" id="line-13"></span><p class="line867"><span class="anchor" id="line-14"></span><span class="anchor" id="line-15"></span><span class="anchor" id="line-16"></span><span class="anchor" id="line-17"></span><span class="anchor" id="line-18"></span><span class="anchor" id="line-19"></span><div class="references"><span class="anchor" id="line-1-1"></span><p class="line874">Ostergaard L, Chesler D, Weisskoff R, Sorensen A, Rosen B. Modeling Cerebral Blood Flow and Flow Heterogeneity From Magnetic Resonance Residue Data. J Cereb Blood Flow Metab 1999;19:690–699. <span class="anchor" id="line-2-1"></span><span class="anchor" id="line-3-1"></span><p class="line862">Mouridsen K, Friston K, Hjort N, Gyldensted L, Østergaard L, Kiebel S. Bayesian estimation of cerebral perfusion using a physiological model of microvasculature. <a class="nonexistent" href="./NeuroImage.html">NeuroImage</a> 2006;33:570–579. doi: 10.1016/j.neuroimage.2006.06.015 <span class="anchor" id="line-4-1"></span><span class="anchor" id="line-5-1"></span><p class="line874">Chappell, M.A., Mehndiratta, A., Calamante F., &quot;Correcting for large vessel contamination in DSC perfusion MRI by extension to a physiological model of the vasculature&quot;, e-print ahead of publication. doi: 10.1002/mrm.25390 </div><span class="anchor" id="line-20"></span><span class="anchor" id="bottom"></span></div>
+</div>
+<hr>
+2017-04-20 13:30
+</body>
+</html>
